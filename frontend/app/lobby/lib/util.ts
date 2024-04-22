@@ -60,14 +60,17 @@
 export const generateRooms = (): Room[] => {
 	const rooms: Room[] = []
 	for (let i = 1; i <= 100; i++) {
+		const roomMaxUserNum = 10
+		const roomCurUserNum = Math.floor(Math.random() * roomMaxUserNum) + 1
+
 		rooms.push({
 			roomId: i,
 			roomTitle: `방 제목 ${i}`,
 			roomOwnerName: `방장${i}`,
-			roomCurUserNum: Math.floor(Math.random() * 10) + 1,
+			roomCurUserNum: roomCurUserNum,
 			roomMaxUserNum: 10,
 			isGameStart: Math.random() > 0.5,
-			isRoomFull: Math.random() > 0.5,
+			isRoomFull: roomCurUserNum === roomMaxUserNum,
 			probCategory: ['수학 퀴즈', '일반상식', '역사', '코딩'][Math.floor(Math.random() * 4)],
 			isHavePW: Math.random() > 0.5,
 			curRound: Math.floor(Math.random() * 10),
