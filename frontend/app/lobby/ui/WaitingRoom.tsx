@@ -16,7 +16,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
 			setModalOpen(true)
 		} else {
 			// Todo : 방 입장 로직(유효성 검증 및 소켓 연결 로직 작성 필요)
-			// enterRoom()
+			// enterRoom(room)
 			console.log('Entering room without password')
 		}
 	}
@@ -24,7 +24,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
 	const submitPassword = (password: string) => {
 		console.log('Password entered:', password)
 		// Todo : 방 입장 로직(유효성 검증 및 소켓 연결 로직 작성 필요)
-		// enterRoom(password)
+		// enterRoom(room, password)
 		setModalOpen(false)
 	}
 
