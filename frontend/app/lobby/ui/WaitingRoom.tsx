@@ -3,6 +3,9 @@
 import React, { useState } from 'react'
 import { Lock } from 'lucide-react'
 import RoomPasswordModal from './RoomPasswordModal'
+import { enterRoom } from '../lib/services/enterRoom'
+import { canEnterRoom } from '../lib/util'
+import useRoomStore from '../lib/store'
 
 interface RoomProps {
 	room: Room
@@ -10,21 +13,25 @@ interface RoomProps {
 
 const WaitingRoom = ({ room }: RoomProps) => {
 	const [isModalOpen, setModalOpen] = useState(false)
+	const { setGameUserList } = useRoomStore()
 
-	const handleRoomClick = () => {
+	const handleRoomClick = async () => {
+		// 비밀번호 방 클릭 시
 		if (room.isHavePW) {
-			setModalOpen(true)
+			canEnterRoom(room) && setModalOpen(true)
 		} else {
-			// Todo : 방 입장 로직(유효성 검증 및 소켓 연결 로직 작성 필요)
-			// enterRoom(room)
-			console.log('Entering room without password')
+			// 비밀번호 없는 방 클릭 시
+			const enterRoomResult = await enterRoom(room)
+			if (enterRoomResult !== null) {
+				setGameUserList(enterRoomResult)
+			}
 		}
 	}
 
 	const submitPassword = (password: string) => {
 		console.log('Password entered:', password)
 		// Todo : 방 입장 로직(유효성 검증 및 소켓 연결 로직 작성 필요)
-		// enterRoom(room, password)
+		enterRoom(room, password)
 		setModalOpen(false)
 	}
 

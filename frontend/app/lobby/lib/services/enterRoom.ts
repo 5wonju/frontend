@@ -1,28 +1,22 @@
 import { postEnterRoom } from '../api'
+import { canEnterRoom } from '../util'
 
-const canEnterRoom = (room: Room) => {
-	const isRoomFull = room.roomCurUserNum === room.roomMaxUserNum
-	const isGameStart = room.isGameStart
-
-	if (isRoomFull) {
-		alert('방이 가득 찼습니다.')
-		return false
-	}
-	if (isGameStart) {
-		alert('게임이 시작된 방입니다.')
-		return false
-	}
-
-	return true
-}
-
-export const enterRoom = async (room: Room, password: string | undefined) => {
+// 1. api를 통해서 옳바른 방입장인지 확인
+// 2. socket 연결을 통해서 방과 connect -> 아마 hook으로 작성될 것
+export const enterRoom = async (
+	room: Room,
+	password?: string
+): Promise<onGameUserInfo[] | null> => {
 	if (!canEnterRoom(room)) {
-		return false
+		return null
 	}
-	// 성공하면 방정보 저장 및 소켓 연결, 실패하면 alert
-	const enterRoomRes = await postEnterRoom(room.roomId, password)
-	const onGameUserList = enterRoomRes.data
 
-	return true
+	// 성공하면 소켓 연결 및 방정보 리턴, 실패하면 alert
+	try {
+		const enterRoomRes = await postEnterRoom(room.roomId, password)
+		return enterRoomRes.data
+	} catch (error) {
+		alert(error)
+		return null
+	}
 }

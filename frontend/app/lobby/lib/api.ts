@@ -1,15 +1,5 @@
 import { tokenInstance } from '@/app/axios'
 
-type onGameUserInfo = {
-	userNickname: string
-	userCoordX: number
-	userCoordY: number
-	userTeam: '' | 'red' | 'blue'
-	winRate: number
-	escapeHistory: number
-	winCnt: number
-}
-
 interface EnterRoomRes {
 	msg: string
 	data: onGameUserInfo[]
@@ -29,7 +19,7 @@ export const postEnterRoom = async (roomId: number, password?: string): Promise<
 		roomPW: password ?? null,
 	})
 	// const enterRoomRes = await axios.get(
-	// 	`${process.env.NEXT_PUBLIC_BASE_URL}/games/rooms/${roomId}`,
+	// 	`${process.env.NEXT_PUBLIC_BASE_URL}/games/rooms/${roomId}`, {roomPW: password ?? null}
 	// 	{
 	// 		withCredentials: true,
 	// 		headers: {
