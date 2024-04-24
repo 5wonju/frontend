@@ -9,7 +9,8 @@ RUN npm run build
 RUN ls -al /app
 
 # 서브 스테이지
-FROM nginx:alpine
+FROM node:20
+WORKDIR /app
 COPY --from=build /app ./
 EXPOSE 3000
 CMD ["npm", "start"]
