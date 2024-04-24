@@ -29,3 +29,13 @@ export const postEnterRoom = async (roomId: number, password?: string): Promise<
 	// )
 	return enterRoomRes.data
 }
+
+// 소켓 통신을 위한 소켓 전용 토큰을 받아오는 함수
+export const getSocketToken = async (): Promise<string> => {
+	const socketTokenRes = await tokenInstance.get('games/socket-token')
+	if (socketTokenRes.status === 200) {
+		return socketTokenRes.data
+	} else {
+		throw new Error('Failed to fetch socket token')
+	}
+}
