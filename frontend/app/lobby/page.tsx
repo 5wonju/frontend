@@ -1,7 +1,9 @@
-import React from 'react'
+'use client'
+
+import WaitingRoomList from './ui/WaitingRoomList'
 
 const Lobby = () => {
-	return <div>Lobby</div>
+	return <WaitingRoomList />
 }
 
 export default Lobby
