@@ -1,0 +1,3 @@
+interface IState {
+	state: string
+}
