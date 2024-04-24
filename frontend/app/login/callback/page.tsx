@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { useAuth } from '@/app/lib/hooks/useAuth'
 
 const LoginCallbackPage = () => {
@@ -22,7 +22,11 @@ const LoginCallbackPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return <div>Logging in...</div>
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<div>Logging in...</div>
+		</Suspense>
+	)
 }
 
 export default LoginCallbackPage
