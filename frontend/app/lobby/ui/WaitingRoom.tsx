@@ -5,6 +5,7 @@ import { Lock } from 'lucide-react'
 import RoomPasswordModal from './RoomPasswordModal'
 import { canEnterRoom } from '../lib/util'
 import { useEnterRoom } from '../lib/hooks/enterRoom'
+import clsx from 'clsx'
 
 interface RoomProps {
 	room: WaitingRoom
@@ -40,9 +41,15 @@ const WaitingRoom = ({ room }: RoomProps) => {
 	return (
 		<div
 			onClick={handleRoomClick}
-			className={`p-4 rounded-lg shadow-md flex items-center gap-6 ${
-				room.isRoomFull ? 'border-2 border-red-500' : 'border-2 border-gray-200'
-			}`}
+			className={clsx('p-4 rounded-lg shadow-md flex items-center gap-6 text-black', {
+				'border-2 border-red-500': room.isRoomFull,
+				'border-2 border-gray-500': !room.isRoomFull,
+				'bg-gray-500': room.isGameStart,
+				'bg-white': !room.isGameStart,
+			})}
+			// className={`p-4 rounded-lg shadow-md flex items-center gap-6 ${
+			// 	room.isRoomFull ? 'border-2 border-red-500' : 'border-2 border-gray-200'
+			// }`}
 		>
 			<div className="text-lg font-bold">{room.roomId}</div>
 			<div className="flex-grow">
