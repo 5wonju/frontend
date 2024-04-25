@@ -1,4 +1,4 @@
-interface Room {
+interface WaitingRoom {
 	roomTitle: string
 	roomOwnerName: string
 	roomCurUserNum: number

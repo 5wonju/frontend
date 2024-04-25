@@ -1,14 +1,31 @@
+import { useWaitingRoomStore } from '@/app/lobby/lib/store'
 import { getSocketToken } from '../api'
 import { useChatSocketStore, useGameSocketStore } from './../store'
+import WaitingRoom from './../../lobby/ui/WaitingRoom'
 
 // Todo: 이 코드는 작성 시(or 완료) util이나 services로 빼서 작성
 // Todo : 게임 진행 중에 필요한 동작을 정의
 // gameSocket에 필요한 설정을 수행하는 함수
-export const setUpGameSocket = (socket: WebSocket) => {
-	// 예시
-	// socket.onmessage = (event) => {
-	// 	console.log('Message from server:', event.data)
-	// }
+export const useSetUpGameSocket = () => {
+	const { gameSocket } = useGameSocketStore()
+	const { setRoomList } = useWaitingRoomStore()
+
+	if (!gameSocket) {
+		alert('Socket이 비어있습니다.')
+		return
+	}
+
+	gameSocket.onmessage = (event) => {
+		const data = JSON.parse(event.data)
+		switch (data.type) {
+			case 'waiting_room':
+				console.log('new room list!')
+				setRoomList(data.roomList as WaitingRoom[])
+				break
+			default:
+				break
+		}
+	}
 }
 
 // 소캣을 수행하는 함수를 리턴하는 커스텀 훅

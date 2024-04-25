@@ -1,32 +1,24 @@
-import create, { StateCreator, StoreApi } from 'zustand'
+import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-interface onGameUserInfo {
-	userNickname: string
-	userCoordX: number
-	userCoordY: number
-	userTeam: '' | 'red' | 'blue'
-	winRate: number
-	escapeHistory: number
-	winCnt: number
+// :: 대기방 리스트
+interface WaitingRoomListState {
+	roomList: WaitingRoom[]
+	setRoomList: (roomList: WaitingRoom[]) => void
 }
 
-interface RoomState {
-	gameUserList: onGameUserInfo[] | null
-	setGameUserList: (users: onGameUserInfo[] | null) => void
-}
-
-export const useRoomStore = create<RoomState>()(
+const useWaitingRoomStore = create<WaitingRoomListState>()(
 	devtools(
 		immer((set) => ({
-			gameUserList: [], // initial state
-			setGameUserList: (users: onGameUserInfo[] | null) =>
-				set((state: RoomState) => {
-					state.gameUserList = users
+			roomList: [], // initial state
+			setRoomList: (roomList: WaitingRoom[]) =>
+				set((state: WaitingRoomListState) => {
+					state.roomList = roomList
 				}),
 		})),
-		{ name: 'RoomStore' } // This name will appear in Redux DevTools
+		{ name: 'WaitingRoomStore' } // This name will appear in Redux DevTools
 	)
 )
-export default useRoomStore
+
+export { useWaitingRoomStore }
