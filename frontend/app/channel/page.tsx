@@ -1,6 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/router'
 import { connectServerSocket, getSocketToken } from './lib/api'
+import { useSocketStore } from './lib/store'
 
 const serverData = [
 	{ name: '구미', count: '654/1000' },
@@ -9,12 +11,15 @@ const serverData = [
 ]
 
 const Channel = () => {
-	let ws
-	const handleConnectSocket = async (region: string) => {
+	const router = useRouter()
+	const { connect } = useSocketStore()
+
+	const handleRegionSelect = async (region: string) => {
 		const response = await getSocketToken()
 		const newSocketToken = response.socketToken
 		localStorage.setItem('socketToken', newSocketToken)
-		ws = await connectServerSocket(region, newSocketToken)
+		await connect(region, newSocketToken) // 실제 사용할 token 값 필요
+		router.push(`/lobby?region=${region}`)
 	}
 	return (
 		<div className="flex flex-col">
@@ -23,7 +28,7 @@ const Channel = () => {
 				<button
 					key={key}
 					className="flex items-center justify-between w-96"
-					onClick={() => handleConnectSocket(data.name)}
+					onClick={() => handleRegionSelect(data.name)}
 				>
 					<p>{data.name}</p>
 					<p>{data.count}</p>
