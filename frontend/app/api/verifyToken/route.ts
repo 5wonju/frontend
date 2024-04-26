@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 	const access_token = req.cookies.get('access-token')?.value
 	if (access_token && access_token === 'asdasdasfdsf') {
 		return NextResponse.json(
-			{ messege: '베리굿', isValid: true, data: userDummyData },
+			{ messege: '베리굿', isValid: true, userData: userDummyData },
 			{ status: 200 }
 		)
 	}
