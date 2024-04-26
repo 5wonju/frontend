@@ -4,6 +4,7 @@ import { tokenInstance } from '../axios'
 export const getSocketToken = async (): Promise<string> => {
 	const socketTokenRes = await tokenInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/socket/token`)
 	return socketTokenRes.data
+}
 
 export const verifyToken = async () => {
 	try {
