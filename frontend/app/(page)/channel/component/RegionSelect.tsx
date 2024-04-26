@@ -3,11 +3,7 @@ import { useRouter } from 'next/navigation'
 import { useSocketStore } from '../lib/store'
 import { getSocketToken } from '../lib/api'
 
-interface IChannelProps {
-	channel: IChannelData
-}
-
-const RegionSelect = ({ channel }: IChannelProps) => {
+const RegionSelect = ({ channel }: { channel: IChannelData }) => {
 	const router = useRouter()
 	const { connect } = useSocketStore()
 

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { Suspense, useEffect } from 'react'
-import { useAuth } from '@/app/lib/hooks/useAuth'
+import { useAuth } from '@/app/hooks/useAuth'
 
 const LoginHandler = () => {
 	const router = useRouter()

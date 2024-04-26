@@ -1,4 +1,4 @@
 interface IChannelData {
 	name: string
-	count: number
+	count: string
 }

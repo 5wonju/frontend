@@ -1,4 +1,4 @@
-import create from 'zustand'
+import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
@@ -18,7 +18,7 @@ interface GameRoomState {
 	setGameUserList: (users: onGameUserInfo[] | null) => void
 }
 
-const useGameRoomStore = create<GameRoomState>()(
+export const useGameRoomStore = create<GameRoomState>()(
 	devtools(
 		immer((set) => ({
 			gameUserList: [], // initial state
@@ -30,5 +30,3 @@ const useGameRoomStore = create<GameRoomState>()(
 		{ name: 'RoomStore' } // This name will appear in Redux DevTools
 	)
 )
-
-export { useGameRoomStore }

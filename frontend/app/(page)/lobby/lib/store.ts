@@ -1,4 +1,4 @@
-import create from 'zustand'
+import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
@@ -8,7 +8,7 @@ interface WaitingRoomListState {
 	setRoomList: (roomList: WaitingRoom[]) => void
 }
 
-const useWaitingRoomStore = create<WaitingRoomListState>()(
+export const useWaitingRoomStore = create<WaitingRoomListState>()(
 	devtools(
 		immer((set) => ({
 			roomList: [], // initial state
@@ -20,5 +20,3 @@ const useWaitingRoomStore = create<WaitingRoomListState>()(
 		{ name: 'WaitingRoomStore' } // This name will appear in Redux DevTools
 	)
 )
-
-export { useWaitingRoomStore }

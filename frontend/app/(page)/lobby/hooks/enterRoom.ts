@@ -1,5 +1,5 @@
 import { useGameSocketStore } from '@/app/lib/store'
-import { canEnterRoom } from '../util'
+import { canEnterRoom } from '../lib/util'
 
 // 1. api를 통해서 옳바른 방입장인지 확인
 // 2. socket 연결을 통해서 방과 connect -> 아마 hook으로 작성될 것

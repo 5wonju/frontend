@@ -1,6 +1,6 @@
 'use client'
 
-import WaitingRoomList from './ui/WaitingRoomList'
+import WaitingRoomList from './component/WaitingRoomList'
 
 const Lobby = () => {
 	return <WaitingRoomList />

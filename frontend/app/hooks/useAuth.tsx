@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { handleLogout, verifyToken } from '../api'
+import { handleLogout, verifyToken } from '../lib/api'
 import { useRouter } from 'next/navigation'
-import { handleLogin } from '@/app/login/callback/lib/api'
+import { handleLogin } from '../(page)/login/(page)/callback/lib/api'
 
 export const useAuth = () => {
 	const queryClient = useQueryClient()

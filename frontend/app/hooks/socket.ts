@@ -1,7 +1,6 @@
-import { useWaitingRoomStore } from '@/app/lobby/lib/store'
-import { getSocketToken } from '../api'
-import { useChatSocketStore, useGameSocketStore } from './../store'
-import WaitingRoom from './../../lobby/ui/WaitingRoom'
+import { useWaitingRoomStore } from '../(page)/lobby/lib/store'
+import { getSocketToken } from '../lib/api'
+import { useChatSocketStore, useGameSocketStore } from '../lib/store'
 
 // Todo: 이 코드는 작성 시(or 완료) util이나 services로 빼서 작성
 // Todo : 게임 진행 중에 필요한 동작을 정의

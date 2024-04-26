@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import { Lock } from 'lucide-react'
 import RoomPasswordModal from './RoomPasswordModal'
 import { canEnterRoom } from '../lib/util'
-import { useEnterRoom } from '../lib/hooks/enterRoom'
 import clsx from 'clsx'
+import { useEnterRoom } from '../hooks/enterRoom'
 
 interface RoomProps {
 	room: WaitingRoom
