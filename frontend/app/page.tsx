@@ -8,7 +8,7 @@ export default function Home() {
 	const router = useRouter()
 	const handleGameStart = () => {
 		if (isLoggedIn) {
-			router.push('/lobby')
+			router.push('/channel')
 		} else {
 			router.push('/login')
 		}
