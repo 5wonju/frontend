@@ -2,22 +2,23 @@
 
 import React, { useEffect } from 'react'
 import WaitingRoom from './WaitingRoom'
+import { useWaitingRoomStore } from '../lib/store'
 import { generateRooms } from '../lib/util'
 
 const WaitingRoomList: React.FC = () => {
-	const [rooms, setRooms] = React.useState<Room[]>([])
+	// const { roomList } = useWaitingRoomStore()
+
+	const [roomList, setRoomList] = React.useState<WaitingRoom[]>([])
 	useEffect(() => {
-		setRooms(generateRooms())
+		setRoomList(generateRooms())
 	}, [])
 	useEffect(() => {
-		console.log('rooms', rooms)
-	}, [rooms])
-
-	// const roomsData = generateRooms()
+		console.log('rooms', roomList)
+	}, [roomList])
 
 	return (
 		<div className="grid grid-cols-2 gap-4">
-			{rooms.map((room) => (
+			{roomList.map((room) => (
 				<WaitingRoom key={room.roomId} room={room} />
 			))}
 		</div>
