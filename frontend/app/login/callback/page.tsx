@@ -4,11 +4,11 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React, { Suspense, useEffect } from 'react'
 import { useAuth } from '@/app/lib/hooks/useAuth'
 
-const LoginCallbackPage = () => {
+const LoginHandler = () => {
 	const router = useRouter()
 	const params = useSearchParams()
-
 	const { login } = useAuth()
+
 	useEffect(() => {
 		try {
 			if (params && params.get('state') && params.get('code')) {
@@ -22,9 +22,13 @@ const LoginCallbackPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
+	return <div>Logging in...</div>
+}
+
+const LoginCallbackPage = () => {
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<div>Logging in...</div>
+			<LoginHandler />
 		</Suspense>
 	)
 }

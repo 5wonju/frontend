@@ -3,28 +3,32 @@
 import React, { useState } from 'react'
 import { Lock } from 'lucide-react'
 import RoomPasswordModal from './RoomPasswordModal'
+import { canEnterRoom } from '../lib/util'
+import { useEnterRoom } from '../lib/hooks/enterRoom'
+import clsx from 'clsx'
 
 interface RoomProps {
-	room: Room
+	room: WaitingRoom
 }
 
 const WaitingRoom = ({ room }: RoomProps) => {
 	const [isModalOpen, setModalOpen] = useState(false)
+	const { sendEnterRoom } = useEnterRoom()
 
 	const handleRoomClick = () => {
+		// 비밀번호 방 클릭 시
 		if (room.isHavePW) {
-			setModalOpen(true)
-		} else {
-			// Todo : 방 입장 로직(유효성 검증 및 소켓 연결 로직 작성 필요)
-			// enterRoom()
-			console.log('Entering room without password')
+			canEnterRoom(room) && setModalOpen(true)
+		}
+		// 비밀번호 없는 방 클릭 시
+		else {
+			sendEnterRoom(room)
 		}
 	}
 
 	const submitPassword = (password: string) => {
 		console.log('Password entered:', password)
-		// Todo : 방 입장 로직(유효성 검증 및 소켓 연결 로직 작성 필요)
-		// enterRoom(password)
+		sendEnterRoom(room, password)
 		setModalOpen(false)
 	}
 
@@ -37,9 +41,15 @@ const WaitingRoom = ({ room }: RoomProps) => {
 	return (
 		<div
 			onClick={handleRoomClick}
-			className={`p-4 rounded-lg shadow-md flex items-center gap-6 ${
-				room.isRoomFull ? 'border-2 border-red-500' : 'border-2 border-gray-200'
-			}`}
+			className={clsx('p-4 rounded-lg shadow-md flex items-center gap-6 text-black', {
+				'border-2 border-red-500': room.isRoomFull,
+				'border-2 border-gray-500': !room.isRoomFull,
+				'bg-gray-500': room.isGameStart,
+				'bg-white': !room.isGameStart,
+			})}
+			// className={`p-4 rounded-lg shadow-md flex items-center gap-6 ${
+			// 	room.isRoomFull ? 'border-2 border-red-500' : 'border-2 border-gray-200'
+			// }`}
 		>
 			<div className="text-lg font-bold">{room.roomId}</div>
 			<div className="flex-grow">

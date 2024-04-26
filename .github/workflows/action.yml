@@ -59,7 +59,7 @@ jobs:
           context: ./frontend
           file: frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:v${{ github.run_number }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/5wonju-frontend:v${{ github.run_number }}
 
       - name: Push Docker image latest
         uses: docker/build-push-action@v2
@@ -67,7 +67,7 @@ jobs:
           context: ./frontend
           file: frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/5wonju-frontend
 
   deploy:
     needs: build-and-push
@@ -82,11 +82,11 @@ jobs:
           script: |
             docker stop frontend || true
             docker rm frontend || true
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/frontend:v${{ github.run_number }}
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/5wonju-frontend:v${{ github.run_number }}
             docker run --name frontend -d \
             -p 3000:3000 \
             --network=bridge \
             --restart unless-stopped \
-            ${{ secrets.DOCKERHUB_USERNAME }}/frontend:v${{ github.run_number }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/5wonju-frontend:v${{ github.run_number }}
             docker container prune -f
-            docker images | grep '${{ secrets.DOCKERHUB_USERNAME }}/frontend' | grep -v 'v${{ github.run_number }}' | awk '{print $3}' | xargs -r docker rmi
+            docker images | grep '${{ secrets.DOCKERHUB_USERNAME }}/5wonju-frontend' | grep -v 'v${{ github.run_number }}' | awk '{print $3}' | xargs -r docker rmi

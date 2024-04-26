@@ -1,64 +1,5 @@
-// export const roomsDummyData: Room[] = [
-// 	{
-// 		roomId: 1,
-// 		roomTitle: '초고수의 도전',
-// 		roomOwnerName: 'GameMaster',
-// 		roomCurUserNum: 4,
-// 		roomMaxUserNum: 10,
-// 		isGameStart: false,
-// 		isRoomFull: false,
-// 		probCategory: '수학 퀴즈',
-// 		isHavePW: false,
-// 		curRound: 0,
-// 		totalRound: 20,
-// 		roomMode: 'basic',
-// 	},
-// 	{
-// 		roomId: 2,
-// 		roomTitle: '초보자만 오세요',
-// 		roomOwnerName: 'Newbie',
-// 		roomCurUserNum: 10,
-// 		roomMaxUserNum: 10,
-// 		isGameStart: true,
-// 		isRoomFull: true,
-// 		probCategory: '일반상식',
-// 		isHavePW: true,
-// 		curRound: 3,
-// 		totalRound: 15,
-// 		roomMode: 'basic',
-// 	},
-// 	{
-// 		roomId: 3,
-// 		roomTitle: '윷놀이 챌린지',
-// 		roomOwnerName: 'YutMaster',
-// 		roomCurUserNum: 6,
-// 		roomMaxUserNum: 8,
-// 		isGameStart: false,
-// 		isRoomFull: false,
-// 		probCategory: '한국사',
-// 		isHavePW: false,
-// 		curRound: 0,
-// 		totalRound: 30,
-// 		roomMode: 'yutnori',
-// 	},
-// 	{
-// 		roomId: 4,
-// 		roomTitle: '파이썬 프로그래밍',
-// 		roomOwnerName: 'Coder',
-// 		roomCurUserNum: 8,
-// 		roomMaxUserNum: 8,
-// 		isGameStart: true,
-// 		isRoomFull: true,
-// 		probCategory: '코딩',
-// 		isHavePW: true,
-// 		curRound: 5,
-// 		totalRound: 10,
-// 		roomMode: 'basic',
-// 	},
-// ]
-
-export const generateRooms = (): Room[] => {
-	const rooms: Room[] = []
+export const generateRooms = (): WaitingRoom[] => {
+	const rooms: WaitingRoom[] = []
 	for (let i = 1; i <= 100; i++) {
 		const roomMaxUserNum = 10
 		const roomCurUserNum = Math.floor(Math.random() * roomMaxUserNum) + 1
@@ -78,5 +19,22 @@ export const generateRooms = (): Room[] => {
 			roomMode: ['basic', 'yutnori'][Math.floor(Math.random() * 2)] as 'basic' | 'yutnori',
 		})
 	}
+
 	return rooms
+}
+
+export const canEnterRoom = (room: WaitingRoom) => {
+	const isRoomFull = room.roomCurUserNum === room.roomMaxUserNum
+	const isGameStart = room.isGameStart
+
+	if (isRoomFull) {
+		alert('방이 가득 찼습니다.')
+		return false
+	}
+	if (isGameStart) {
+		alert('게임이 시작된 방입니다.')
+		return false
+	}
+
+	return true
 }
