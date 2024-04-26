@@ -34,7 +34,7 @@ export const useAuth = () => {
 		onSuccess: (data) => {
 			// 로그인 성공 후 처리, 예: `isValid`를 `true`로 설정
 			queryClient.setQueryData(['authStatus'], { isValid: true, ...data })
-			router.push('/lobby')
+			router.push('/channel')
 		},
 		onError: (error) => {
 			// 로그인 실패 처리
