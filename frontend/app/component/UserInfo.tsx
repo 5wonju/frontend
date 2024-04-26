@@ -22,7 +22,7 @@ const UserInfo = () => {
 	return (
 		<>
 			{userData && (
-				<Link href={'/mypage'} className="bg-white p-4 shadow-md rounded-lg flex flex-col gap-1">
+				<Link href={'/mypage'} className="bg-white p-4 shadow-md  flex flex-col gap-1 h-full">
 					<div className="flex gap-4">
 						<Image
 							src={defaultProfileImg}
@@ -33,7 +33,7 @@ const UserInfo = () => {
 						/>
 						<div className="flex flex-col gap-1 grow">
 							<div className="font-bold text-lg">{userData.userNickname}</div>
-							<div>승리 수: {userData.winCount}</div>
+							<div>승리: {userData.winCount} 승</div>
 							<div>승률: {userData.winRate}%</div>
 						</div>
 					</div>

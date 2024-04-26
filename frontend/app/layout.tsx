@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ReactQueryProviders from './hooks/useReactQuery'
+import HeaderNavigationBar from './component/HeaderNavigationBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +20,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<ReactQueryProviders>
-					<div id="root">{children}</div>
+					<div id="root" className="pt-12">
+						<HeaderNavigationBar />
+						{children}
+					</div>
 				</ReactQueryProviders>
 			</body>
 		</html>
