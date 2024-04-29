@@ -2,6 +2,8 @@
 
 import { Cylinder } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
+import AnswerSpot from './AnswerSpot'
+import React from 'react'
 
 const GameField = () => {
 	return (
@@ -12,6 +14,8 @@ const GameField = () => {
 					<meshStandardMaterial color="white" />
 				</Cylinder>
 			</RigidBody>
+
+			<AnswerSpot/>
 		</>
 	)
 }

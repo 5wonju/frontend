@@ -11,7 +11,7 @@ const page = () => {
 		<Canvas shadows camera={{ position: [0, 6, 18], fov: 42 }}>
 			<OrbitControls />
 			<color attach="background" args={['#dbecfb']} />
-			<fog attach="fog" args={['#dbecfb', 20, 40]} />
+			{/* <fog attach="fog" args={['#dbecfb', 20, 40]} /> */}
 
 			{/* LIGHTS */}
 			<ambientLight intensity={1} />
