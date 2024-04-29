@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ReactQueryProviders from './hooks/useReactQuery'
-import HeaderNavigationBar from './component/HeaderNavigationBar'
+import HeaderNavigationBar from './component/HeaderNavigation/HeaderNavigationBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
