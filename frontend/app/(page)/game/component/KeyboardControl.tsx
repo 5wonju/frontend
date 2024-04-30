@@ -1,15 +1,16 @@
 import React, { useMemo } from 'react'
 import { KeyboardControls } from '@react-three/drei'
+import ReactDOM from 'react-dom'
 
 export const controls = {
-  forward: "forward",
-  back: "back",
-  left: "left",
-  right: "right",
-  jump: "jump",
-};
+	forward: 'forward',
+	back: 'back',
+	left: 'left',
+	right: 'right',
+	jump: 'jump',
+}
 
-const KeyboardControl = ({ children }) => {
+const KeyboardControl = ({ children }: { children: React.ReactNode }) => {
 	const map = useMemo(
 		() => [
 			{ name: controls.forward, keys: ['ArrowUp', 'KeyW'] },
