@@ -1,31 +1,26 @@
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { CapsuleCollider, RigidBody } from '@react-three/rapier'
-import { useRef } from 'react'
-import Character from './characters/Character'
+import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
+import { useEffect, useRef } from 'react'
+
+import * as THREE from 'three'
+import Character from './Character'
+import { controls } from './KeyboardControl'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1
 const MAX_VEL = 3
 
-export const Controls = {
-	forward: 'forward',
-	back: 'back',
-	left: 'left',
-	right: 'right',
-	jump: 'jump',
-}
-
 export const CharacterController = () => {
-	const jumpPressed = useKeyboardControls<Controls>((state) => state.jump)
-	const leftPressed = useKeyboardControls<Controls>((state) => state.left)
-	const rightPressed = useKeyboardControls<Controls>((state) => state.right)
-	const backPressed = useKeyboardControls<Controls>((state) => state.back)
-	const forwardPressed = useKeyboardControls<Controls>((state) => state.forward)
+	const jumpPressed = useKeyboardControls((state) => state[controls.jump])
+	const leftPressed = useKeyboardControls((state) => state[controls.left])
+	const rightPressed = useKeyboardControls((state) => state[controls.right])
+	const backPressed = useKeyboardControls((state) => state[controls.back])
+	const forwardPressed = useKeyboardControls((state) => state[controls.forward])
 	const rigidbody = useRef()
 	const isOnFloor = useRef(true)
 
-	useFrame(() => {
+	useFrame((state) => {
 		const impulse = { x: 0, y: 0, z: 0 }
 		if (jumpPressed && isOnFloor.current) {
 			impulse.y += JUMP_FORCE
@@ -56,9 +51,24 @@ export const CharacterController = () => {
 			const angle = Math.atan2(linvel.x, linvel.z)
 			character.current.rotation.y = angle
 		}
+
+		// CAMERA FOLLOW
+		const characterWorldPosition = character.current.getWorldPosition(new THREE.Vector3())
+		state.camera.position.x = characterWorldPosition.x
+		state.camera.position.z = characterWorldPosition.z + 14
+
+		const targetLookAt = new THREE.Vector3(characterWorldPosition.x, 0, characterWorldPosition.z)
+
+		state.camera.lookAt(targetLookAt)
 	})
 
 	const character = useRef()
+
+	const resetPosition = () => {
+		rigidbody.current.setTranslation(vec3({ x: 0, y: 0, z: 0 }))
+		rigidbody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }))
+	}
+
 	return (
 		<group>
 			<RigidBody
@@ -68,6 +78,14 @@ export const CharacterController = () => {
 				enabledRotations={[false, false, false]}
 				onCollisionEnter={() => {
 					isOnFloor.current = true
+				}}
+				onIntersectionEnter={({ other }) => {
+					if (other.rigidBodyObject.name === 'void') {
+						resetPosition()
+						playAudio('fall', () => {
+							playAudio('ganbatte')
+						})
+					}
 				}}
 			>
 				<CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
