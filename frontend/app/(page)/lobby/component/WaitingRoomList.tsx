@@ -17,7 +17,7 @@ const WaitingRoomList: React.FC = () => {
 	}, [roomList])
 
 	return (
-		<div className="grid grid-cols-2 gap-4">
+		<div className="grid grid-cols-2 gap-4 p-4">
 			{roomList.map((room) => (
 				<WaitingRoom key={room.roomId} room={room} />
 			))}
