@@ -6,6 +6,7 @@ import WriteRoomName from './WriteRoomName'
 import WriteRoomPw from './WriteRoomPw'
 import SelectCategory from './SelectCategory'
 import WriteProblemNumber from './WriteProblemNumber'
+import { validateCreateRoomData } from '../../lib/util'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
 	const [roomName, setRoomName] = useState('')
@@ -18,7 +19,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
 	const { gameSocket } = useGameSocketStore() // zustand에서 소켓 가져오기
 
 	// Todo : setupGameSocket으로 로직 빼서 관리
-	// 게임 소켓 셋팅
+	// 방 생성 관련 게임 소켓 셋팅
 	useEffect(() => {
 		if (gameSocket === null) return
 
@@ -40,7 +41,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
 		}
 	}, [gameSocket])
 
-	// Todo : API 명세서에 따라 방 데이터 변경 필요
+	// 방 생성하기
 	const handleCreateRoom = () => {
 		const roomData = {
 			roomTitle: roomName,
@@ -51,9 +52,14 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
 			probNum,
 		}
 
+		if (gameSocket === null) {
+			alert('Socket is not connected')
+			return
+		}
+		if (!validateCreateRoomData(roomData)) return
+
 		// 소켓을 이용해서 메세지 보내기
 		gameSocket && gameSocket.send(JSON.stringify({ action: 'createRoom', data: roomData }))
-
 		onModalClose()
 	}
 
@@ -71,10 +77,10 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
 
 				<div className="mt-4 flex justify-end space-x-2">
 					<button className="px-4 py-2 bg-gray-300 rounded" onClick={onModalClose}>
-						취소하기
+						취소
 					</button>
 					<button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleCreateRoom}>
-						생성하기
+						방 생성
 					</button>
 				</div>
 			</div>

@@ -11,13 +11,13 @@ const WriteRoomPw = ({ roomPw, setRoomPw }: WriteRoomPwProps) => {
 
 	return (
 		<div className="mt-2">
-			<label className="block text-sm font-bold">Room Password</label>
+			<label className="block text-sm font-bold">Room Password (옵션)</label>
 			<div className="relative">
 				<input
 					type={isPasswordVisible ? 'text' : 'password'}
 					value={roomPw}
 					onChange={(e) => setRoomPw(e.target.value)}
-					placeholder="Enter room password"
+					placeholder="4자 이상 입력해주세요"
 					className="w-full border p-2 rounded"
 				/>
 				<button
