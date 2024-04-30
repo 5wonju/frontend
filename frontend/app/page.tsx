@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useAuth } from './hooks/useAuth'
 import { useRouter } from 'next/navigation'
+import React from 'react'
 
 export default function Home() {
 	const { isLoggedIn } = useAuth()
