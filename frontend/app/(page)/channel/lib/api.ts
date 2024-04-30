@@ -1,4 +1,5 @@
 import { tokenInstance } from '@/app/axios'
+import axios from 'axios'
 
 export const getSocketToken = async () => {
 	try {
@@ -15,11 +16,18 @@ export const connectServerSocket = async (region: string, socketToken: string) =
 	return ws
 }
 
-export const getChannelData = async (): Promise<IChannelData[]> => {
+export const getChannelData = async (accessToken?: string): Promise<IChannelData[]> => {
 	try {
-		const response = await fetch('http://localhost:3000/api/channel')
-		const data = await response.json()
-		return data
+		if (accessToken === undefined) throw new Error('accessToken is undefined')
+
+		const response = await axios.get('http://localhost:3000/api/channel', {
+			headers: {
+				Cookie: `access-token=${accessToken}`,
+			},
+		})
+		console.log(response)
+
+		return response.data // axios의 응답 데이터는 data 속성에 저장됩니다.
 	} catch (error) {
 		console.error(error)
 		throw error
