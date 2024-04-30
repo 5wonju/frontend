@@ -3,14 +3,17 @@ import React, { useEffect, useState } from 'react'
 import SelectPlayerCount from './SelectPlayerCount'
 import SelectGameMode from './SelectGameMode'
 import WriteRoomName from './WriteRoomName'
+import WriteRoomPw from './WriteRoomPw'
+import SelectCategory from './SelectCategory'
+import WriteProblemNumber from './WriteProblemNumber'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
 	const [roomName, setRoomName] = useState('')
-	const [roomPw, setRoomPw] = useState('') // Todo : 비밀번호 추가 필요
-	const [probCategory, setProbCategory] = useState('') // Todo : 카테고리 추가 필요
+	const [roomPw, setRoomPw] = useState('')
+	const [probCategory, setProbCategory] = useState('개발')
 	const [playerCount, setPlayerCount] = useState(2)
 	const [gameMode, setGameMode] = useState('basic')
-	const [probNum, setProbNum] = useState('') // Todo : 문제 수 추가 필요
+	const [probNum, setProbNum] = useState(10)
 
 	const { gameSocket } = useGameSocketStore() // zustand에서 소켓 가져오기
 
@@ -41,11 +44,11 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
 	const handleCreateRoom = () => {
 		const roomData = {
 			roomTitle: roomName,
-			roomPW: 'need to develop',
-			probCategory: 'need to develop',
+			roomPW: roomPw,
+			probCategory,
 			maxUserNum: playerCount,
 			roomMode: gameMode,
-			probNum: 'need to develop',
+			probNum,
 		}
 
 		// 소켓을 이용해서 메세지 보내기
@@ -60,8 +63,11 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
 				<h2 className="text-lg font-bold">Create Room</h2>
 
 				<WriteRoomName roomName={roomName} setRoomName={setRoomName} />
+				<WriteRoomPw roomPw={roomPw} setRoomPw={setRoomPw} />
+				<SelectCategory probCategory={probCategory} setProbCategory={setProbCategory} />
 				<SelectPlayerCount playerCount={playerCount} setPlayerCount={setPlayerCount} />
 				<SelectGameMode gameMode={gameMode} setGameMode={setGameMode} />
+				<WriteProblemNumber probNum={probNum} setProbNum={setProbNum} />
 
 				<div className="mt-4 flex justify-end space-x-2">
 					<button className="px-4 py-2 bg-gray-300 rounded" onClick={onModalClose}>
