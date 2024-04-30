@@ -7,14 +7,15 @@ import { CharacterController } from './CharacterController'
 const GameField = () => {
 	return (
 		<>
+			{/* 카메라 컨트롤 */}
 			<OrbitControls />
-			{/* <fog attach="fog" args={['#dbecfb', 20, 40]} /> */}
+			<fog attach="fog" args={['#dbecfb', 30, 50]} />
 
-			{/* LIGHTS */}
+			{/* 조명 */}
 			<ambientLight intensity={2} />
 			<directionalLight position={[15, 15, 15]} intensity={2.8} castShadow color={'white'} />
 
-			{/* BACKGROUND */}
+			{/* 배경 필드 */}
 			<RigidBody colliders={false} type="fixed" name="void">
 				<mesh position={[0, -1.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
 					<planeGeometry args={[50, 50]} />
@@ -34,8 +35,9 @@ const GameField = () => {
 				<CuboidCollider position={[0, -3.5, 0]} args={[50, 0.1, 50]} sensor />
 			</RigidBody>
 
-			{/* FLOOR */}
+			{/* 게임 필드 */}
 			<group position-y={-1}>
+				{/* 중앙 필드 */}
 				<RigidBody colliders={false} type="fixed" position-y={-0.5} friction={2}>
 					<CylinderCollider args={[2 / 2, 10]} />
 					<Cylinder scale={[10, 2, 10]} receiveShadow>
@@ -44,6 +46,7 @@ const GameField = () => {
 				</RigidBody>
 
 				<CharacterController />
+				{/* 문제 보기 필드 */}
 				<AnswerSpot />
 			</group>
 		</>

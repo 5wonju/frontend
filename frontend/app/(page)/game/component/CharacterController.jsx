@@ -1,7 +1,7 @@
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 import * as THREE from 'three'
 import Character from './Character'

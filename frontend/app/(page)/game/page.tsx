@@ -1,10 +1,9 @@
 'use client'
 
-import React, { Suspense, useMemo } from 'react'
+import React, { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import GameField from './component/GameField'
-import { MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import KeyboardControl from './component/KeyboardControl'
 
 const page = () => {

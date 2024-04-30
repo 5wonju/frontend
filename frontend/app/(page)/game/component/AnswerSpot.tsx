@@ -1,7 +1,6 @@
 import { Center, Cylinder, Text3D } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
-import { MeshStandardMaterial } from 'three'
 
 const AnswerSpot = () => {
 	const answers = ['A', 'B', 'C', 'D']
