@@ -21,6 +21,7 @@ export const CharacterController = () => {
 	const isOnFloor = useRef(true)
 
 	useFrame((state) => {
+		if(!rigidbody.current) return
 		const impulse = { x: 0, y: 0, z: 0 }
 		if (jumpPressed && isOnFloor.current) {
 			impulse.y += JUMP_FORCE
