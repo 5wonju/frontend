@@ -7,6 +7,7 @@ interface IInstruction {
 	description: string
 }
 
+// TODO: AI스러운 문구는 추후 수정하기
 const descriptions: IInstruction[] = [
 	{
 		title: '스피드 퀴즈 챌린지',
@@ -41,16 +42,13 @@ const AutoInstruction = () => {
 		return () => clearInterval(intervalId)
 	}, [descriptions.length, interval])
 
-	useEffect(() => {
-		console.log(currentDescIndex)
-	}, [currentDescIndex])
 	return (
 		<>
 			{descriptions.map(
 				(item, index) =>
 					// 현재 나타낼 문구만 마운트
 					index === currentDescIndex && (
-						<div key={index} className='flex flex-col gap-5'>
+						<div key={index} className="flex flex-col gap-5">
 							<h2
 								className={`text-6xl text-neutral-800 font-black ${
 									// 현재 나타날 문구일 경우에만 애니메이션 클래스 추가

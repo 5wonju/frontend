@@ -2,7 +2,7 @@
 import { useAuth } from './hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-// import PreviewImage from './component/HomeUI/PreviewImage'
+import PreviewImage from './component/HomeUI/PreviewImage'
 import AutoInstruction from './component/HomeUI/AutoInstruction'
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
 	}
 	return (
 		<main className="flex h-[calc(100%-3.5rem)] items-center justify-between m-10 px-10">
-			<fieldset className="flex flex-col gap-16">
+			<fieldset className="flex flex-col gap-16 w-1/2">
 				<AutoInstruction />
 				<button
 					className="bg-indigo-600 text-neutral-100 font-semibold text-xl py-6 w-44 rounded-full hover:bg-indigo-500 transition-colors"
@@ -27,8 +27,8 @@ export default function Home() {
 				</button>
 			</fieldset>
 
-			<fieldset className="h-full">
-				{/* <PreviewImage /> */}
+			<fieldset className="h-full w-1/2">
+				<PreviewImage />
 			</fieldset>
 		</main>
 	)
