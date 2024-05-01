@@ -27,7 +27,7 @@ export default function Home() {
 				</button>
 			</fieldset>
 
-			<fieldset className="h-full w-1/2">
+			<fieldset className="h-full my-auto w-1/2">
 				<PreviewImage />
 			</fieldset>
 		</main>

@@ -31,39 +31,35 @@ const PreviewImage = () => {
 		return () => clearInterval(intervalId)
 	}, [])
 	return (
-		<div className="">
+		<>
 			{imageUrls.map(
 				(image, index) =>
 					index === currentImageIndex && (
 						<div
 							key={index}
-							className="relative h-full animate-floating
+							className="relative top-10 h-[80%] *:size-[50%] animate-floating
 						 flex flex-col items-center justify-center gap-4"
 						>
 							<Image
 								src={image.mainImg}
 								alt="Description of the game1"
-								width={200}
-								height={200}
-								layout="responsive"
-								className={`absolute h-full top-0 bottom-16 z-10 ${
+								fill
+								className={`absolute object-contain bottom-0 z-10 ${
 									index === currentImageIndex ? 'animate-faceInFromButtom1' : ''
 								}`}
 							/>
 							<Image
 								src={image.subImg}
 								alt="Description of the game2"
-								width={200}
-								height={200}
-								layout="responsive"
-								className={`absolute h-full top-16 bottom-0 ${
+								fill
+								className={`absolute object-contain bottom-0 ${
 									index === currentImageIndex ? 'animate-faceInFromButtom2' : ''
 								}`}
 							/>
 						</div>
 					)
 			)}
-		</div>
+		</>
 	)
 }
 
