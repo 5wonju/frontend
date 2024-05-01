@@ -1,17 +1,24 @@
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import Character from './Character'
 
 import * as THREE from 'three'
-import Character from './Character'
+import { gameStateEnum, playerStateEnum, useGameRoomStore } from '../lib/store'
 import { controls } from './KeyboardControl'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1
 const MAX_VEL = 3
+const RUN_VEL = 1.5
 
 export const CharacterController = () => {
+	const { playerState, setPlayerState, gameState } = useGameRoomStore((state) => ({
+		playerState: state.playerState,
+		setPlayerState: state.setPlayerState,
+		gameState: state.gameState,
+	}))
 	const jumpPressed = useKeyboardControls((state) => state[controls.jump])
 	const leftPressed = useKeyboardControls((state) => state[controls.left])
 	const rightPressed = useKeyboardControls((state) => state[controls.right])
@@ -19,9 +26,11 @@ export const CharacterController = () => {
 	const forwardPressed = useKeyboardControls((state) => state[controls.forward])
 	const rigidbody = useRef()
 	const isOnFloor = useRef(true)
+	const character = useRef()
 
-	useFrame((state) => {
-		if(!rigidbody.current) return
+	useFrame((state, delta) => {
+		if (!rigidbody.current) return
+
 		const impulse = { x: 0, y: 0, z: 0 }
 		if (jumpPressed && isOnFloor.current) {
 			impulse.y += JUMP_FORCE
@@ -48,6 +57,19 @@ export const CharacterController = () => {
 		}
 
 		rigidbody.current.applyImpulse(impulse, true)
+
+		if (Math.abs(linvel.x) > RUN_VEL || Math.abs(linvel.z) > RUN_VEL) {
+			if (playerState !== playerStateEnum.RUN) {
+				setPlayerState(playerStateEnum.RUN)
+			}
+		} else {
+			if (playerState !== playerStateEnum.IDLE) {
+				setPlayerState(playerStateEnum.IDLE)
+			}
+		}
+
+		if (!character.current) return
+
 		if (changeRotation) {
 			const angle = Math.atan2(linvel.x, linvel.z)
 			character.current.rotation.y = angle
@@ -55,20 +77,54 @@ export const CharacterController = () => {
 
 		// CAMERA FOLLOW
 		const characterWorldPosition = character.current.getWorldPosition(new THREE.Vector3())
-		state.camera.position.x = characterWorldPosition.x
-		state.camera.position.z = characterWorldPosition.z + 14
+
+		const targetCameraPosition = new THREE.Vector3(
+			characterWorldPosition.x,
+			0,
+			characterWorldPosition.z + 14
+		)
+
+		// 게임 시작 시 카메라 위치
+		if (gameState === gameStateEnum.GAME) {
+			targetCameraPosition.y = 6
+		}
+		// 게임 시작 전 카메라 위치
+		if (gameState !== gameStateEnum.GAME) {
+			targetCameraPosition.y = 0
+		}
+
+		state.camera.position.lerp(targetCameraPosition, delta * 2)
 
 		const targetLookAt = new THREE.Vector3(characterWorldPosition.x, 0, characterWorldPosition.z)
 
-		state.camera.lookAt(targetLookAt)
-	})
+		const direction = new THREE.Vector3()
+		state.camera.getWorldDirection(direction)
 
-	const character = useRef()
+		const position = new THREE.Vector3()
+		state.camera.getWorldPosition(position)
+
+		const currentLookAt = position.clone().add(direction)
+		const lerpedLookAt = new THREE.Vector3()
+
+		lerpedLookAt.lerpVectors(currentLookAt, targetLookAt, delta * 2)
+
+		state.camera.lookAt(lerpedLookAt)
+	})
 
 	const resetPosition = () => {
 		rigidbody.current.setTranslation(vec3({ x: 0, y: 0, z: 0 }))
 		rigidbody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }))
 	}
+
+	// useEffect(
+	//   () => useGameStore.subscribe((state) => state.currentStage, resetPosition),
+	//   []
+	// );
+
+	// useEffect(
+	//   () => useGameStore.subscribe((state) => state.wrongAnswers, resetPosition),
+	//   []
+	// );
 
 	return (
 		<group>
