@@ -20,7 +20,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<ReactQueryProviders>
-					<div id="root" className="pt-12">
+					<div id="root" className="pt-14">
 						<HeaderNavigationBar />
 						{children}
 					</div>

@@ -1,8 +1,9 @@
 'use client'
-import Image from 'next/image'
 import { useAuth } from './hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+// import PreviewImage from './component/HomeUI/PreviewImage'
+import AutoInstruction from './component/HomeUI/AutoInstruction'
 
 export default function Home() {
 	const { isLoggedIn } = useAuth()
@@ -15,10 +16,20 @@ export default function Home() {
 		}
 	}
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<button className="w-96 h-40 bg-blue-500 rounded-lg" onClick={handleGameStart}>
-				게임 시작
-			</button>
+		<main className="flex h-[calc(100%-3.5rem)] items-center justify-between m-10 px-10">
+			<fieldset className="flex flex-col gap-16">
+				<AutoInstruction />
+				<button
+					className="bg-indigo-600 text-neutral-100 font-semibold text-xl py-6 w-44 rounded-full hover:bg-indigo-500 transition-colors"
+					onClick={handleGameStart}
+				>
+					시작하기
+				</button>
+			</fieldset>
+
+			<fieldset className="h-full">
+				{/* <PreviewImage /> */}
+			</fieldset>
 		</main>
 	)
 }
