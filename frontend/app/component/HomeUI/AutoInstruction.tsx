@@ -40,7 +40,7 @@ const AutoInstruction = () => {
 
 		// 컴포넌트가 언마운트될 때 인터벌 클리어
 		return () => clearInterval(intervalId)
-	}, [descriptions.length, interval])
+	}, [])
 
 	return (
 		<>

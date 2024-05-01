@@ -29,7 +29,7 @@ const PreviewImage = () => {
 		}, interval)
 
 		return () => clearInterval(intervalId)
-	}, [imageUrls.length, interval])
+	}, [])
 	return (
 		<div className="">
 			{imageUrls.map(

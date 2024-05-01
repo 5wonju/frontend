@@ -36,6 +36,6 @@ body {
 
 @layer components {
 	.nav-btn {
-		@apply text-indigo-950 bg-purple-200 my-auto font-semibold text-center px-4 py-3 rounded-2xl hover:bg-purple-100 transition-colors;
+		@apply text-indigo-950 bg-purple-200 my-auto font-semibold text-center px-4 py-3 rounded-2xl hover:bg-purple-100 hover:text-purple-400 transition-colors;
 	}
 }
