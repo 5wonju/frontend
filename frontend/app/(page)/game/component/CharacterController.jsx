@@ -134,6 +134,7 @@ export const CharacterController = () => {
 				onIntersectionEnter={({ other }) => {
 					if (other.rigidBodyObject.name === 'void') {
 						resetPosition()
+						// Todo: 게임 시작 오디오 삽입하기!
 						playAudio('fall', () => {
 							playAudio('ganbatte')
 						})
