@@ -4,6 +4,7 @@ import AnswerSpot from './AnswerSpot'
 import React, { useEffect } from 'react'
 import { CharacterController } from './CharacterController'
 import { useGameRoomStore } from '../lib/store'
+import TeamSpot from './TeamSpot'
 
 const GameField = () => {
 	const { startGame } = useGameRoomStore()
@@ -52,7 +53,10 @@ const GameField = () => {
 
 				<CharacterController />
 				{/* 문제 보기 필드 */}
-				<AnswerSpot />
+				{/* <AnswerSpot /> */}
+
+				{/* 팀 결정 필드 */}
+				<TeamSpot />
 			</group>
 		</>
 	)
