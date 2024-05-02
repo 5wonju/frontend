@@ -22,7 +22,7 @@ jobs:
       - name: Setup Python and Install git filter-repo
         uses: actions/setup-python@v2
         with:
-          python -version: "3.12.3"
+          python-version: "3.12.3"
 
       - name: Install git filter-repo
         run: pip install git-filter-repo
@@ -32,7 +32,7 @@ jobs:
           git checkout deploy
           git pull origin deploy
           git checkout -b frontend
-          git filter-repo --commit-callback '
+          git filter-repo --force --commit-callback '
             import re
             if re.search(b"Merge branch", commit.message):
               name = commit.author_name.decode("utf-8")
