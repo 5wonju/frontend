@@ -27,6 +27,7 @@ export const CharacterController = () => {
 	const rigidbody = useRef()
 	const isOnFloor = useRef(true)
 	const character = useRef()
+	const cameraLookAt = useRef(new THREE.Vector3()).current
 
 	useFrame((state, delta) => {
 		if (!rigidbody.current) return
@@ -108,7 +109,11 @@ export const CharacterController = () => {
 
 		lerpedLookAt.lerpVectors(currentLookAt, targetLookAt, delta * 2)
 
-		state.camera.lookAt(lerpedLookAt)
+		// 바라보는 위치 부드럽게 이동
+		cameraLookAt.lerp(targetLookAt, delta * 2)
+
+		// 카메라가 실제로 바라보게 설정
+		state.camera.lookAt(cameraLookAt)
 	})
 
 	const resetPosition = () => {

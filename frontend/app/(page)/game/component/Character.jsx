@@ -9,7 +9,6 @@ export default function Character(props) {
 
 	const playerState = useGameRoomStore((state) => state.playerState)
 	scene.traverse((child) => {
-		console.log('child: ', child)
 		if (child.isMesh) {
 			child.castShadow = true
 		}
