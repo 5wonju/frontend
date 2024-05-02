@@ -25,36 +25,25 @@ jobs:
           git checkout deploy
           git pull origin deploy
           git checkout -b frontend
-          git filter-branch -f --env-filter '
-            case "$GIT_AUTHOR_NAME" in
-              "이원주")
-                CORRECT_EMAIL="dldnjswn4265@gmail.com"
-                ;;
-              "이우성")
-                CORRECT_EMAIL="sitpo96@naver.com"
-                ;;
-              "이재민")
-                CORRECT_EMAIL="cytor@naver.com"
-                ;;
-              *)
-                # Default to a generic email if none of the names match
-                CORRECT_EMAIL="genericemail@example.com"
-                ;;
-            esac
-            
-            if git show $GIT_COMMIT | grep -q "Merge branch"; then
-              GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
-              GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
-              GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME"  # Maintaining original author's name
-              GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"  # Set committer's name to be the same as author's name
-            fi
-            
-            export GIT_AUTHOR_EMAIL
-            export GIT_COMMITTER_EMAIL
-            export GIT_AUTHOR_NAME
-            export GIT_COMMITTER_NAME
-          ' HEAD
-          git filter-branch --force --prune-empty --index-filter "git rm -rf --cached --ignore-unmatch .github" HEAD
+          git filter-repo --commit-callback '
+            import re
+            if re.search(b"Merge branch", commit.message):
+              name = commit.author_name.decode("utf-8")
+              email = ""
+              if name == "이원주":
+                email = "dldnjswn4265@gmail.com"
+              elif name == "이우성":
+                email = "sitpo96@naver.com"
+              elif name == "이재민":
+                email = "cytor@naver.com"
+              else:
+                email = "genericemail@example.com"
+              commit.author_email = email.encode()
+              commit.committer_email = email.encode()
+          '
+          git push gitlab frontend:frontend --force
+          git checkout deploy
+          git branch -D frontend
 
       - name: Push to GitLab frontend branch
         env:
