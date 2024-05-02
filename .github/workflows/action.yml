@@ -43,11 +43,17 @@ jobs:
                 email = "sitpo96@naver.com"
               elif name == "이재민":
                 email = "cytor@naver.com"
+              elif name == "JaeMin Lee":
+                name = "이재민"
+                email = "cytor@naver.com"
               commit.author_email = email.encode()
               commit.committer_email = email.encode()
               commit.author_name = name.encode()
               commit.committer_name = name.encode()
           '
+          git filter-branch -f --msg-filter '
+            sed -e "s/of https:\/\/github\.com\/5wonju\/dummy//g" -e "s/Merge branch '\''main'\''/Merge branch '\''frontend'\''/g"
+          ' HEAD
           git filter-branch --force --prune-empty --index-filter "git rm -rf --cached --ignore-unmatch .github" HEAD
 
       - name: Push to GitLab frontend branch
