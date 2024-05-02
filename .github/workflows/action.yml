@@ -34,7 +34,7 @@ jobs:
           git checkout -b frontend
           git filter-repo --force --commit-callback '
             import re
-            if re.search(b"Merge branch", commit.message):
+            if re.search(b"Merge pull request", commit.message) or re.search(b"Merge branch", commit.message):
               name = commit.author_name.decode("utf-8")
               email = ""
               if name == "이원주":
@@ -43,8 +43,6 @@ jobs:
                 email = "sitpo96@naver.com"
               elif name == "이재민":
                 email = "cytor@naver.com"
-              else:
-                email = "error"
               commit.author_email = email.encode()
               commit.committer_email = email.encode()
               commit.author_name = name.encode()
