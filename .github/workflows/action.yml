@@ -48,9 +48,6 @@ jobs:
               commit.author_email = email.encode()
               commit.committer_email = email.encode()
           '
-          git push gitlab frontend:frontend --force
-          git checkout deploy
-          git branch -D frontend
 
       - name: Push to GitLab frontend branch
         env:
