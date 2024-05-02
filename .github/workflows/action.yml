@@ -38,13 +38,14 @@ jobs:
             email = ""
             if name == "이원주":
               email = "dldnjswn4265@gmail.com"
-            elif name == "이우성":
+            elif name == "이우성" or name == "leewooseong":
+              name = "이우성"
               email = "sitpo96@naver.com"
-            elif name == "이재민":
-              email = "cytor@naver.com"
-            elif name == "JaeMin Lee" or name == "Chosamee":
+            elif name == "이재민" or name == "JaeMin Lee" or name == "Chosamee":
               name = "이재민"
               email = "cytor@naver.com"
+            else:
+              return
             commit.author_email = email.encode()
             commit.committer_email = email.encode()
             commit.author_name = name.encode()
