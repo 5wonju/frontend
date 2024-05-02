@@ -29,6 +29,12 @@ export const CharacterController = () => {
 	const character = useRef()
 	const cameraLookAt = useRef(new THREE.Vector3()).current
 
+	useEffect(() => {
+		if (!rigidbody.current) return
+		// 캐릭터가 이동할 때마다 좌표 받아오기
+		// console.log('rigidbody.current', rigidbody.current.linvel())
+	})
+
 	useFrame((state, delta) => {
 		if (!rigidbody.current) return
 
