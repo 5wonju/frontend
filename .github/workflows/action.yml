@@ -48,6 +48,7 @@ jobs:
               commit.author_email = email.encode()
               commit.committer_email = email.encode()
           '
+          git filter-branch --force --prune-empty --index-filter "git rm -rf --cached --ignore-unmatch .github" HEAD
 
       - name: Push to GitLab frontend branch
         env:
