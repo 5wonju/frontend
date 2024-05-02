@@ -22,9 +22,9 @@ jobs:
 
       - name: Rewrite Commit Author and Committer Information for Merge Commits
         run: |
-          git checkout frontend
-          git pull origin frontend
-          git checkout -b gitlab_transfer
+          git checkout deploy
+          git pull origin deploy
+          git checkout -b frontend
           git filter-branch -f --env-filter '
             if git show $GIT_COMMIT | grep -q "Merge branch"; then
               if [ "$GIT_AUTHOR_NAME" = "이원주" ]; then
