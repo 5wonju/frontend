@@ -1,13 +1,15 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
-import { useGameRoomStore } from '../lib/store'
+import { useGameRoomStore, usePlayerStore } from '../lib/store'
 
 export default function Character(props) {
 	const group = useRef()
 	const { nodes, materials, animations, scene } = useGLTF('/models/male/model.gltf')
 	const { actions } = useAnimations(animations, group)
 
-	const playerState = useGameRoomStore((state) => state.playerState)
+	const { playerMoveState } = usePlayerStore((state) => ({
+		playerMoveState: state.playerMoveState,
+	}))
 	scene.traverse((child) => {
 		if (child.isMesh) {
 			child.castShadow = true
@@ -15,11 +17,11 @@ export default function Character(props) {
 	})
 
 	useEffect(() => {
-		actions[playerState].reset().fadeIn(0.2).play()
+		actions[playerMoveState].reset().fadeIn(0.2).play()
 		return () => {
-			actions[playerState].fadeOut(0.2)
+			actions[playerMoveState].fadeOut(0.2)
 		}
-	}, [playerState])
+	}, [playerMoveState])
 
 	return (
 		<group ref={group} {...props} dispose={null}>

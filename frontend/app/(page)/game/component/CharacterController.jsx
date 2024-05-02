@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
-import { gameStateEnum, playerStateEnum, useGameRoomStore } from '../lib/store'
+import { gameStateEnum, playerMoveStateEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { controls } from './KeyboardControl'
 
 const JUMP_FORCE = 0.5
@@ -14,11 +14,18 @@ const MAX_VEL = 3
 const RUN_VEL = 1.5
 
 export const CharacterController = () => {
-	const { playerState, setPlayerState, gameState } = useGameRoomStore((state) => ({
-		playerState: state.playerState,
-		setPlayerState: state.setPlayerState,
+	// 게임 진행 상태
+	const { gameState } = useGameRoomStore((state) => ({
 		gameState: state.gameState,
 	}))
+
+	// 플레이어 상태
+	const { playerMoveState, setPlayerMoveState, playerTeamState } = usePlayerStore((state) => ({
+		playerMoveState: state.playerMoveState,
+		setPlayerMoveState: state.setPlayerMoveState,
+		playerTeamState: state.playerTeamState,
+	}))
+
 	const jumpPressed = useKeyboardControls((state) => state[controls.jump])
 	const leftPressed = useKeyboardControls((state) => state[controls.left])
 	const rightPressed = useKeyboardControls((state) => state[controls.right])
@@ -38,6 +45,7 @@ export const CharacterController = () => {
 	useFrame((state, delta) => {
 		if (!rigidbody.current) return
 
+		// console.log(playerTeamState)
 		const impulse = { x: 0, y: 0, z: 0 }
 		if (jumpPressed && isOnFloor.current) {
 			impulse.y += JUMP_FORCE
@@ -66,16 +74,14 @@ export const CharacterController = () => {
 		rigidbody.current.applyImpulse(impulse, true)
 
 		if (Math.abs(linvel.x) > RUN_VEL || Math.abs(linvel.z) > RUN_VEL) {
-			if (playerState !== playerStateEnum.RUN) {
-				setPlayerState(playerStateEnum.RUN)
+			if (playerMoveState !== playerMoveStateEnum.RUN) {
+				setPlayerMoveState(playerMoveStateEnum.RUN)
 			}
 		} else {
-			if (playerState !== playerStateEnum.IDLE) {
-				setPlayerState(playerStateEnum.IDLE)
+			if (playerMoveState !== playerMoveStateEnum.IDLE) {
+				setPlayerMoveState(playerMoveStateEnum.IDLE)
 			}
 		}
-
-		if (!character.current) return
 
 		if (changeRotation) {
 			const angle = Math.atan2(linvel.x, linvel.z)
