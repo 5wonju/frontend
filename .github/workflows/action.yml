@@ -43,7 +43,7 @@ jobs:
                 email = "sitpo96@naver.com"
               elif name == "이재민":
                 email = "cytor@naver.com"
-              elif name == "JaeMin Lee" or name = "Chosamee":
+              elif name == "JaeMin Lee" or name == "Chosamee":
                 name = "이재민"
                 email = "cytor@naver.com"
               commit.author_email = email.encode()
