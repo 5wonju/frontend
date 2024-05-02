@@ -44,9 +44,11 @@ jobs:
               elif name == "이재민":
                 email = "cytor@naver.com"
               else:
-                email = "genericemail@example.com"
+                email = "error"
               commit.author_email = email.encode()
               commit.committer_email = email.encode()
+              commit.author_name = name.encode()
+              commit.committer_name = name.encode()
           '
           git filter-branch --force --prune-empty --index-filter "git rm -rf --cached --ignore-unmatch .github" HEAD
 
