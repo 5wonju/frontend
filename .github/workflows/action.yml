@@ -36,7 +36,7 @@ jobs:
             import re
             name = commit.author_name.decode("utf-8")
             email = ""
-            if name == "이원주" or "Lee Wonju":
+            if name == "이원주" or name == "Lee Wonju":
               name = "이원주"
               email = "turtle4265@naver.com"
             elif name == "이우성" or name == "leewooseong":
