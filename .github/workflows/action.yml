@@ -51,16 +51,12 @@ jobs:
               commit.author_name = name.encode()
               commit.committer_name = name.encode()
           '
-          git filter-branch -f --msg-filter '
-            if grep -q "https://github.com/5wonju" <<<"$GIT_COMMIT_MESSAGE"; then
-              echo "Merge branch '\''frontend'\''"
-            else
-              echo "$GIT_COMMIT_MESSAGE"
-            fi
-          ' HEAD
           git filter-repo --force --message-callback '
-            if b"5wonju/" in message:
-              message = message.replace(b"5wonju/", b"")
+            import re
+            if re.search(b"https://github.com/5wonju", message):
+              return b"Merge branch '\''frontend'\''"
+            elif b"5wonju/" in message:
+              return message.replace(b"5wonju/", b"")
             return message
           '
           git filter-branch --force --prune-empty --index-filter "git rm -rf --cached --ignore-unmatch .github" HEAD
