@@ -19,6 +19,9 @@ jobs:
         run: |
           git config user.name "이우성"
           git config user.email "sitpo96@naver.com"
+          
+      - name: Install git filter-repo
+        run: pip install git-filter-repo
 
       - name: Rewrite Commit Author and Committer Information for Merge Commits
         run: |
