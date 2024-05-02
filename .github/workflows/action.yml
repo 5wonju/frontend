@@ -60,11 +60,13 @@ jobs:
               return message.replace(b"5wonju/", b"")
             return message
           '
-          git filter-repo --force --message-callback '
+          git filter-repo --force --commit-callback '
             import re
-            if b"deploy" in message:
-              return message.replace(b"deploy", b"frontend")
-            return message
+            author_name = commit.author_name.decode("utf-8")
+            if author_name == "신창엽":
+              return
+            if b"deploy" in commit.message:
+              commit.message = commit.message.replace(b"deploy", b"frontend")
           '
           git filter-branch --force --prune-empty --index-filter "git rm -rf --cached --ignore-unmatch .github" HEAD
 
