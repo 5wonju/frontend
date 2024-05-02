@@ -24,7 +24,7 @@ jobs:
         run: |
           git checkout deploy
           git pull origin deploy
-          git checkout -b cleanup
+          git checkout -b frontend
           git filter-branch -f --env-filter '
             OLD_EMAIL="$GIT_AUTHOR_EMAIL";
             CORRECT_NAME="$GIT_AUTHOR_NAME";
