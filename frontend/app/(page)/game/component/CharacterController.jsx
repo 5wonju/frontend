@@ -116,16 +116,6 @@ export const CharacterController = () => {
 		rigidbody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }))
 	}
 
-	// useEffect(
-	//   () => useGameStore.subscribe((state) => state.currentStage, resetPosition),
-	//   []
-	// );
-
-	// useEffect(
-	//   () => useGameStore.subscribe((state) => state.wrongAnswers, resetPosition),
-	//   []
-	// );
-
 	return (
 		<group>
 			<RigidBody
