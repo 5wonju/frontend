@@ -1,4 +1,3 @@
-
 name: deployment
 
 on:
@@ -19,7 +18,12 @@ jobs:
         run: |
           git config user.name "이우성"
           git config user.email "sitpo96@naver.com"
-          
+
+      - name: Setup Python and Install git filter-repo
+        uses: actions/setup-python@v2
+        with:
+          python -version: "3.12.3"
+
       - name: Install git filter-repo
         run: pip install git-filter-repo
 
