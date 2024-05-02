@@ -24,7 +24,7 @@ jobs:
         run: |
           git checkout deploy
           git pull origin deploy
-          git checkout -b gitlab_transfer
+          git checkout -b frontend
           git filter-branch -f --env-filter '
             case "$GIT_AUTHOR_NAME" in
               "이원주")
