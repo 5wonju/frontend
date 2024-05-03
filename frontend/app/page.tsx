@@ -20,7 +20,7 @@ export default function Home() {
 			<fieldset className="flex flex-col gap-16 w-1/2">
 				<AutoInstruction />
 				<button
-					className="bg-indigo-600 border-4 font-semibold border-indigo-600 hover:border-4 hover:text-indigo-600 hover:border-indigo-600 text-neutral-100 hover:font-bold text-xl py-6 w-44 rounded-full hover:bg-white transition-colors"
+					className="bg-indigo-600 border-4 font-semibold border-indigo-600 hover:border-4 hover:text-indigo-600 hover:border-indigo-600 text-neutral-100 hover:font-bold text-xl py-6 w-44 rounded-full hover:bg-white transition-colors select-none"
 					onClick={handleGameStart}
 				>
 					시작하기
