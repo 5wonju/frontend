@@ -1,11 +1,10 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { CharacterController } from './CharacterController'
 import { gameStateEnum, teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
 import TeamSpot from './TeamSpot'
-import { stat } from 'fs'
 
 const GameField = () => {
 	const { startGame, gameState } = useGameRoomStore()
@@ -65,7 +64,8 @@ const GameField = () => {
 				{/* 게임 상태에 따른 필드 변경 */}
 				{/* {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />} */}
 
-				<TeamSpot />
+				<AnswerSpot />
+				{/* <TeamSpot /> */}
 			</group>
 		</>
 	)

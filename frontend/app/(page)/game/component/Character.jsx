@@ -7,11 +7,13 @@ export default function Character({ pos }) {
 	const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
 	const { nodes, materials, animations, scene } = useGLTF('/models/male/model.gltf')
 	const { actions } = useAnimations(animations, groupRef)
-
+	
 	const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
 		playerMoveState: state.playerMoveState,
 		playerTeamState: state.playerTeamState,
 	}))
+
+	// 캐릭터에 그림자 효과
 	scene.traverse((child) => {
 		if (child.isMesh) {
 			child.castShadow = true
