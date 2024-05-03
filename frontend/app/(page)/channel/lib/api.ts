@@ -1,11 +1,10 @@
 import { tokenInstance } from '@/app/axios'
 import { QueryFunctionContext } from '@tanstack/react-query'
 import axios from 'axios'
-import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const getSocketToken = async () => {
 	try {
-		const response = await tokenInstance.get('/api/socketToken')
+		const response = await tokenInstance.post('/users/generate/socket-token')
 		return response.data
 	} catch (error) {
 		console.error(error)
@@ -20,12 +19,10 @@ export const connectServerSocket = async (region: string, socketToken: string) =
 
 export const getChannelData = async (accessToken?: string): Promise<IChannelData[]> => {
 	try {
-		if (accessToken === undefined) throw new Error('accessToken is undefined')
+		// if (accessToken === undefined) throw new Error('accessToken is undefined')
 
 		const response = await axios.get('http://localhost:3000/api/channel', {
-			headers: {
-				Cookie: `access-token=${accessToken}`,
-			},
+			withCredentials: true,
 		})
 		console.log(response)
 

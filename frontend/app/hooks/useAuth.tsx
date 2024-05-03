@@ -4,6 +4,15 @@ import { handleLogout, verifyToken } from '../lib/api'
 import { useRouter } from 'next/navigation'
 import { handleLogin } from '../(page)/login/(page)/callback/lib/api'
 
+interface IUserData {
+	nickname: string
+	point: number
+	winRate: number
+	exp: number
+	escapeHistory: number
+	winCnt: number
+}
+
 export const useAuth = () => {
 	const queryClient = useQueryClient()
 
@@ -55,8 +64,8 @@ export const useAuth = () => {
 	}
 
 	return {
-		isLoggedIn: !!authData?.isValid,
-		userInfo: authData?.isValid ? authData : null, // 로그인 상태면 사용자 정보 반환, 아니면 null
+		isLoggedIn: !!authData?.nickname,
+		userInfo: authData?.nickname ? authData : null, // 로그인 상태면 사용자 정보 반환, 아니면 null
 		isLoading,
 		login: (code: string, state: string) => loginMutation.mutate({ code, state }),
 		logout,

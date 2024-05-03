@@ -8,8 +8,8 @@ export const getSocketToken = async (): Promise<string> => {
 
 export const verifyToken = async () => {
 	try {
-		const response = await tokenInstance.get('/api/verifyToken')
-		return response.data
+		const response = await tokenInstance.get('/users/my-page')
+		return response.data.data
 	} catch (error) {
 		console.error(error)
 		throw error

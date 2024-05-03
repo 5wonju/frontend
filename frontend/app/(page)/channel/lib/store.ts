@@ -35,7 +35,10 @@ export const useSocketStore = create<SocketState>((set, get) => ({
 		set({ region })
 	},
 	connect: (region: string, socketToken: string) => {
-		const ws = new WebSocket(`wss://localhost:3000/ws/${region}`, [socketToken])
+		// const ws = new WebSocket(`wss://localhost:3000/ws/${region}?Authorization=${socketToken}`)
+		// const ws = new WebSocket(`wss://localhost:8080/ws?Authorization=${socketToken}`)
+		const ws = new WebSocket(`wss://dummy.mo-or-do.net/ws?Authorization=${socketToken}`)
+
 		ws.onopen = () => {
 			console.log('Connected to WebSocket')
 			set({ isConnected: true, reconnectAttempts: 0 })
