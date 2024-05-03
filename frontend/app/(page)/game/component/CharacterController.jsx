@@ -1,4 +1,4 @@
-import { useKeyboardControls } from '@react-three/drei'
+import { Html, useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
 import { useEffect, useRef } from 'react'
@@ -138,7 +138,7 @@ export const CharacterController = () => {
 			<RigidBody
 				ref={rigidbody}
 				colliders={false}
-				scale={[0.5, 0.5, 0.5]}
+				scale={[.5, 0.5, 0.5]}
 				enabledRotations={[false, false, false]}
 				onCollisionEnter={() => {
 					isOnFloor.current = true
@@ -155,7 +155,7 @@ export const CharacterController = () => {
 			>
 				<CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
 				<group ref={character}>
-					<Character />
+					<Character pos={rigidbody.current && rigidbody.current.linvel()} />
 				</group>
 			</RigidBody>
 		</group>
