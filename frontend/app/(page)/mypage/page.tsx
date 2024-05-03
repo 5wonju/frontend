@@ -4,17 +4,17 @@ import UserInfo from '../../component/UserInfo'
 import { useAuth } from '@/app/hooks/useAuth'
 
 const Mypage = () => {
-	const { refetch } = useAuth()
+  const { refetch } = useAuth()
 
-	useEffect(() => {
-		refetch()
-	}, [])
+  useEffect(() => {
+    refetch()
+  }, [])
 
-	return (
-		<div>
-			<UserInfo />
-		</div>
-	)
+  return (
+    <div>
+      <UserInfo />
+    </div>
+  )
 }
 
 export default Mypage

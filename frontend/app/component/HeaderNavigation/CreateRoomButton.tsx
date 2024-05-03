@@ -5,29 +5,25 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 const CreateRoomButton = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const openCreateRoomModal = () => {
-		setIsModalOpen(true)
-	}
+  const openCreateRoomModal = () => {
+    setIsModalOpen(true)
+  }
 
-	const closeCreateRoomModal = () => {
-		setIsModalOpen(false)
-	}
+  const closeCreateRoomModal = () => {
+    setIsModalOpen(false)
+  }
 
-	return (
-		<>
-			<button
-				type="button"
-				onClick={openCreateRoomModal}
-				className="nav-btn"
-			>
-				방 만들기
-			</button>
-			{isModalOpen &&
-				createPortal(<CreateRoomModal onModalClose={closeCreateRoomModal} />, document.body)}
-		</>
-	)
+  return (
+    <>
+      <button type="button" onClick={openCreateRoomModal} className="nav-btn">
+        방 만들기
+      </button>
+      {isModalOpen &&
+        createPortal(<CreateRoomModal onModalClose={closeCreateRoomModal} />, document.body)}
+    </>
+  )
 }
 
 export default CreateRoomButton

@@ -3,26 +3,26 @@ import { KeyboardControls } from '@react-three/drei'
 import ReactDOM from 'react-dom'
 
 export const controls = {
-	forward: 'forward',
-	back: 'back',
-	left: 'left',
-	right: 'right',
-	jump: 'jump',
+  forward: 'forward',
+  back: 'back',
+  left: 'left',
+  right: 'right',
+  jump: 'jump',
 }
 
 const KeyboardControl = ({ children }: { children: React.ReactNode }) => {
-	const map = useMemo(
-		() => [
-			{ name: controls.forward, keys: ['ArrowUp', 'KeyW'] },
-			{ name: controls.back, keys: ['ArrowDown', 'KeyS'] },
-			{ name: controls.left, keys: ['ArrowLeft', 'KeyA'] },
-			{ name: controls.right, keys: ['ArrowRight', 'KeyD'] },
-			{ name: controls.jump, keys: ['Space'] },
-		],
-		[]
-	)
+  const map = useMemo(
+    () => [
+      { name: controls.forward, keys: ['ArrowUp', 'KeyW'] },
+      { name: controls.back, keys: ['ArrowDown', 'KeyS'] },
+      { name: controls.left, keys: ['ArrowLeft', 'KeyA'] },
+      { name: controls.right, keys: ['ArrowRight', 'KeyD'] },
+      { name: controls.jump, keys: ['Space'] },
+    ],
+    []
+  )
 
-	return <KeyboardControls map={map}>{children}</KeyboardControls>
+  return <KeyboardControls map={map}>{children}</KeyboardControls>
 }
 
 export default KeyboardControl
