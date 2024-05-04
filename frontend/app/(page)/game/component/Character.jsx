@@ -1,28 +1,37 @@
-import { useAnimations, useGLTF } from '@react-three/drei'
-import React, { useEffect, useRef } from 'react'
-import { useGameRoomStore } from '../lib/store'
+import { Html, useAnimations, useGLTF } from '@react-three/drei'
+import React, { useEffect, useRef, useState } from 'react'
+import { teamEnum, usePlayerStore } from '../lib/store'
 
-export default function Character(props) {
-  const group = useRef()
+export default function Character({ pos }) {
+  const groupRef = useRef()
+  const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
   const { nodes, materials, animations, scene } = useGLTF('/models/male/model.gltf')
-  const { actions } = useAnimations(animations, group)
+  const { actions } = useAnimations(animations, groupRef)
 
-  const playerState = useGameRoomStore((state) => state.playerState)
+  const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
+    playerMoveState: state.playerMoveState,
+    playerTeamState: state.playerTeamState,
+  }))
+
+  // 캐릭터에 그림자 효과
   scene.traverse((child) => {
     if (child.isMesh) {
       child.castShadow = true
     }
   })
 
+  // 캐릭터 움직임 애니메이션
   useEffect(() => {
-    actions[playerState].reset().fadeIn(0.2).play()
+    if (!actions) return
+    actions[playerMoveState].reset().fadeIn(0.2).play()
     return () => {
-      actions[playerState].fadeOut(0.2)
+      if (!actions[playerMoveState]) return
+      actions[playerMoveState].fadeOut(0.2)
     }
-  }, [playerState])
+  }, [playerMoveState])
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={groupRef} dispose={null}>
       <group name="Scene">
         <group name="Root003" scale={0.64}>
           <primitive object={nodes.LeftFootCtrl} />
@@ -35,10 +44,23 @@ export default function Character(props) {
             material={materials['skin.001']}
             skeleton={nodes.characterMedium.skeleton}
           />
+          {pos && (
+            <Html position={[0, 4.7, 0]}>
+              <div
+                className={`text-sm w-20 overflow-hidden whitespace-nowrap truncate ${
+                  playerTeamState === teamEnum.BLUE
+                    ? 'text-blue-400'
+                    : playerTeamState === teamEnum.RED
+                    ? 'text-red-400'
+                    : 'text-neutral-700'
+                }`}
+              >
+                {nickname}
+              </div>
+            </Html>
+          )}
         </group>
       </group>
     </group>
   )
 }
-
-useGLTF.preload('./models/male/model.gltf')

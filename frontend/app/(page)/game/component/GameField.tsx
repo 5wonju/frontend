@@ -3,10 +3,14 @@ import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier
 import AnswerSpot from './AnswerSpot'
 import React, { useEffect } from 'react'
 import { CharacterController } from './CharacterController'
-import { useGameRoomStore } from '../lib/store'
+import { gameStateEnum, teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
+import TeamSpot from './TeamSpot'
 
 const GameField = () => {
-  const { startGame } = useGameRoomStore()
+  const { startGame, gameState } = useGameRoomStore()
+  const { setPlayerTeamState } = usePlayerStore((state) => ({
+    setPlayerTeamState: state.setPlayerTeamState,
+  }))
   useEffect(() => {
     startGame()
   })
@@ -43,7 +47,13 @@ const GameField = () => {
       {/* 게임 필드 */}
       <group position-y={-1}>
         {/* 중앙 필드 */}
-        <RigidBody colliders={false} type="fixed" position-y={-0.5} friction={2}>
+        <RigidBody
+          colliders={false}
+          type="fixed"
+          position-y={-0.5}
+          friction={2}
+          onCollisionEnter={() => setPlayerTeamState(teamEnum.NONE)}
+        >
           <CylinderCollider args={[2 / 2, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>
             <meshStandardMaterial color="white" />
@@ -51,8 +61,11 @@ const GameField = () => {
         </RigidBody>
 
         <CharacterController />
-        {/* 문제 보기 필드 */}
+        {/* 게임 상태에 따른 필드 변경 */}
+        {/* {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />} */}
+
         <AnswerSpot />
+        {/* <TeamSpot /> */}
       </group>
     </>
   )

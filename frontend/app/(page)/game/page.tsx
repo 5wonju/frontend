@@ -12,7 +12,7 @@ const page = () => {
       <Canvas shadows camera={{ position: [0, 6, 18], fov: 42 }}>
         <color attach="background" args={['#dbecfb']} />
         <Suspense>
-          <Physics>
+          <Physics debug>
             <GameField />
           </Physics>
         </Suspense>
