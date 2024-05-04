@@ -2,10 +2,18 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef, useState } from 'react'
 import { teamEnum, usePlayerStore } from '../lib/store'
 
+/*
+모델별 scale 조정
+model1 -> 0.64
+model2 -> 1
+model3 -> 1
+model3 -> 1
+model3 -> 0.64
+*/
 export default function Character({ pos }) {
 	const groupRef = useRef()
 	const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
-	const { nodes, materials, animations, scene } = useGLTF('/models/custom/custom-male-model1.gltf')
+	const { nodes, materials, animations, scene } = useGLTF('/models/custom/custom-model6.gltf')
 	const { actions } = useAnimations(animations, groupRef)
 
 	const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
@@ -34,7 +42,7 @@ export default function Character({ pos }) {
 	return (
 		<group ref={groupRef} dispose={null}>
 			<group name="Scene">
-				<group name="Root003" scale={0.64}>
+				<group name="Root003" scale={1}>
 					<primitive object={nodes.LeftFootCtrl} />
 					<primitive object={nodes.RightFootCtrl} />
 					<primitive object={nodes.HipsCtrl} />\
