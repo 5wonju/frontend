@@ -5,9 +5,9 @@ import { teamEnum, usePlayerStore } from '../lib/store'
 export default function Character({ pos }) {
 	const groupRef = useRef()
 	const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
-	const { nodes, materials, animations, scene } = useGLTF('/models/male/model.gltf')
+	const { nodes, materials, animations, scene } = useGLTF('/models/custom/custom-male-model1.gltf')
 	const { actions } = useAnimations(animations, groupRef)
-	
+
 	const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
 		playerMoveState: state.playerMoveState,
 		playerTeamState: state.playerTeamState,
@@ -23,6 +23,7 @@ export default function Character({ pos }) {
 	// 캐릭터 움직임 애니메이션
 	useEffect(() => {
 		if (!actions) return
+
 		actions[playerMoveState].reset().fadeIn(0.2).play()
 		return () => {
 			if (!actions[playerMoveState]) return

@@ -11,7 +11,8 @@ export enum gameStateEnum {
 
 export enum playerMoveStateEnum {
 	IDLE = 'Idle',
-	RUN = 'Run',
+	RUN = 'FastRun',
+	JUMP = 'Jump',
 }
 
 export enum teamEnum {

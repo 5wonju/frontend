@@ -49,6 +49,7 @@ export const CharacterController = () => {
 		const impulse = { x: 0, y: 0, z: 0 }
 		if (jumpPressed && isOnFloor.current) {
 			impulse.y += JUMP_FORCE
+			setPlayerMoveState(playerMoveStateEnum.JUMP)
 			isOnFloor.current = false
 		}
 
@@ -74,11 +75,11 @@ export const CharacterController = () => {
 		rigidbody.current.applyImpulse(impulse, true)
 
 		if (Math.abs(linvel.x) > RUN_VEL || Math.abs(linvel.z) > RUN_VEL) {
-			if (playerMoveState !== playerMoveStateEnum.RUN) {
+			if (isOnFloor.current && playerMoveState !== playerMoveStateEnum.RUN) {
 				setPlayerMoveState(playerMoveStateEnum.RUN)
 			}
 		} else {
-			if (playerMoveState !== playerMoveStateEnum.IDLE) {
+			if (isOnFloor.current && playerMoveState !== playerMoveStateEnum.IDLE) {
 				setPlayerMoveState(playerMoveStateEnum.IDLE)
 			}
 		}
@@ -138,7 +139,7 @@ export const CharacterController = () => {
 			<RigidBody
 				ref={rigidbody}
 				colliders={false}
-				scale={[.5, 0.5, 0.5]}
+				scale={[0.5, 0.5, 0.5]}
 				enabledRotations={[false, false, false]}
 				onCollisionEnter={() => {
 					isOnFloor.current = true
