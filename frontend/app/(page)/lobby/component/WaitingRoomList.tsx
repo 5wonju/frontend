@@ -4,14 +4,17 @@ import React, { useEffect } from 'react'
 import WaitingRoom from './WaitingRoom'
 import { useWaitingRoomStore } from '../lib/store'
 import { useSocketStore } from '../../channel/lib/store'
-import { useSetUpWaitingRoom } from '@/app/hooks/socket'
+import { useWaitingRoom } from '@/app/hooks/socket'
 // import { generateRooms } from '../lib/util'
 
 const WaitingRoomList: React.FC = () => {
   // 1. socket 통신 ver.
   const { roomList } = useWaitingRoomStore()
-  const { socket } = useSocketStore()
-  // useSetUpWaitingRoom(socket)
+  // const { getInitialRoomList } = useWaitingRoom()
+
+  // useEffect(() => {
+  //   getInitialRoomList()
+  // }, [])
 
   // 2. 더미 데이터 ver.
   // const [roomList, setRoomList] = React.useState<WaitingRoom[]>([])

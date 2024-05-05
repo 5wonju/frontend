@@ -3,8 +3,9 @@ import { useWaitingRoomStore } from '../(page)/lobby/lib/store'
 import { getSocketToken } from '../lib/api'
 import { useChatSocketStore, useGameSocketStore } from '../lib/store'
 import { useChatLogsStore, useMainSocketStore } from '../(page)/channel/lib/store'
-import { SOCKET_RES_CODE } from '../lib/type.d'
+import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
 import { useRouter } from 'next/navigation'
+import { useGameRoomStore } from '../(page)/game/lib/store'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -21,6 +22,23 @@ export const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'CREATE_ROOM', data: roomInfo }))
   }
 
+  // Todo : 서버랑 예기해서 소켓 연결 끊기는 문제 해결 필요.
+  const getInitialRoomList = () => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    socket.send(
+      JSON.stringify({
+        eventType: 'SEARCH_ROOM_LIST',
+        data: {
+          // offset: 1, // 추후 pagination 구현 시 사용 예정
+          limit: 10,
+        },
+      })
+    )
+  }
+
   const enterRoom = (roomId: number, roomPw: string) => {
     if (!socket) {
       alert('Socket이 비어있습니다.')
@@ -30,7 +48,7 @@ export const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'ENTER_ROOM', data: { roomId, roomPw } }))
   }
 
-  return { createWaitingRoom, enterRoom, roomList }
+  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList }
 }
 
 // :: Chat
@@ -61,26 +79,40 @@ export const useChat = () => {
 // :: Socket
 // 대기방 관련 소켓 셋팅
 export const useSetUpRoom = () => {
+  const { setRoomList } = useWaitingRoomStore()
+  const { setGameUserList } = useGameRoomStore()
   const router = useRouter()
 
-  const afterCreateRoom = (roomId: number) => {
+  // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
+  const successCreateRoom = (roomId: number) => {
     router.push(`/game`)
-    // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
     // router.push(`/game/${roomId}`)
   }
 
-  return { afterCreateRoom }
+  const successGetRoomList = (rooms: WaitingRoom[]) => {
+    console.log('Received rooms:', rooms)
+    setRoomList(rooms)
+  }
+
+  // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
+  const successEnterRoom = (userList: onGameUserInfo[]) => {
+    setGameUserList(userList)
+    router.push(`/game`)
+    // router.push(`/game/${room.roomId}`)
+  }
+
+  return { successCreateRoom, successGetRoomList, successEnterRoom }
 }
 // 채팅 관련 소켓 셋팅
 export const useSetUpChat = () => {
   const { addChatLogs } = useChatLogsStore()
 
-  const receiveChat = (message: string) => {
+  const successReceiveChat = (message: string) => {
     console.log('Received message:', message)
     addChatLogs(message)
   }
 
-  return { receiveChat }
+  return { successReceiveChat }
 }
 // 소캣을 수행하는 함수를 리턴하는 커스텀 훅
 export const useSocket = () => {
@@ -95,8 +127,8 @@ export const useSocket = () => {
     setConnectAttempts,
   } = useMainSocketStore()
   // 소켓으로 데이터 처리
-  const { receiveChat } = useSetUpChat()
-  const { afterCreateRoom } = useSetUpRoom()
+  const { successReceiveChat } = useSetUpChat()
+  const { successGetRoomList, successCreateRoom, successEnterRoom } = useSetUpRoom()
 
   const connectSocket = async (region: string) => {
     // Todo : region을 사용하여 소켓 연결 예정
@@ -157,14 +189,19 @@ export const useSocket = () => {
       switch (eventType) {
         case SOCKET_RES_CODE.CHATTING:
           console.log('채팅 수신 응답')
-          receiveChat(event.data)
+          successReceiveChat(event.data)
+          break
+        case SOCKET_RES_CODE.GET_ROOM_LIST:
+          console.log('방 목록 조회 응답')
+          successGetRoomList(responseData.data.roomList)
           break
         case SOCKET_RES_CODE.CREATE_ROOM:
           console.log('방 생성 성공 응답')
-          afterCreateRoom(responseData.data.roomId)
+          successCreateRoom(responseData.data.roomId)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')
+          successEnterRoom(responseData.data.userList)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 이벤트 코드가 없습니다.')
