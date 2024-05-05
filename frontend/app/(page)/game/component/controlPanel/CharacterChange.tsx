@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import Carousel from './Carousel'
+import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
+import { useModalStore } from '../../lib/store';
 
 const CharacterChange = ({ numItems = 6, radius = 2 }) => {
+  const { isModalOpen, setModalOpen } = useModalStore((state) => ({
+		isModalOpen: state.isModalOpen,
+    setModalOpen: state.setModalOpen,
+	}))
 	const [rotation, setRotation] = useState(0.6)
 	console.log(rotation)
-	const step = (Math.PI * 2) / numItems // 각 아이템 간의 각도
+	const step = (Math.PI * 2) / numItems
 
 	const handleOpenModal = () => {
 		console.log('캐릭터 변경 모달 열기')
@@ -13,6 +19,7 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 		if (element) {
 			element.classList.remove('hidden')
 		}
+    setModalOpen(true)
 	}
 
 	const rotateCarousel = (direction: number) => {
@@ -30,24 +37,24 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 
 			<div
 				id="character-select-modal"
-				className="hidden fixed inset-10 rounded-2xl bg-gray-500 bg-opacity-75 flex justify-center items-center"
+				className=" bg-white flex justify-between items-center bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg border border-white border-opacity-60 fixed inset-14 rounded-3xl"
 			>
-				<Canvas>
-					<ambientLight />
-					<pointLight position={[0, 0, 0]} />
+				<Canvas className="absolute inset-0">
+					<ambientLight intensity={2} />
+					<pointLight position={[10, 10, 10]} />
 					<Carousel rotation={rotation} />
 				</Canvas>
 				<button
-					style={{ position: 'absolute', top: 20, left: 20 }}
 					onClick={() => rotateCarousel(1)}
+          className='absolute -left-4'
 				>
-					Rotate Left
+					<FaCircleChevronLeft className="size-12 text-indigo-600" />
 				</button>
 				<button
-					style={{ position: 'absolute', top: 20, left: 100 }}
 					onClick={() => rotateCarousel(-1)}
+          className='absolute -right-4'
 				>
-					Rotate Right
+					<FaCircleChevronRight className="size-12 text-indigo-600" />
 				</button>
 			</div>
 		</>

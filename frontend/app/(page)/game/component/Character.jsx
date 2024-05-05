@@ -1,6 +1,6 @@
 import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef, useState } from 'react'
-import { teamEnum, usePlayerStore } from '../lib/store'
+import { teamEnum, useModalStore, usePlayerStore } from '../lib/store'
 
 /*
 모델별 scale 조정
@@ -18,12 +18,15 @@ model6 -> 1
 export default function Character({ pos }) {
 	const groupRef = useRef()
 	const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
-	const { nodes, materials, animations, scene } = useGLTF('/models/custom/custom-model6.gltf')
+	const { nodes, materials, animations, scene } = useGLTF('/models/custom/custom-model2.gltf')
 	const { actions } = useAnimations(animations, groupRef)
 
 	const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
 		playerMoveState: state.playerMoveState,
 		playerTeamState: state.playerTeamState,
+	}))
+	const { isModalOpen } = useModalStore((state) => ({
+		isModalOpen: state.isModalOpen,
 	}))
 
 	// 캐릭터에 그림자 효과
@@ -59,9 +62,9 @@ export default function Character({ pos }) {
 						skeleton={nodes.characterMedium.skeleton}
 					/>
 					{pos && (
-						<Html position={[0, 3, 0]}>
+						<Html position={[0, 3, 0]} className={`${isModalOpen ? 'hidden' : ''}`}>
 							<div
-								className={`text-sm w-20 overflow-hidden whitespace-nowrap truncate ${
+								className={`text-sm w-20 overflow-hidden whitespace-nowrap select-none truncate ${
 									playerTeamState === teamEnum.BLUE
 										? 'text-blue-400'
 										: playerTeamState === teamEnum.RED

@@ -87,3 +87,22 @@ export const usePlayerStore = create<IPlayerState>()(
 		{ name: 'PlayerStore' }
 	)
 )
+
+// :: 모달 상태
+interface IModalState {
+	isModalOpen: boolean
+	setModalOpen: (isOpen: boolean) => void
+}
+
+export const useModalStore = create<IModalState>()(
+	devtools(
+		immer((set) => ({
+			isModalOpen: false,
+			setModalOpen: (isOpen: boolean) =>
+				set((state: IModalState) => {
+					state.isModalOpen = isOpen
+				}),
+		})),
+		{ name: 'ModalStore' }
+	)
+)
