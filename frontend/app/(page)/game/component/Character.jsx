@@ -7,8 +7,13 @@ import { teamEnum, usePlayerStore } from '../lib/store'
 model1 -> 0.64
 model2 -> 1
 model3 -> 1
-model3 -> 1
-model3 -> 0.64
+model4 -> 1
+model5 -> 0.64
+model6 -> 1
+
+닉네임 y 위치
+1 -> 3
+0.64 -> 4.7
 */
 export default function Character({ pos }) {
 	const groupRef = useRef()
@@ -54,7 +59,7 @@ export default function Character({ pos }) {
 						skeleton={nodes.characterMedium.skeleton}
 					/>
 					{pos && (
-						<Html position={[0, 4.7, 0]}>
+						<Html position={[0, 3, 0]}>
 							<div
 								className={`text-sm w-20 overflow-hidden whitespace-nowrap truncate ${
 									playerTeamState === teamEnum.BLUE
