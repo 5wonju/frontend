@@ -13,7 +13,6 @@ const WriteProblemNumber = ({ probNum, setProbNum }: WriteProblemNumberProps) =>
       <label className="block text-sm font-bold">Problem Number (10-100)</label>
       <input
         type="number"
-        defaultValue={10}
         value={probNum}
         onChange={(e) => setProbNum(parseInt(e.target.value))}
         placeholder="Enter problem number"

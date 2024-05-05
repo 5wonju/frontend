@@ -3,45 +3,35 @@ import { useWaitingRoomStore } from '../(page)/lobby/lib/store'
 import { getSocketToken } from '../lib/api'
 import { useChatSocketStore, useGameSocketStore } from '../lib/store'
 import { useChatLogsStore, useMainSocketStore } from '../(page)/channel/lib/store'
+import { SOCKET_RES_CODE } from '../lib/type.d'
+import { useRouter } from 'next/navigation'
 
-// :: Setting Waiting Room
-// Todo: 이 코드는 작성 시(or 완료) util이나 services로 빼서 작성
-// Todo : 게임 진행 중에 필요한 동작을 정의
-// gameSocket에 필요한 설정을 수행하는 함수
-// export const useSetUpWaitingRoom = (socket: WebSocket | null) => {
-//   // const { gameSocket } = useGameSocketStore()
-//   const { setRoomList } = useWaitingRoomStore()
+// :: Waiting Room
+// 대기방과 관련된 처리를 담당하는 hook
+export const useWaitingRoom = () => {
+  const { socket } = useMainSocketStore()
+  const { roomList } = useWaitingRoomStore()
 
-//   useEffect(() => {
-//     return () => {
-//       console.log('clean up waiting room list!')
-//       setRoomList([])
-//     }
-//   }, [])
+  const createWaitingRoom = (roomInfo: ICreatedRoom) => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('createWaitingRoom:', roomInfo)
+    socket.send(JSON.stringify({ eventType: 'CREATE_ROOM', data: roomInfo }))
+  }
 
-//   if (!socket) {
-//     alert('Socket이 비어있습니다.')
-//     return
-//   }
+  const enterRoom = (roomId: number, roomPw: string) => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('enterRoom:', roomId, roomPw)
+    socket.send(JSON.stringify({ eventType: 'ENTER_ROOM', data: { roomId, roomPw } }))
+  }
 
-//   socket.onmessage = (event) => {
-//     const data = JSON.parse(event.data)
-//     switch (data.type) {
-//       case 'waiting_room':
-//         console.log('new room list!')
-//         setRoomList(data.roomList as WaitingRoom[])
-//         break
-//       default:
-//         break
-//     }
-//   }
-
-//   const setWaitingRoomSettings = (roomList: WaitingRoom[]) => {
-//     setRoomList(roomList as WaitingRoom[])
-//   }
-
-//   return { setWaitingRoomSettings }
-// }
+  return { createWaitingRoom, enterRoom, roomList }
+}
 
 // :: Chat
 // 채팅과 관련된 처리를 담당하는 hook
@@ -67,7 +57,21 @@ export const useChat = () => {
 
   return { sendChat, chatLogs }
 }
-// 소켓 관련 채팅 셋팅
+
+// :: Socket
+// 대기방 관련 소켓 셋팅
+export const useSetUpRoom = () => {
+  const router = useRouter()
+
+  const afterCreateRoom = (roomId: number) => {
+    router.push(`/game`)
+    // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
+    // router.push(`/game/${roomId}`)
+  }
+
+  return { afterCreateRoom }
+}
+// 채팅 관련 소켓 셋팅
 export const useSetUpChat = () => {
   const { addChatLogs } = useChatLogsStore()
 
@@ -78,7 +82,6 @@ export const useSetUpChat = () => {
 
   return { receiveChat }
 }
-
 // 소캣을 수행하는 함수를 리턴하는 커스텀 훅
 export const useSocket = () => {
   const {
@@ -93,6 +96,7 @@ export const useSocket = () => {
   } = useMainSocketStore()
   // 소켓으로 데이터 처리
   const { receiveChat } = useSetUpChat()
+  const { afterCreateRoom } = useSetUpRoom()
 
   const connectSocket = async (region: string) => {
     // Todo : region을 사용하여 소켓 연결 예정
@@ -130,7 +134,7 @@ export const useSocket = () => {
       }
       // 연결이 깨끗하게 종료되었거나 최대 재연결 횟수에 도달했을 때
       else {
-        console.log('WebSocket closed: ', event.reason)
+        console.log('WebSocket closed: ', event)
         socket?.close() // 소켓이 있으면 닫음
         setConnectedStatus(false)
         removeSocket()
@@ -139,12 +143,31 @@ export const useSocket = () => {
 
     // 핸들링 로직 처리
     newSocket.onmessage = (event) => {
-      switch (event.type) {
-        case 'message':
-          console.log('new chat!')
+      let responseData = undefined
+      let eventType = undefined
+
+      // Todo : 채팅 부분 응답 변경되면 try-catch 제거
+      try {
+        responseData = JSON.parse(event.data)
+        eventType = parseInt(responseData.code)
+      } catch (error) {
+        console.log('socket 응답 데이터를 확인하세요.', error)
+      }
+
+      switch (eventType) {
+        case SOCKET_RES_CODE.CHATTING:
+          console.log('채팅 수신 응답')
           receiveChat(event.data)
           break
+        case SOCKET_RES_CODE.CREATE_ROOM:
+          console.log('방 생성 성공 응답')
+          afterCreateRoom(responseData.data.roomId)
+          break
+        case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
+          console.log('방 입장 성공 응답')
+          break
         default:
+          console.log('이벤트 코드가 없습니다. 현재는 채팅에 이벤트 코드가 없습니다.')
           break
       }
     }
