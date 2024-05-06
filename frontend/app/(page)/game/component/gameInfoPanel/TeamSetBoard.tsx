@@ -94,7 +94,7 @@ const TeamSetBoard = () => {
   }
 
   return (
-    <div className="board flex flex-col items-start gap-3 p-4">
+    <div className="board flex flex-col items-start gap-3 p-4 select-none">
       <TeamInfo
         teamName="RED TEAM"
         teamColor={teamEnum.RED}
