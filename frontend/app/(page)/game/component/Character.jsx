@@ -42,12 +42,17 @@ export default function Character({ pos }) {
 		isModalOpen: state.isModalOpen,
 	}))
 
-	// 캐릭터에 그림자 효과
-	scene.traverse((child) => {
-		if (child.isMesh) {
-			child.castShadow = true
-		}
-	})
+  const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
+    playerMoveState: state.playerMoveState,
+    playerTeamState: state.playerTeamState,
+  }))
+
+    // 캐릭터에 그림자 효과
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true
+    }
+  })
 
 	// 캐릭터 움직임 애니메이션
 	useEffect(() => {

@@ -1,3 +1,4 @@
 interface IState {
-	state: string
+  msg: string
+  data: string
 }
