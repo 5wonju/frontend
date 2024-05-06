@@ -1,8 +1,8 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React, { useEffect } from 'react'
-import { CharacterController } from './CharacterController'
+import React, { Suspense, useEffect } from 'react'
+import CharacterController from './CharacterController'
 import { gameStateEnum, teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
 import TeamSpot from './TeamSpot'
 

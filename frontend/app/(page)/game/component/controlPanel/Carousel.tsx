@@ -4,28 +4,28 @@ import { Group, Mesh } from 'three'
 import { useGLTF } from '@react-three/drei'
 
 const models = [
+	'/models/character-select/custom-model0.gltf',
 	'/models/character-select/custom-model1.gltf',
 	'/models/character-select/custom-model2.gltf',
 	'/models/character-select/custom-model3.gltf',
 	'/models/character-select/custom-model4.gltf',
 	'/models/character-select/custom-model5.gltf',
-	'/models/character-select/custom-model6.gltf',
 ]
 
 interface ICarouselItem {
 	modelPath: string
 	position: [number, number, number]
 	index: number
-  rotation: number
+	rotation: number
 }
 
 const CarouselItem = ({ modelPath, position, index, rotation }: ICarouselItem) => {
-const mesh = useRef<Mesh>(null as Mesh | null)
-const { scene } = useGLTF(modelPath)
+	const mesh = useRef<Mesh>(null as Mesh | null)
+	const { scene } = useGLTF(modelPath)
 
 	return (
-		<mesh position={position} ref={mesh} >
-			<primitive object={scene} scale={[1, 1, 1]} />
+		<mesh position={position} ref={mesh}>
+			<primitive object={scene} scale={[1, 1, 1]} rotation-y={1.5} />
 		</mesh>
 	)
 }
@@ -51,6 +51,7 @@ const Carousel = ({ numItems = 6, radius = 2, rotation }: ICarousel) => {
 
 	useFrame(() => {
 		if (group.current) {
+			// console.log('rotation:',rotation)
 			const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t
 			const step = 0.05 // 이 값을 조정하여 회전 속도와 부드러움을 변경
 			rotation = lerp(targetRotation, rotation, step)
@@ -68,7 +69,7 @@ const Carousel = ({ numItems = 6, radius = 2, rotation }: ICarousel) => {
 							modelPath={modelPath}
 							position={getPosition(index) as [number, number, number]}
 							index={index}
-              rotation={rotation}
+							rotation={rotation}
 						/>
 					</group>
 				))}

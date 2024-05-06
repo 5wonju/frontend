@@ -106,3 +106,24 @@ export const useModalStore = create<IModalState>()(
 		{ name: 'ModalStore' }
 	)
 )
+
+// :: 캐릭터 선택 상태
+interface ICharacterSelectState {
+	characterIndex: number
+	setCharacterIndex: (character: number) => void
+}
+
+export const useCharacterSelectStore = create<ICharacterSelectState>()(
+	devtools(
+		immer((set) => ({
+			characterIndex: 0,
+
+			setCharacterIndex: (character: number) =>
+				set((state: ICharacterSelectState) => {
+					console.log('selected characterIndex:', character)
+					state.characterIndex = character
+				}),
+		})),
+		{ name: 'CharacterSelectStore' }
+	)
+)

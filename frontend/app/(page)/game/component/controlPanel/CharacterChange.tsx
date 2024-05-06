@@ -2,15 +2,20 @@ import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import Carousel from './Carousel'
 import { FaCircleChevronLeft, FaCircleChevronRight } from 'react-icons/fa6'
-import { useModalStore } from '../../lib/store'
+import { useCharacterSelectStore, useModalStore } from '../../lib/store'
 
 const CharacterChange = ({ numItems = 6, radius = 2 }) => {
-	const { isModalOpen, setModalOpen } = useModalStore((state) => ({
-		isModalOpen: state.isModalOpen,
-		setModalOpen: state.setModalOpen,
+  const { setModalOpen } = useModalStore((state) => ({
+    setModalOpen: state.setModalOpen,
 	}))
-	const [rotation, setRotation] = useState(0.6)
-	console.log(rotation)
+  
+	const { characterIndex, setCharacterIndex } = useCharacterSelectStore((state) => ({
+    characterIndex: state.characterIndex,
+		setCharacterIndex: state.setCharacterIndex,
+	}))
+  const [character, setCharacter] = useState(characterIndex)
+
+	const [rotation, setRotation] = useState(4.7) // 0.54
 	const step = (Math.PI * 2) / numItems
 
 	const handleOpenModal = () => {
@@ -20,6 +25,7 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 		}
 		setModalOpen(true)
 	}
+
 	const handleCloseModal = () => {
 		const element = document.getElementById('character-select-modal')
 		if (element) {
@@ -28,8 +34,23 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 		setModalOpen(false)
 	}
 
+  const handleSelectCharacter = () => {
+    handleCloseModal()
+    setCharacterIndex(character)
+  }
+
 	const rotateCarousel = (direction: number) => {
 		setRotation((prev) => prev + step * direction)
+		let index = character
+		if (direction > 0) {
+			index = (index + 1) % numItems
+		}
+		if (direction < 0) {
+			index = (index - 1) % numItems 
+		}
+
+    index = index < 0 ? index + 6 : index
+		setCharacter(index)
 	}
 
 	return (
@@ -42,7 +63,7 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 				id="character-select-modal"
 				className="hidden bg-white flex flex-col justify-center items-center bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg border border-white border-opacity-60 fixed inset-14 rounded-3xl"
 			>
-				<div className='absolute top-16 flex flex-col justify-center items-center'>
+				<div className="absolute top-16 flex flex-col justify-center items-center">
 					<h1 className="text-2xl font-semibold">캐릭터 변경</h1>
 					<h1 className="text-md text-black">플레이할 캐릭터를 선택해 주세요</h1>
 				</div>
@@ -57,7 +78,12 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 				<button onClick={() => rotateCarousel(-1)} className="absolute -right-4">
 					<FaCircleChevronRight className="size-12 text-indigo-600 hover:text-indigo-500 transition-colors" />
 				</button>
-				<button onClick={handleCloseModal} className="absolute bottom-24 text-center text-xl px-4 indigo-btn-active">선택하기</button>
+				<button
+					onClick={handleSelectCharacter}
+					className="absolute bottom-24 text-center text-xl px-4 indigo-btn-active"
+				>
+					선택하기
+				</button>
 			</div>
 		</>
 	)

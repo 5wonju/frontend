@@ -1,11 +1,17 @@
 import { Html, useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
-import { useEffect, useRef } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
-import { gameStateEnum, playerMoveStateEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
+import {
+	gameStateEnum,
+	playerMoveStateEnum,
+	useCharacterSelectStore,
+	useGameRoomStore,
+	usePlayerStore,
+} from '../lib/store'
 import { controls } from './KeyboardControl'
 
 const JUMP_FORCE = 0.5
@@ -13,7 +19,7 @@ const MOVEMENT_SPEED = 0.1
 const MAX_VEL = 3
 const RUN_VEL = 1.5
 
-export const CharacterController = () => {
+const CharacterController = () => {
 	// 게임 진행 상태
 	const { gameState } = useGameRoomStore((state) => ({
 		gameState: state.gameState,
@@ -25,6 +31,8 @@ export const CharacterController = () => {
 		setPlayerMoveState: state.setPlayerMoveState,
 		playerTeamState: state.playerTeamState,
 	}))
+
+	const { characterIndex } = useCharacterSelectStore()
 
 	const jumpPressed = useKeyboardControls((state) => state[controls.jump])
 	const leftPressed = useKeyboardControls((state) => state[controls.left])
@@ -45,7 +53,6 @@ export const CharacterController = () => {
 	useFrame((state, delta) => {
 		if (!rigidbody.current) return
 
-		// console.log(playerTeamState)
 		const impulse = { x: 0, y: 0, z: 0 }
 		if (jumpPressed && isOnFloor.current) {
 			impulse.y += JUMP_FORCE
@@ -162,3 +169,5 @@ export const CharacterController = () => {
 		</group>
 	)
 }
+
+export default CharacterController
