@@ -1,10 +1,11 @@
 'use client'
+
+import Link from 'next/link'
+
 const QuickStart = () => {
-  return (
-    <div onClick={() => alert('빠른 시작')} className="nav-btn">
-      빠른 시작
-    </div>
-  )
+	return <Link href="/game" className="nav-btn">
+		빠른 시작
+	</Link>
 }
 
 export default QuickStart

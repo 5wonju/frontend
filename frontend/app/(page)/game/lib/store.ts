@@ -10,8 +10,9 @@ export enum gameStateEnum {
 }
 
 export enum playerMoveStateEnum {
-  IDLE = 'Idle',
-  RUN = 'Run',
+	IDLE = 'Idle',
+	RUN = 'Run',
+	JUMP = 'Jump',
 }
 
 export enum teamEnum {
@@ -85,4 +86,44 @@ export const usePlayerStore = create<IPlayerState>()(
     })),
     { name: 'PlayerStore' }
   )
+)
+
+// :: 모달 상태
+interface IModalState {
+	isModalOpen: boolean
+	setModalOpen: (isOpen: boolean) => void
+}
+
+export const useModalStore = create<IModalState>()(
+	devtools(
+		immer((set) => ({
+			isModalOpen: false,
+			setModalOpen: (isOpen: boolean) =>
+				set((state: IModalState) => {
+					state.isModalOpen = isOpen
+				}),
+		})),
+		{ name: 'ModalStore' }
+	)
+)
+
+// :: 캐릭터 선택 상태
+interface ICharacterSelectState {
+	characterIndex: number
+	setCharacterIndex: (character: number) => void
+}
+
+export const useCharacterSelectStore = create<ICharacterSelectState>()(
+	devtools(
+		immer((set) => ({
+			characterIndex: 0,
+
+			setCharacterIndex: (character: number) =>
+				set((state: ICharacterSelectState) => {
+					console.log('selected characterIndex:', character)
+					state.characterIndex = character
+				}),
+		})),
+		{ name: 'CharacterSelectStore' }
+	)
 )
