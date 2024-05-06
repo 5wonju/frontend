@@ -42,11 +42,6 @@ export default function Character({ pos }) {
 		isModalOpen: state.isModalOpen,
 	}))
 
-  const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
-    playerMoveState: state.playerMoveState,
-    playerTeamState: state.playerTeamState,
-  }))
-
     // 캐릭터에 그림자 효과
   scene.traverse((child) => {
     if (child.isMesh) {
