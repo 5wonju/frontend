@@ -10,7 +10,7 @@ interface ITeamInfoProps {
   handleOutUser: (userId: number) => void
 }
 
-const teamColorToCss = {
+export const teamColorToCss = {
   [teamEnum.RED]: 'text-red-400',
   [teamEnum.BLUE]: 'text-blue-400',
   [teamEnum.NONE]: 'text-gray-600',
