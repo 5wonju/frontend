@@ -1,6 +1,6 @@
 const GameBoard = () => {
   return (
-    <div className="col-span-4 board">
+    <div className="board col-span-4 max-h-full">
       GameBoard
     </div>
   )
