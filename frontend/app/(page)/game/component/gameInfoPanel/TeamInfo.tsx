@@ -13,7 +13,7 @@ interface ITeamInfoProps {
 export const teamColorToCss = {
   [teamEnum.RED]: 'text-red-400',
   [teamEnum.BLUE]: 'text-blue-400',
-  [teamEnum.NONE]: 'text-gray-600',
+  [teamEnum.NONE]: 'text-gray-400',
 }
 
 const TeamInfo = ({ teamName, teamColor, userList, handleOutUser }: ITeamInfoProps) => {
