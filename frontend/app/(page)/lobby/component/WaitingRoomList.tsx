@@ -10,11 +10,11 @@ import { useWaitingRoom } from '@/app/hooks/socket'
 const WaitingRoomList: React.FC = () => {
   // 1. socket 통신 ver.
   const { roomList } = useWaitingRoomStore()
-  // const { getInitialRoomList } = useWaitingRoom()
+  const { getInitialRoomList } = useWaitingRoom()
 
-  // useEffect(() => {
-  //   getInitialRoomList()
-  // }, [])
+  useEffect(() => {
+    getInitialRoomList()
+  }, [])
 
   // 2. 더미 데이터 ver.
   // const [roomList, setRoomList] = React.useState<WaitingRoom[]>([])

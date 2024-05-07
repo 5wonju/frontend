@@ -34,7 +34,9 @@ export const isWaitingRoomData = (room: any): room is ICreatedRoom => {
   return (
     typeof room.roomTitle === 'string' &&
     typeof room.roomPW === 'string' &&
-    isProblemCategoryType(room.probCategory) &&
+    room.probCategory.every((selectedCategory: ProblemCategoryType) =>
+      CATEGORY_LIST.includes(selectedCategory)
+    ) &&
     typeof room.maxUserNum === 'number' &&
     (room.roomMode === 'basic' || room.roomMode === 'yoot') &&
     typeof room.probNum === 'number'
@@ -69,7 +71,7 @@ export const validateCreateRoomData = ({
 }: {
   roomTitle: string
   roomPW: string
-  probCategory: string
+  probCategory: string[]
   maxUserNum: number
   roomMode: string
   probNum: number
@@ -89,7 +91,11 @@ export const validateCreateRoomData = ({
     return false
   }
 
-  if (!CATEGORY_LIST.includes(probCategory)) {
+  if (
+    !probCategory.every((selectedCategory) =>
+      CATEGORY_LIST.includes(selectedCategory as ProblemCategoryType)
+    )
+  ) {
     alert('유효하지 않은 카테고리 정보입니다.')
     return false
   }

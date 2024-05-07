@@ -1,10 +1,11 @@
-'use client'
+// 'use client'
 import { getChannelData, getChannelDataWithNextJS } from './lib/api'
 import { cookies } from 'next/headers'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import ChannelList from './component/ChannelList'
 import { Suspense } from 'react'
 import RegionSelect from './component/RegionSelect'
+import { verifyToken } from '@/app/lib/api'
 
 const prefetchChannelData = async (token: string | undefined) => {
   if (!!token) return
@@ -20,36 +21,36 @@ const prefetchChannelData = async (token: string | undefined) => {
   return dehydrate(queryClient)
 }
 
-const Channel = () => {
-  // const cookieStore = cookies()
-  // const token = cookieStore.get('accessToken')?.value
+const Channel = async () => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('accessToken')?.value
   // console.log(token)
   // 1. API ver.
   // const channelData: IChannelData[] | undefined = await getChannelData(token)
 
   // 2. ReactQuery ver.
-  // const dehydratedChannelState = prefetchChannelData(token)
-  // console.log(dehydratedChannelState)
+  const dehydratedChannelState = prefetchChannelData(token)
+  console.log(dehydratedChannelState)
 
   // queryClient.getQueryData()
 
-  const channelData = [
-    { name: '구미', count: '654/1000' },
-    { name: '서울', count: '200/1000' },
-    { name: '아귀찮ㄷ', count: '23/321' },
-  ]
+  // const channelData = [
+  //   { name: '구미', count: '654/1000' },
+  //   { name: '서울', count: '200/1000' },
+  //   { name: '아귀찮ㄷ', count: '23/321' },
+  // ]
 
   return (
     <div className="flex flex-col">
       <h1>Channel</h1>
-      {/* <HydrationBoundary state={dehydratedChannelState}> */}
-      <Suspense fallback={<div>Loading...</div>}>
-        {/* <ChannelList token={token} /> */}
+      <HydrationBoundary state={dehydratedChannelState}>
+        <ChannelList />
+        {/* <Suspense fallback={<div>Loading...</div>}>
         {channelData.map((channel, index) => (
           <RegionSelect key={index} channel={channel} />
         ))}
-      </Suspense>
-      {/* </HydrationBoundary> */}
+      </Suspense> */}
+      </HydrationBoundary>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import RoomPasswordModal from './RoomPasswordModal'
 import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
 import { useEnterRoom } from '../hooks/enterRoom'
+import { useWaitingRoom } from '@/app/hooks/socket'
 
 interface RoomProps {
   room: WaitingRoom
@@ -13,7 +14,7 @@ interface RoomProps {
 
 const WaitingRoom = ({ room }: RoomProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
-  const { sendEnterRoom } = useEnterRoom()
+  const { enterRoom } = useWaitingRoom()
 
   const handleRoomClick = () => {
     // 비밀번호 방 클릭 시
@@ -22,13 +23,13 @@ const WaitingRoom = ({ room }: RoomProps) => {
     }
     // 비밀번호 없는 방 클릭 시
     else {
-      sendEnterRoom(room)
+      enterRoom(room.roomId)
     }
   }
 
   const submitPassword = (password: string) => {
     console.log('Password entered:', password)
-    sendEnterRoom(room, password)
+    enterRoom(room.roomId, password)
     setModalOpen(false)
   }
 
