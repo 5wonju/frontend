@@ -8,7 +8,7 @@ import { FaCaretDown } from 'react-icons/fa6'
 const GameInfoPanel = () => {
   const { isTeamSetBoardOpen, setTeamSetBoardOpen } = useTeamSetBoardStore()
   return (
-    <div className="h-1/3 px-4 absolute top-10 left-0 right-0 grid grid-cols-6 gap-10 items-start">
+    <div className="h-1/3 px-10 absolute top-16 left-0 right-0 grid grid-cols-6 gap-10 items-start">
       {isTeamSetBoardOpen ? (
         <TeamSetBoard />
       ) : (

@@ -13,12 +13,12 @@ const page = () => {
     <KeyboardControl>
       <Canvas
         shadows
-        camera={{ position: [0, 6, 18], fov: 42 }}
+        camera={{ position: [0, 40, 20], fov: 42 }}
         className="absolute top-0 bottom-0"
       >
         <color attach="background" args={['#dbecfb']} />
         <Suspense>
-          <Physics debug>
+          <Physics>
             <GameField />
           </Physics>
         </Suspense>

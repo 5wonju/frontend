@@ -57,7 +57,6 @@ export default function Character({ pos }) {
 		return () => {
 			if (!actions[playerMoveState]) return
 			actions[playerMoveState].fadeOut(0.2)
-			actions[playerMoveState].stop()
 		}
 	}, [playerMoveState, actions])
 
