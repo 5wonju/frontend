@@ -21,7 +21,7 @@ const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
 						onChange={(e) => setGameMode(e.target.value)}
 					>
 						<option value="basic">베이직</option>
-						<option value="yutnori">윷놀이</option>
+						<option value="yoot">윷놀이</option>
 					</select> */}
 
       <div ref={ref} className="relative">
@@ -40,7 +40,7 @@ const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
             className="absolute w-full border rounded mt-1 bg-white z-10"
             aria-labelledby="game-mode-button"
           >
-            {['basic', 'yutnori'].map((mode) => (
+            {['basic', 'yoot'].map((mode) => (
               <li
                 key={mode}
                 className={`p-2 hover:bg-blue-100 ${mode === gameMode ? 'bg-blue-200' : ''}`}

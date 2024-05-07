@@ -1,3 +1,5 @@
+export const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발']
+
 // api 연결 전에 더미 방 리스트 데이터 생성
 export const generateRooms = (): WaitingRoom[] => {
   const rooms: WaitingRoom[] = []
@@ -13,18 +15,34 @@ export const generateRooms = (): WaitingRoom[] => {
       roomMaxUserNum: 10,
       isGameStart: Math.random() > 0.5,
       isRoomFull: roomCurUserNum === roomMaxUserNum,
-      probCategory: ['수학 퀴즈', '일반상식', '역사', '코딩'][Math.floor(Math.random() * 4)],
+      probCategory: (CATEGORY_LIST as ProblemCategoryType[])[Math.floor(Math.random() * 4)],
       isHavePW: Math.random() > 0.5,
       curRound: Math.floor(Math.random() * 10),
       totalRound: 20,
-      roomMode: ['basic', 'yutnori'][Math.floor(Math.random() * 2)] as 'basic' | 'yutnori',
+      roomMode: ['basic', 'yoot'][Math.floor(Math.random() * 2)] as 'basic' | 'yoot',
     })
   }
 
   return rooms
 }
 
-// 방 입장 시 사용되는 데이터 유효성 검사 함수
+// :: Type Guard
+const isProblemCategoryType = (probCategory: string): probCategory is ProblemCategoryType => {
+  return CATEGORY_LIST.includes(probCategory as ProblemCategoryType)
+}
+export const isWaitingRoomData = (room: any): room is ICreatedRoom => {
+  return (
+    typeof room.roomTitle === 'string' &&
+    typeof room.roomPW === 'string' &&
+    isProblemCategoryType(room.probCategory) &&
+    typeof room.maxUserNum === 'number' &&
+    (room.roomMode === 'basic' || room.roomMode === 'yoot') &&
+    typeof room.probNum === 'number'
+  )
+}
+
+// :: Validate Created Room Data Functions
+// - 입장 가능한 방인지 검사
 export const canEnterRoom = (room: WaitingRoom) => {
   const isRoomFull = room.roomCurUserNum === room.roomMaxUserNum
   const isGameStart = room.isGameStart
@@ -40,8 +58,7 @@ export const canEnterRoom = (room: WaitingRoom) => {
 
   return true
 }
-
-// 방생성 시 사용되는 데이터 유효성 검사 함수
+// - 생성 가능한 방인지 검사
 export const validateCreateRoomData = ({
   roomTitle,
   roomPW,
@@ -72,7 +89,6 @@ export const validateCreateRoomData = ({
     return false
   }
 
-  const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발'] // 예시 카테고리 목록
   if (!CATEGORY_LIST.includes(probCategory)) {
     alert('유효하지 않은 카테고리 정보입니다.')
     return false
@@ -83,7 +99,7 @@ export const validateCreateRoomData = ({
     return false
   }
 
-  if (roomMode !== 'basic' && roomMode !== 'yutnori') {
+  if (roomMode !== 'basic' && roomMode !== 'yoot') {
     alert('유효하지 않은 게임 모드 정보입니다.')
     return false
   }
