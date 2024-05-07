@@ -1,7 +1,7 @@
 'use client'
 
-import ProtectedLogin from '@/app/component/ProtectedLogin'
-import ProtectedRoute from '@/app/component/ProtectedRoute'
+import ProtectedLogin from '@/app/component/ProtectionComponent/ProtectedLogin'
+import ProtectedRoute from '@/app/component/ProtectionComponent/ProtectedRoute'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 

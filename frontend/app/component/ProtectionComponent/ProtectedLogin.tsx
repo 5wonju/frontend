@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
 import { useRouter } from 'next/navigation'
 
 const ProtectedLogin = ({ children }: { children: React.ReactNode }) => {
