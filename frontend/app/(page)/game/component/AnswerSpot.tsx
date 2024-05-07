@@ -7,7 +7,13 @@ const AnswerSpot = () => {
   return answers.map((answer, index) => (
     <group key={answer} rotation-y={((index + 1) / 4) * Math.PI * 2}>
       <group position-x={8} position-z={-8}>
-        <RigidBody colliders={false} type="fixed">
+        <RigidBody
+          colliders={false}
+          type="fixed"
+          onCollisionEnter={() => {
+            alert(answer)
+          }}
+        >
           <CylinderCollider args={[2 / 2, 3]} />
           <Cylinder scale={[3, 2, 3]}>
             <meshStandardMaterial color="white" />
