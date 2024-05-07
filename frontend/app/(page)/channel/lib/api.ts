@@ -17,11 +17,11 @@ export const connectServerSocket = async (region: string, socketToken: string) =
   return ws
 }
 
-export const getChannelData = async (accessToken?: string): Promise<IChannelData[]> => {
+export const getChannelData = async (): Promise<IChannelData[]> => {
   try {
     // if (accessToken === undefined) throw new Error('accessToken is undefined')
 
-    const response = await axios.get('http://localhost:3000/api/channel', {
+    const response = await axios.get('https://localhost:3000/api/channel', {
       withCredentials: true,
     })
     console.log(response)
@@ -40,7 +40,7 @@ export const getChannelDataWithNextJS = async ({
     const accessToken = queryKey[1]
     if (accessToken === undefined) throw new Error('accessToken is undefined')
 
-    const response = await fetch('http://localhost:3000/api/channel', {
+    const response = await fetch('https://localhost:3000/api/channel', {
       next: {
         tags: ['channel'], // next에서 관리하는 캐시의 키(reactQuery의 queryKey와 동일한 역할을 하지만 둘이 같은 공간을 공유하지는 않음)
       },

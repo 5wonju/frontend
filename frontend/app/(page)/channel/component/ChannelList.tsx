@@ -2,17 +2,12 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import RegionSelect from './RegionSelect'
-import { getChannelDataWithNextJS } from '../lib/api'
+import { getChannelData, getChannelDataWithNextJS } from '../lib/api'
 
-interface ChannelListProps {
-  token: string | undefined
-}
-
-const ChannelList = ({ token }: ChannelListProps) => {
+const ChannelList = () => {
   const { data: channelData } = useQuery({
-    queryKey: ['channel', token],
-    queryFn: getChannelDataWithNextJS,
-    enabled: !!token,
+    queryKey: ['channel'],
+    queryFn: getChannelData,
   })
 
   console.log('in list', channelData)
