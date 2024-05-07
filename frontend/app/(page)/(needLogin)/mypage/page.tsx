@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import UserInfo from '../../component/UserInfo'
+import UserInfo from '../../../component/UserInfo'
 import { useAuth } from '@/app/hooks/useAuth'
 
 const Mypage = () => {

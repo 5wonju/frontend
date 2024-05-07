@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useWaitingRoomStore } from '../(page)/lobby/lib/store'
 import { getSocketToken } from '../lib/api'
 import { useChatSocketStore, useGameSocketStore } from '../lib/store'
-import { useChatLogsStore, useMainSocketStore } from '../(page)/channel/lib/store'
 import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
 import { useRouter } from 'next/navigation'
-import { useGameRoomStore } from '../(page)/game/lib/store'
+import { useChatLogsStore, useMainSocketStore } from '../(page)/(needLogin)/channel/lib/store'
+import { useWaitingRoomStore } from '../(page)/(needLogin)/lobby/lib/store'
+import { useGameRoomStore } from '../(page)/(needLogin)/game/lib/store'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook

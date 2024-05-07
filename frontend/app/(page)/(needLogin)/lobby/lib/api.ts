@@ -1,4 +1,5 @@
 import { tokenInstance } from '@/app/axios'
+import { onGameUserInfo } from '@/app/lib/type'
 
 interface EnterRoomRes {
   msg: string

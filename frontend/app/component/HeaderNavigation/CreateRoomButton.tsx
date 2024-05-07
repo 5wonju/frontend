@@ -1,6 +1,6 @@
 'use client'
 
-import CreateRoomModal from '@/app/(page)/lobby/component/CreateRoom/CreateRoomModal'
+import CreateRoomModal from '@/app/(page)/(needLogin)/lobby/component/CreateRoom/CreateRoomModal'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
