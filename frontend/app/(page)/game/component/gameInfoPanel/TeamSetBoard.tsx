@@ -4,8 +4,11 @@
 // - 팀 정보 (default: null)
 // - 점수 정보 (default: 0)
 
-import { teamEnum } from '../../lib/store'
+import { useState } from 'react'
+import { teamEnum, useTeamSetBoardStore } from '../../lib/store'
 import TeamInfo from './TeamInfo'
+import { FaCaretDown } from 'react-icons/fa'
+import { is } from '@react-three/fiber/dist/declarations/src/core/utils'
 
 export interface IUserInfo {
   nickname: string
@@ -89,12 +92,23 @@ const userList: IUserInfo[] = [
   },
 ]
 const TeamSetBoard = () => {
+  const { isTeamSetBoardOpen, setTeamSetBoardOpen } = useTeamSetBoardStore()
+
+  const toggleOpen = () => setTeamSetBoardOpen(!isTeamSetBoardOpen)
+
   const handleOutUser = (userId: number) => {
     alert(`유저 ${userId} 너 강퇴임`)
   }
 
   return (
-    <div className="board flex flex-col items-start gap-3 p-4 select-none">
+    <div
+      className={`board flex flex-col items-start gap-3 p-4 select-none first:mt-3 ${
+        isTeamSetBoardOpen ? '' : 'invisible'
+      }`}
+    >
+      <button onClick={toggleOpen} className="self-end absolute top-2 text-darkGray1">
+        <FaCaretDown className="text-black size-5" />
+      </button>
       <TeamInfo
         teamName="RED TEAM"
         teamColor={teamEnum.RED}

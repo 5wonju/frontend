@@ -47,7 +47,11 @@ body {
     @apply bg-indigo-600 text-white rounded-full px-2.5 py-1 transition-colors font-semibold active:bg-transparent active:ring-[2.5px] active:ring-indigo-600 ring-inset active:text-indigo-600;
   }
 
+	.glass {
+		@apply bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm shadow-sm border border-white border-opacity-60 rounded-xl
+	}
+
   .board {
-    @apply min-h-full bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm shadow-sm border border-white border-opacity-60 rounded-xl;
+    @apply min-h-full glass;
   }
 }

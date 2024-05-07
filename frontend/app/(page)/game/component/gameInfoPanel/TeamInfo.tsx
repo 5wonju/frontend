@@ -18,9 +18,9 @@ export const teamColorToCss = {
 
 const TeamInfo = ({ teamName, teamColor, userList, handleOutUser }: ITeamInfoProps) => {
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className={`flex flex-col gap-1 w-full pb-2 ${teamColor === teamEnum.NONE ? '' : 'border-b border-lightGray5'}`}>
       <h2 className={`${teamColorToCss[teamColor]} font-bold`}>{teamName}</h2>
-      <ul>
+      <ul className="">
         {userList
           .filter((user) => user.team === teamColor)
           .map((user) => (
