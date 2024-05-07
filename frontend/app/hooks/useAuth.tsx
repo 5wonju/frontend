@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { handleLogout, verifyToken } from '../lib/api'
 import { useRouter } from 'next/navigation'
-import { handleLogin } from '../(page)/login/(page)/callback/lib/api'
+import { handleLogin } from '../(page)/(needProtection)/login/(page)/callback/lib/api'
 
 interface IUserData {
   nickname: string

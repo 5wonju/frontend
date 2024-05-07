@@ -2,9 +2,10 @@
 
 import React from 'react'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { fetchState } from './lib/api'
+import { useAuth } from '@/app/hooks/useAuth'
 
 const GOOGLE_AUTH_URL = 'https://kauth.kakao.com/oauth/authorize'
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID
@@ -12,6 +13,17 @@ const RESPONSE_TYPE = 'code'
 const SCOPE = 'profile_nickname profile_image account_email'
 
 function Login() {
+  const { isLoggedIn, isLoading, refetch } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    refetch()
+    console.log(isLoading, isLoggedIn)
+    if (!isLoading && isLoggedIn) {
+      router.push('/channel')
+    }
+  }, [isLoading, isLoggedIn])
+
   const handleLogin = async () => {
     try {
       const response = await fetchState()
@@ -22,6 +34,10 @@ function Login() {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  if (isLoading || isLoggedIn) {
+    return <div>Loading...</div>
   }
 
   return (
