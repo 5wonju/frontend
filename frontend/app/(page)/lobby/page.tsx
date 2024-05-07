@@ -9,9 +9,9 @@ import Chat from '@/app/component/Chat'
 const Lobby = () => {
   const { refetch } = useAuth()
 
-  // useEffect(() => {
-  //   refetch()
-  // }, [])
+  useEffect(() => {
+    refetch()
+  }, [])
 
   return (
     <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-48px)]">
