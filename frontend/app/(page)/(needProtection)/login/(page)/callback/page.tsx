@@ -12,6 +12,7 @@ const LoginHandler = () => {
   useEffect(() => {
     try {
       if (params && params.get('state') && params.get('code')) {
+        console.log('do login', params.get('code'), params.get('state'))
         login(params.get('code')!, params.get('state')!)
       }
     } catch (e) {
