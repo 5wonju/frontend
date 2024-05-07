@@ -67,7 +67,7 @@ const QuizContent = () => {
             key={index}
             className="flex glass text-black gap-1 w-full rounded-xl border-2 backdrop-blur-md border-opacity-75 border-white px-4 py-2"
           >
-            <span className="font-medium text-indigo-600">{answer.answer}.</span>
+            <span className="font-medium bg-indigo-600 text-white rounded-full size-6 flex items-center justify-center">{answer.answer}</span>
             <p>{answer.content}</p>
           </li>
         ))}
