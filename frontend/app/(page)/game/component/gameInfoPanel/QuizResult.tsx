@@ -9,23 +9,29 @@ interface IWonUser {
   time: number
 }
 
+const rankList: { [key: number]: string } = {
+  1: '1st',
+  2: '2nd',
+  3: '3rd',
+}
+
 const wonUserList: IWonUser[] = [
   {
-    nickname: 'user1',
+    nickname: 'user1s-3we',
     team: teamEnum.RED,
     userId: 1,
     rank: 1,
     time: 2.012,
   },
   {
-    nickname: 'user2',
+    nickname: 'wnatdsoi',
     team: teamEnum.BLUE,
     userId: 2,
     rank: 2,
     time: 2.012,
   },
   {
-    nickname: 'user3',
+    nickname: 'woosss',
     team: teamEnum.RED,
     userId: 3,
     rank: 3,
@@ -34,10 +40,11 @@ const wonUserList: IWonUser[] = [
 ]
 
 const QuizResult = () => {
+  const quizNumber = 1
   return (
     <div className="board flex flex-col items-center p-4">
-      <h1 className="text-lg text-lightGray1 font-semibold pb-2">결과</h1>
-      <section className="flex items-center gap-2 font-bold text-xl animate-floating">
+      <h1 className="text-lg text-lightGray1 font-semibold pb-2">Quiz. {quizNumber}</h1>
+      <section className="flex items-center gap-2 font-bold text-3xl animate-floating">
         <span className={`text-red-400`}>RED</span>
         <span className="flex items-center gap-1 text-yellow-400">
           WIN
@@ -51,12 +58,18 @@ const QuizResult = () => {
       </section>
       <ul className="flex-1 flex flex-col justify-around">
         {wonUserList.map((wonUser, index) => (
-          <li key={index} className="flex gap-2 items-center">
-            <p className="font-bold text-lg text-darkGray3">{wonUser.rank}st.</p>
-            <span className={`${teamColorToCss[wonUser.team]} font-semibold`}>
-              {wonUser.nickname}
-            </span>
-            <p className="font-light text-sm text-lightGray1">{wonUser.time}초</p>
+          <li key={index} className="flex gap-4 justify-between items-end px-2">
+            <p className="font-bold text-2xl text-darkGray3">{rankList[wonUser.rank]}.</p>
+            <p className="fle1 flex flex-col items-start">
+              <span className="font-light text-sm text-lightGray1">{wonUser.time}초</span>
+              <span
+                className={`${
+                  teamColorToCss[wonUser.team]
+                } font-semibold text-2xl overflow-hidden w-24 select-none truncate`}
+              >
+                {wonUser.nickname}
+              </span>
+            </p>
           </li>
         ))}
       </ul>
