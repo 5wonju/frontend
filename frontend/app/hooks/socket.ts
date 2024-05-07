@@ -30,7 +30,7 @@ export const useWaitingRoom = () => {
     }
     socket.send(
       JSON.stringify({
-        eventType: 'SEARCH_ROOM_LIST',
+        eventType: 'GET_ROOM_LIST',
         data: {
           // offset: 1, // 추후 pagination 구현 시 사용 예정
           limit: 10,
@@ -39,7 +39,7 @@ export const useWaitingRoom = () => {
     )
   }
 
-  const enterRoom = (roomId: number, roomPw: string) => {
+  const enterRoom = (roomId: number, roomPw?: string) => {
     if (!socket) {
       alert('Socket이 비어있습니다.')
       return

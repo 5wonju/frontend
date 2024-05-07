@@ -27,7 +27,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
     const roomData = {
       roomTitle: roomName,
       roomPW: roomPw,
-      probCategory,
+      probCategory: [probCategory],
       maxUserNum: playerCount,
       roomMode: gameMode,
       probNum,
