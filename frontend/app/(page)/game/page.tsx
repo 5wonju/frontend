@@ -18,7 +18,7 @@ const page = () => {
       >
         <color attach="background" args={['#dbecfb']} />
         <Suspense>
-          <Physics>
+          <Physics debug>
             <GameField />
           </Physics>
         </Suspense>

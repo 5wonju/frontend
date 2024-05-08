@@ -11,7 +11,7 @@ const AnswerSpot = () => {
           colliders={false}
           type="fixed"
           onCollisionEnter={() => {
-            alert(answer)
+            console.log(answer)
           }}
         >
           <CylinderCollider args={[2 / 2, 3]} />

@@ -102,7 +102,7 @@ const TeamSetBoard = () => {
 
   return (
     <div
-      className={`board flex flex-col items-start gap-3 p-4 select-none ${
+      className={`board col-span-1 flex flex-col items-start gap-3 p-4 select-none ${
         isTeamSetBoardOpen ? '' : 'invisible'
       }`}
     >

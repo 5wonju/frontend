@@ -22,7 +22,7 @@ const GameField = () => {
 
       {/* 조명 */}
       <ambientLight intensity={2} />
-      <directionalLight position={[15, 15, 15]} intensity={2.8} castShadow color={'white'} />
+      <directionalLight position={[30, 50, 30]} intensity={2.8} castShadow color={'white'} />
 
       {/* 배경 필드 */}
       <RigidBody colliders={false} type="fixed" name="void">
@@ -51,12 +51,12 @@ const GameField = () => {
           colliders={false}
           type="fixed"
           position-y={-0.5}
-          friction={2}
+          friction={4}
           onCollisionEnter={() => setPlayerTeamState(teamEnum.NONE)}
         >
-          <CylinderCollider args={[2 / 2, 10]} />
+          <CylinderCollider args={[1, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>
-            <meshStandardMaterial color="white" />
+            <meshStandardMaterial color="white"  />
           </Cylinder>
         </RigidBody>
 
