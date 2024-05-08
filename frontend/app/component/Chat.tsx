@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useChat } from '../hooks/socket'
+import { useChat } from '../hooks/useSocket'
 
 const Chat = () => {
   // const { socket } = useSocketStore()

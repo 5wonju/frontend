@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import WaitingRoom from './WaitingRoom'
 import { useWaitingRoomStore } from '../lib/store'
 import { useSocketStore } from '../../channel/lib/store'
-import { useWaitingRoom } from '@/app/hooks/socket'
+import { useWaitingRoom } from '@/app/hooks/useSocket'
 // import { generateRooms } from '../lib/util'
 
 const WaitingRoomList: React.FC = () => {

@@ -1,15 +1,11 @@
 import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
-import { useChatSocketStore, useGameSocketStore } from '../lib/store'
-import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
-import { useRouter } from 'next/navigation'
 import { useChatLogsStore, useMainSocketStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
-export const useWaitingRoom = () => {
+const useWaitingRoom = () => {
   const { socket } = useMainSocketStore()
   const { roomList } = useWaitingRoomStore()
 
@@ -53,7 +49,7 @@ export const useWaitingRoom = () => {
 
 // :: Chat
 // 채팅과 관련된 처리를 담당하는 hook
-export const useChat = () => {
+const useChat = () => {
   const { socket } = useMainSocketStore()
   const { setChatLogs, chatLogs } = useChatLogsStore()
 
@@ -77,45 +73,8 @@ export const useChat = () => {
 }
 
 // :: Socket
-// 대기방 관련 소켓 셋팅
-export const useSetUpRoom = () => {
-  const { setRoomList } = useWaitingRoomStore()
-  const { setGameUserList } = useGameRoomStore()
-  const router = useRouter()
-
-  // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successCreateRoom = (roomId: number) => {
-    router.push(`/game`)
-    // router.push(`/game/${roomId}`)
-  }
-
-  const successGetRoomList = (rooms: WaitingRoom[]) => {
-    console.log('Received rooms:', rooms)
-    setRoomList(rooms)
-  }
-
-  // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successEnterRoom = (userList: onGameUserInfo[]) => {
-    setGameUserList(userList)
-    router.push(`/game`)
-    // router.push(`/game/${room.roomId}`)
-  }
-
-  return { successCreateRoom, successGetRoomList, successEnterRoom }
-}
-// 채팅 관련 소켓 셋팅
-export const useSetUpChat = () => {
-  const { addChatLogs } = useChatLogsStore()
-
-  const successReceiveChat = (message: string) => {
-    console.log('Received message:', message)
-    addChatLogs(message)
-  }
-
-  return { successReceiveChat }
-}
-// 소캣을 수행하는 함수를 리턴하는 커스텀 훅
-export const useSocket = () => {
+// - 소켓 연결 및 종료 처리를 담당
+const useSocket = () => {
   const {
     socket,
     setSocket,
@@ -126,9 +85,6 @@ export const useSocket = () => {
     maxReconnectAttempts,
     setConnectAttempts,
   } = useMainSocketStore()
-  // 소켓으로 데이터 처리
-  const { successReceiveChat } = useSetUpChat()
-  const { successGetRoomList, successCreateRoom, successEnterRoom } = useSetUpRoom()
 
   const connectSocket = async (region: string) => {
     // Todo : region을 사용하여 소켓 연결 예정
@@ -173,42 +129,6 @@ export const useSocket = () => {
       }
     }
 
-    // 핸들링 로직 처리
-    newSocket.onmessage = (event) => {
-      let responseData = undefined
-      let eventType = undefined
-
-      // Todo : 채팅 부분 응답 변경되면 try-catch 제거
-      try {
-        responseData = JSON.parse(event.data)
-        eventType = parseInt(responseData.code)
-      } catch (error) {
-        console.log('socket 응답 데이터를 확인하세요.', error)
-      }
-
-      switch (eventType) {
-        case SOCKET_RES_CODE.CHATTING:
-          console.log('채팅 수신 응답')
-          successReceiveChat(event.data)
-          break
-        case SOCKET_RES_CODE.GET_ROOM_LIST:
-          console.log('방 목록 조회 응답')
-          successGetRoomList(responseData.data.roomList)
-          break
-        case SOCKET_RES_CODE.CREATE_ROOM:
-          console.log('방 생성 성공 응답')
-          successCreateRoom(responseData.data.roomId)
-          break
-        case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
-          console.log('방 입장 성공 응답')
-          successEnterRoom(responseData.data.userList)
-          break
-        default:
-          console.log('이벤트 코드가 없습니다. 현재는 채팅에 이벤트 코드가 없습니다.')
-          break
-      }
-    }
-
     // 에러 발생
     newSocket.onerror = (error) => {
       console.log('WebSocket error:', error)
@@ -217,3 +137,5 @@ export const useSocket = () => {
 
   return { connectSocket, isConnected, socket }
 }
+
+export { useWaitingRoom, useChat, useSocket }
