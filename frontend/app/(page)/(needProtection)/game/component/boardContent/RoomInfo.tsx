@@ -10,9 +10,9 @@ const roomInfo = {
 
 const RoomInfo = ({ roomId }: { roomId: number }) => {
   // TODO: roomId로 roomInfo를 가져와야 함
-
+  // TODO: UI 수정 필요 (텍스트 데이터가 너무 많음)
   return (
-    <h1 className="glass flex justify-between text-black px-5">
+    <h1 className="glass fixed top-2 right-2 left-2 flex justify-between text-black px-5">
       <fieldset className="flex gap-3">
         <span>{roomInfo.roomId.toString().padStart(3, '0')}</span>
         <span>{roomInfo.roomName}</span>
