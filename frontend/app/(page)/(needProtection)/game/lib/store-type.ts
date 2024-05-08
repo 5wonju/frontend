@@ -1,8 +1,8 @@
 // :: 게임 상태
 export enum gameStateEnum {
-  READY,
-  GAME,
-  DONE,
+  READY = '대기중',
+  GAME = '게임중',
+  DONE = '게임종료',
 }
 
 // :: 플레이어 액션 종류
@@ -21,11 +21,11 @@ export enum teamEnum {
 
 // :: 정답 선택 종류
 export enum AnswerEnum {
-  A,
-  C,
-  D,
-  B,
-  NONE,
+  A = 'A',
+  C = 'C',
+  D = 'D',
+  B = 'B',
+  NONE = 'none',
 }
 
 // ------------------------------------------------

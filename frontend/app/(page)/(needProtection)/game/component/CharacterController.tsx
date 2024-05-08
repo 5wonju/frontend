@@ -105,13 +105,17 @@ const CharacterController = () => {
 			characterWorldPosition.z + 14
 		)
 
-		// 게임 시작 시 카메라 위치
-		if (gameState === gameStateEnum.GAME) {
-			targetCameraPosition.y = 6
-		}
-		// 게임 시작 전 카메라 위치
-		if (gameState !== gameStateEnum.GAME) {
-			targetCameraPosition.y = 0
+		targetCameraPosition.y = 0
+		
+		// 게임 진행 상황에 따른 카메라 위치 변경
+		switch(gameState) {
+			case gameStateEnum.READY:
+			case gameStateEnum.DONE:
+				targetCameraPosition.y = 10
+				break
+			case gameStateEnum.GAME:
+				targetCameraPosition.y = 6
+				break
 		}
 
 		state.camera.position.lerp(targetCameraPosition, delta * 2)

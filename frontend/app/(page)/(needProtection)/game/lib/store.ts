@@ -15,6 +15,8 @@ import {
   teamEnum,
 } from './store-type'
 
+
+// :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
   devtools(
     immer((set) => ({
@@ -36,6 +38,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
   )
 )
 
+// :: PlayerStore
 export const usePlayerStore = create<IPlayerState>()(
   devtools(
     immer((set) => ({
@@ -106,7 +109,7 @@ export const useAnswerSelectStore = create<IAnswerState>()(
   devtools(
     immer((set) => ({
       selectAnswer: AnswerEnum.NONE,
-      setSelectAnswer: (selectAnswer: number) =>
+      setSelectAnswer: (selectAnswer: AnswerEnum) =>
         set((state) => {
           state.selectAnswer = selectAnswer
         }),

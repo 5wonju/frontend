@@ -13,9 +13,9 @@ const GameField = () => {
   }))
   const { setSelectAnswer } = useAnswerSelectStore()
 
-  useEffect(() => {
-    startGame()
-  })
+  // useEffect(() => {
+  //   startGame()
+  // })
   return (
     <>
       {/* 카메라 컨트롤 */}
