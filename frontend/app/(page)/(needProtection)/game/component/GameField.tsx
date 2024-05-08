@@ -55,14 +55,15 @@ const GameField = () => {
         >
           <CylinderCollider args={[1, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>
-            <meshStandardMaterial color="white"  />
+            <meshStandardMaterial color="white" />
           </Cylinder>
         </RigidBody>
 
         <CharacterController />
         {/* 게임 상태에 따른 필드 변경 */}
         {/* {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />} */}
-
+        {/* <>TODO: OtherPlayers -> Socket에서 데이터 받기 map()
+        안에다가 OtherCharacter -> pos, action, 이것저것 props 캐릭터 렌더링 </> */}
         <AnswerSpot />
         {/* <TeamSpot /> */}
       </group>
