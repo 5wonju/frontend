@@ -1,4 +1,4 @@
-import { playerMoveStateEnum, teamEnum } from "./store"
+import { playerMoveStateEnum, teamEnum } from "./store-type"
 import { IUserInfo, IWonUser } from "./type"
 
 

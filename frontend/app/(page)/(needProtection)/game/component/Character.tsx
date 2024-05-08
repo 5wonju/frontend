@@ -3,21 +3,8 @@
 
 import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
-import { teamEnum, useCharacterSelectStore, useModalStore, usePlayerStore } from '../lib/store'
-
-/*
-모델별 scale 조정
-model1 -> 0.64
-model2 -> 1
-model3 -> 1
-model4 -> 1
-model5 -> 0.64
-model6 -> 1
-
-닉네임 y 위치
-1 -> 3
-0.64 -> 4.7
-*/
+import { useCharacterSelectStore, useModalStore, usePlayerStore } from '../lib/store'
+import { teamEnum } from '../lib/store-type'
 
 const pathObj = {
   0: '/models/custom/custom-model0.gltf',

@@ -3,7 +3,8 @@ import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier
 import AnswerSpot from './AnswerSpot'
 import React, { useEffect } from 'react'
 import CharacterController from './CharacterController'
-import { teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
+import { useGameRoomStore, usePlayerStore } from '../lib/store'
+import { teamEnum } from '../lib/store-type'
 
 const GameField = () => {
   const { startGame, gameState } = useGameRoomStore()

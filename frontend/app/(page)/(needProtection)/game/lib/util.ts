@@ -1,4 +1,4 @@
-import { teamEnum } from './store'
+import { teamEnum } from "./store-type"
 
 // 정답자 순위 표현
 export const rankList: { [key: number]: string } = {
