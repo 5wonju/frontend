@@ -77,7 +77,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           successCreateRoom(responseData.data.roomId)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
-          console.log('방 입장 성공 응답')
+          console.log('방 입장 성공 응답', JSON.parse(event.data))
           successEnterRoom(responseData.data.userList)
           break
         default:
@@ -103,6 +103,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
       let responseData = undefined
       let eventType = undefined
 
+      console.log('test', event)
       // Todo : 채팅 부분 응답 변경되면 try-catch 제거
       try {
         responseData = JSON.parse(event.data)
@@ -116,6 +117,12 @@ const useSetUpGame = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.CHATTING:
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
+          break
+        case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
+          console.log('방 입장 성공 응답', event.data)
+          break
+        case SOCKET_RES_CODE.ENTER_ROOM_OTHER:
+          console.log('방에 다른 사람 입장 응답', event.data)
           break
         // 추가적인 이벤트 핸들러 등록..
         default:
