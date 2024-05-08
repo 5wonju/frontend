@@ -1,4 +1,4 @@
-import { Html, useKeyboardControls } from '@react-three/drei'
+import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
 import React, { Suspense, useEffect, useRef, useState } from 'react'

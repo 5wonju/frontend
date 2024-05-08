@@ -1,4 +1,4 @@
-import CharacterChange from './controlPanel/CharacterChange'
+import CharacterChange from "./gameControlPanel/CharacterChange"
 
 const GameControlPanel = () => {
 	return (

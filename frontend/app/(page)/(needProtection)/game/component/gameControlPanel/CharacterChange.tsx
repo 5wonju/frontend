@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import Carousel from './Carousel'
 import { FaCircleChevronLeft, FaCircleChevronRight } from 'react-icons/fa6'
-import { useCharacterSelectStore, useModalStore } from '../../lib/store'
+import { useCharacterSelectStore, useModalStore } from '@/app/(page)/(needProtection)/game/lib/store'
 
 const CharacterChange = ({ numItems = 6, radius = 2 }) => {
   const { setModalOpen } = useModalStore((state) => ({

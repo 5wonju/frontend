@@ -32,7 +32,7 @@ export default function Character({ pos }) {
 	const { characterIndex } = useCharacterSelectStore()
 
 	const { nodes, animations, scene } = useGLTF(pathObj[characterIndex])
-	const { actions } = useAnimations(animations, groupRef)
+	const { actions } = useAnimations(animations, scene)
 
 	const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
 		playerMoveState: state.playerMoveState,
@@ -57,7 +57,6 @@ export default function Character({ pos }) {
 		return () => {
 			if (!actions[playerMoveState]) return
 			actions[playerMoveState].fadeOut(0.2)
-			actions[playerMoveState].stop()
 		}
 	}, [playerMoveState, actions])
 

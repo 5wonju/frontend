@@ -127,3 +127,22 @@ export const useCharacterSelectStore = create<ICharacterSelectState>()(
 		{ name: 'CharacterSelectStore' }
 	)
 )
+
+// :: TeamSetBoard 확장/축소 상태
+interface ITeamSetBoardState {
+  isTeamSetBoardOpen: boolean
+  setTeamSetBoardOpen: (isOpen: boolean) => void
+} 
+
+export const useTeamSetBoardStore = create<ITeamSetBoardState>()(
+  devtools(
+    immer((set) => ({
+      isTeamSetBoardOpen: true,
+      setTeamSetBoardOpen: (isOpen: boolean) =>
+        set((state: ITeamSetBoardState) => {
+          state.isTeamSetBoardOpen = isOpen
+        }),
+    })),
+    { name: 'TeamSetBoardStore' }
+  )
+)
