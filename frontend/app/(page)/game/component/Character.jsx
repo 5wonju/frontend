@@ -32,7 +32,7 @@ export default function Character({ pos }) {
 	const { characterIndex } = useCharacterSelectStore()
 
 	const { nodes, animations, scene } = useGLTF(pathObj[characterIndex])
-	const { actions } = useAnimations(animations, groupRef)
+	const { actions } = useAnimations(animations, scene)
 
 	const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
 		playerMoveState: state.playerMoveState,
