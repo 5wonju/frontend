@@ -1,10 +1,11 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React, { useEffect } from 'react'
+import React from 'react'
 import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
-import { AnswerEnum, teamEnum } from '../lib/store-type'
+import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
+import TeamSpot from './TeamSpot'
 
 const GameField = () => {
   const { startGame, gameState } = useGameRoomStore()
@@ -13,9 +14,6 @@ const GameField = () => {
   }))
   const { setSelectAnswer } = useAnswerSelectStore()
 
-  // useEffect(() => {
-  //   startGame()
-  // })
   return (
     <>
       {/* 카메라 컨트롤 */}
@@ -67,11 +65,9 @@ const GameField = () => {
 
         <CharacterController />
         {/* 게임 상태에 따른 필드 변경 */}
-        {/* {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />} */}
+        {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />}
         {/* <>TODO: OtherPlayers -> Socket에서 데이터 받기 map()
         안에다가 OtherCharacter -> pos, action, 이것저것 props 캐릭터 렌더링 </> */}
-        <AnswerSpot />
-        {/* <TeamSpot /> */}
       </group>
     </>
   )
