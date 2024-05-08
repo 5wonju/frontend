@@ -2,10 +2,11 @@ import { Center, Cylinder, Text3D } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
 import { AnswerEnum } from '../lib/store-type'
+import { useAnswerSelectStore } from '../lib/store'
 
 const AnswerSpot = () => {
-  const answers = Object.values(AnswerEnum).filter((answer) => answer !== AnswerEnum.NONE)
-  // useAnswerSelectStore
+  const answers = Object.values(AnswerEnum).slice(0, 4)
+  const { selectAnswer, setSelectAnswer } = useAnswerSelectStore()
 
   return answers.map((answer, index) => (
     <group key={answer} rotation-y={((index + 1) / 4) * Math.PI * 2}>
@@ -14,18 +15,18 @@ const AnswerSpot = () => {
           colliders={false}
           type="fixed"
           onCollisionEnter={() => {
-            console.log(answer)
+            setSelectAnswer(answer as AnswerEnum)
           }}
         >
           <CylinderCollider args={[2 / 2, 3]} />
           <Cylinder scale={[3, 2, 3]}>
-            <meshStandardMaterial color="white" />
+            <meshStandardMaterial color={answer === selectAnswer ? '#6466F1' : '#d4a9dc'} />
           </Cylinder>
         </RigidBody>
 
         <Center position-y={2.5}>
           <Text3D
-            font={'./fonts/Geologica Thin_Regular.json'}
+            font={'/fonts/Geologica Thin_Regular.json'}
             size={2}
             rotation-y={((index + 1) / 4) * Math.PI * 2 * (index % 2 === 0 ? -1 : 1)}
             bevelEnabled={true}

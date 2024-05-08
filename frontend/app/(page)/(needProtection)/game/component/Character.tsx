@@ -19,7 +19,7 @@ export default function Character({ pos }) {
   const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
   const { characterIndex } = useCharacterSelectStore()
 
-  const { nodes, animations, scene } = useGLTF(pathObj[characterIndex])
+  const { nodes, animations, scene } = useGLTF(`/models/custom/custom-model${characterIndex}.gltf`)
   const { actions } = useAnimations(animations, scene)
 
   const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({

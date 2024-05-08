@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { rankList, teamColorToCss } from '../../lib/util'
 import { wonUserList } from '../../lib/dummy'
+import { teamEnum } from '../../lib/store-type'
 
 const QuizResult = () => {
   const [result, setResult] = useState({
@@ -60,7 +61,7 @@ const QuizResult = () => {
               <span className="font-normal text-xs text-darkGray3 h-3">{wonUser.time}초</span>
               <span
                 className={`${
-                  teamColorToCss[wonUser.team]
+                  teamColorToCss[wonUser.team as teamEnum]
                 } font-medium text-xl overflow-hidden w-24 select-none truncate`}
               >
                 {wonUser.nickname}
