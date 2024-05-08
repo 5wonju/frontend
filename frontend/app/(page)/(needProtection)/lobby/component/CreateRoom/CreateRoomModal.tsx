@@ -6,7 +6,7 @@ import WriteRoomPw from './WriteRoomPw'
 import SelectCategory from './SelectCategory'
 import WriteProblemNumber from './WriteProblemNumber'
 import { isWaitingRoomData, validateCreateRoomData } from '../../lib/util'
-import { useWaitingRoom } from '@/app/hooks/socket'
+import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useMainSocketStore } from '../../../channel/lib/store'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {

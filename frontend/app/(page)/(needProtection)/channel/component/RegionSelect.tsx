@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSocket } from '@/app/hooks/socket'
+import { useSocket } from '@/app/hooks/useSocket'
 // import { useSocketStore } from '../lib/store'
 // import { getSocketToken } from '../lib/api'
 

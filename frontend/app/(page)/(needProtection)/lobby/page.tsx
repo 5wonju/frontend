@@ -5,10 +5,13 @@ import WaitingRoomList from './component/WaitingRoomList'
 import UserInfo from '@/app/component/UserInfo'
 import Chat from '@/app/component/Chat'
 import { useMainSocketStore } from '../channel/lib/store'
-import { useRouter } from 'next/navigation'
 import ProtectedSocket from '@/app/component/ProtectionComponent/ProtectedSocket'
+import { useSetupSocket } from './../../../hooks/useSetupSocket'
 
 const Lobby = () => {
+  const { socket } = useMainSocketStore()
+  useSetupSocket(socket)
+
   return (
     <ProtectedSocket>
       <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-48px)]">
