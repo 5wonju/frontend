@@ -22,9 +22,9 @@ export enum teamEnum {
 // :: 정답 선택 종류
 export enum AnswerEnum {
   A,
-  B,
   C,
   D,
+  B,
   NONE,
 }
 
