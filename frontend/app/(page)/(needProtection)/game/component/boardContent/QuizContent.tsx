@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { QuizAnswerList } from '../../lib/dummy'
 import { formatTime } from '../../lib/util'
+import { useAnswerSelectStore } from '../../lib/store'
+import { AnswerEnum } from '../../lib/store-type'
 
 const QuizContent = () => {
   const question = '다음 중 삼국시대에 해당하지 않는 국가는?'
   const [time, setTime] = useState(10) // 초기 시간: 10초
+  const { selectAnswer } = useAnswerSelectStore()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -43,9 +46,13 @@ const QuizContent = () => {
         {QuizAnswerList.map((answer, index) => (
           <li
             key={index}
-            className="flex glass text-black gap-1 w-full rounded-xl border-2 backdrop-blur-md border-opacity-75 border-white px-4 py-2"
+            className={`flex items-center gap-3 glass ${
+              answer.answer === selectAnswer.toString() ? 'bg-indigo-400 bg-opacity-40' : ''
+            } text-black gap-1 w-full rounded-xl transition-colors border-2 backdrop-blur-md border-opacity-75 border-white px-4 py-2`}
           >
-            <span className="font-medium bg-indigo-600 text-white rounded-full size-6 flex items-center justify-center">{answer.answer}</span>
+            <span className="font-medium bg-indigo-600 text-white rounded-full size-6 flex items-center justify-center">
+              {answer.answer}
+            </span>
             <p>{answer.content}</p>
           </li>
         ))}

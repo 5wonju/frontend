@@ -1,50 +1,19 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-
-// :: 게임 상태
-export enum gameStateEnum {
-  READY,
-  GAME,
-  DONE,
-}
-
-export enum playerMoveStateEnum {
-	IDLE = 'Idle',
-	RUN = 'Run',
-	JUMP = 'Jump',
-}
-
-export enum teamEnum {
-  NONE = 'none',
-  RED = 'red',
-  BLUE = 'blue',
-}
-
-// :: 게임 중인 방 내 유저 정보 리스트
-interface IOnGameUserInfo {
-  userNickname: string
-  userCoordX: number
-  userCoordY: number
-  userTeam: '' | 'red' | 'blue'
-  winRate: number
-  escapeHistory: number
-  winCnt: number
-}
-
-interface IGameRoomState {
-  gameState: gameStateEnum
-  gameUserList: IOnGameUserInfo[] | null
-  setGameUserList: (users: IOnGameUserInfo[] | null) => void
-  startGame: () => void
-}
-
-interface IPlayerState {
-  playerMoveState: playerMoveStateEnum
-  setPlayerMoveState: (state: playerMoveStateEnum) => void
-  playerTeamState: teamEnum
-  setPlayerTeamState: (state: teamEnum) => void
-}
+import {
+  AnswerEnum,
+  gameStateEnum,
+  IAnswerState,
+  ICharacterSelectState,
+  IGameRoomState,
+  IModalState,
+  IOnGameUserInfo,
+  IPlayerState,
+  ITeamSetBoardState,
+  playerMoveStateEnum,
+  teamEnum,
+} from './store-type'
 
 export const useGameRoomStore = create<IGameRoomState>()(
   devtools(
@@ -89,51 +58,36 @@ export const usePlayerStore = create<IPlayerState>()(
 )
 
 // :: 모달 상태
-interface IModalState {
-	isModalOpen: boolean
-	setModalOpen: (isOpen: boolean) => void
-}
-
 export const useModalStore = create<IModalState>()(
-	devtools(
-		immer((set) => ({
-			isModalOpen: false,
-			setModalOpen: (isOpen: boolean) =>
-				set((state: IModalState) => {
-					state.isModalOpen = isOpen
-				}),
-		})),
-		{ name: 'ModalStore' }
-	)
+  devtools(
+    immer((set) => ({
+      isModalOpen: false,
+      setModalOpen: (isOpen: boolean) =>
+        set((state: IModalState) => {
+          state.isModalOpen = isOpen
+        }),
+    })),
+    { name: 'ModalStore' }
+  )
 )
 
 // :: 캐릭터 선택 상태
-interface ICharacterSelectState {
-	characterIndex: number
-	setCharacterIndex: (character: number) => void
-}
-
 export const useCharacterSelectStore = create<ICharacterSelectState>()(
-	devtools(
-		immer((set) => ({
-			characterIndex: 0,
+  devtools(
+    immer((set) => ({
+      characterIndex: 0,
 
-			setCharacterIndex: (character: number) =>
-				set((state: ICharacterSelectState) => {
-					console.log('selected characterIndex:', character)
-					state.characterIndex = character
-				}),
-		})),
-		{ name: 'CharacterSelectStore' }
-	)
+      setCharacterIndex: (character: number) =>
+        set((state: ICharacterSelectState) => {
+          console.log('selected characterIndex:', character)
+          state.characterIndex = character
+        }),
+    })),
+    { name: 'CharacterSelectStore' }
+  )
 )
 
 // :: TeamSetBoard 확장/축소 상태
-interface ITeamSetBoardState {
-  isTeamSetBoardOpen: boolean
-  setTeamSetBoardOpen: (isOpen: boolean) => void
-} 
-
 export const useTeamSetBoardStore = create<ITeamSetBoardState>()(
   devtools(
     immer((set) => ({
@@ -144,5 +98,19 @@ export const useTeamSetBoardStore = create<ITeamSetBoardState>()(
         }),
     })),
     { name: 'TeamSetBoardStore' }
+  )
+)
+
+// :: 정답 선택 상태 (어떤 보기를 선택했는지)
+export const useAnswerSelectStore = create<IAnswerState>()(
+  devtools(
+    immer((set) => ({
+      selectAnswer: AnswerEnum.NONE,
+      setSelectAnswer: (selectAnswer: number) =>
+        set((state) => {
+          state.selectAnswer = selectAnswer
+        }),
+    })),
+    { name: 'AnswerSelectStore' }
   )
 )

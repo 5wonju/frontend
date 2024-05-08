@@ -1,7 +1,8 @@
 import { Center, Cylinder, Text3D } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
-import { teamEnum, usePlayerStore } from '../lib/store'
+import { usePlayerStore } from '../lib/store'
+import { teamEnum } from '../lib/store-type'
 
 const TeamSpot = () => {
 	const { setPlayerTeamState } = usePlayerStore((state) => ({

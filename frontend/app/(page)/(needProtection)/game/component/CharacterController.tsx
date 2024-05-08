@@ -1,18 +1,18 @@
+// @ts-nocheck
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
 import {
-	gameStateEnum,
-	playerMoveStateEnum,
 	useCharacterSelectStore,
 	useGameRoomStore,
 	usePlayerStore,
 } from '../lib/store'
 import { controls } from './KeyboardControl'
+import { gameStateEnum, playerMoveStateEnum } from '../lib/store-type'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1

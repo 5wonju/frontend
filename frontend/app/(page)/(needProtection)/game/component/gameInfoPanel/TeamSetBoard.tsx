@@ -1,7 +1,8 @@
 import TeamInfo from './TeamInfo'
 import { FaCaretDown } from 'react-icons/fa'
-import { teamEnum, useTeamSetBoardStore } from '../../lib/store'
+import { useTeamSetBoardStore } from '../../lib/store'
 import { userList } from '../../lib/dummy'
+import { teamEnum } from '../../lib/store-type'
 
 const TeamSetBoard = () => {
   const { isTeamSetBoardOpen, setTeamSetBoardOpen } = useTeamSetBoardStore()

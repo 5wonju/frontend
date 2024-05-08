@@ -3,13 +3,16 @@ import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier
 import AnswerSpot from './AnswerSpot'
 import React, { useEffect } from 'react'
 import CharacterController from './CharacterController'
-import { teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
+import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
+import { AnswerEnum, teamEnum } from '../lib/store-type'
 
 const GameField = () => {
   const { startGame, gameState } = useGameRoomStore()
   const { setPlayerTeamState } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
   }))
+  const { setSelectAnswer } = useAnswerSelectStore()
+
   useEffect(() => {
     startGame()
   })
@@ -51,7 +54,10 @@ const GameField = () => {
           type="fixed"
           position-y={-0.5}
           friction={4}
-          onCollisionEnter={() => setPlayerTeamState(teamEnum.NONE)}
+          onCollisionEnter={() => {
+            setPlayerTeamState(teamEnum.NONE)
+            setSelectAnswer(AnswerEnum.NONE)
+          }}
         >
           <CylinderCollider args={[1, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>
