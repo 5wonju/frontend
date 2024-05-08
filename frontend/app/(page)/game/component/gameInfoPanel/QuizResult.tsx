@@ -1,48 +1,8 @@
 import { useEffect, useState } from 'react'
-import { teamEnum } from '../../lib/store'
-import { teamColorToCss } from './TeamInfo'
-
-interface IWonUser {
-  nickname: string
-  team: teamEnum
-  userId: number
-  rank: number
-  time: number
-}
-
-const rankList: { [key: number]: string } = {
-  1: '1st',
-  2: '2nd',
-  3: '3rd',
-}
-
-// 더미 데이터
-const wonUserList: IWonUser[] = [
-  {
-    nickname: 'user1s-3we',
-    team: teamEnum.RED,
-    userId: 1,
-    rank: 1,
-    time: 2.012,
-  },
-  {
-    nickname: 'wnatdsoi',
-    team: teamEnum.BLUE,
-    userId: 2,
-    rank: 2,
-    time: 2.012,
-  },
-  {
-    nickname: 'woosss',
-    team: teamEnum.RED,
-    userId: 3,
-    rank: 3,
-    time: 2.012,
-  },
-]
+import { rankList, teamColorToCss } from '../../lib/util'
+import { wonUserList } from '../../lib/dummy'
 
 const QuizResult = () => {
-  const quizNumber = 1
   const [result, setResult] = useState({
     winTeam: false,
     0: false,

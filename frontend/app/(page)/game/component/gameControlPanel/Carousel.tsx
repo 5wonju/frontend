@@ -1,25 +1,11 @@
 import React, { useRef, useState } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { Group, Mesh } from 'three'
 import { useGLTF } from '@react-three/drei'
+import { ICarouselItemProp, ICarouselProp } from '../../lib/type'
+import { getPosition, models } from '../../lib/util'
 
-const models = [
-  '/models/character-select/custom-model0.gltf',
-  '/models/character-select/custom-model1.gltf',
-  '/models/character-select/custom-model2.gltf',
-  '/models/character-select/custom-model3.gltf',
-  '/models/character-select/custom-model4.gltf',
-  '/models/character-select/custom-model5.gltf',
-]
-
-interface ICarouselItem {
-  modelPath: string
-  position: [number, number, number]
-  index: number
-  rotation: number
-}
-
-const CarouselItem = ({ modelPath, position, index, rotation }: ICarouselItem) => {
+const CarouselItem = ({ modelPath, position, index, rotation }: ICarouselItemProp) => {
   const mesh = useRef<Mesh>(null as Mesh | null)
   const { scene } = useGLTF(modelPath)
 
@@ -33,24 +19,10 @@ const CarouselItem = ({ modelPath, position, index, rotation }: ICarouselItem) =
   )
 }
 
-interface ICarousel {
-  numItems?: number
-  radius?: number
-  rotation: number
-}
-
-const Carousel = ({ numItems = 6, radius = 2, rotation }: ICarousel) => {
+const Carousel = ({ numItems = 6, radius = 2, rotation }: ICarouselProp) => {
   const group = useRef<Group>(null as Group | null)
   const [targetRotation, setTargetRotation] = useState(0)
   const character = useRef(null as Group | null)
-
-  const getPosition = (index: number) => {
-    const angle = (index / numItems) * Math.PI * 2
-    const x = Math.cos(angle) * radius
-    const y = 0
-    const z = Math.sin(angle) * radius
-    return [x, y, z]
-  }
 
   useFrame(() => {
     if (group.current) {
@@ -70,7 +42,7 @@ const Carousel = ({ numItems = 6, radius = 2, rotation }: ICarousel) => {
           <group key={index} ref={character}>
             <CarouselItem
               modelPath={modelPath}
-              position={getPosition(index) as [number, number, number]}
+              position={getPosition(index, 6, radius) as [number, number, number]}
               index={index}
               rotation={rotation}
             />

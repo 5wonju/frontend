@@ -1,20 +1,8 @@
 import React from 'react'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
-import { IUserInfo } from './TeamSetBoard'
 import { teamEnum } from '../../lib/store'
-
-interface ITeamInfoProps {
-  teamName: string
-  teamColor: teamEnum
-  userList: IUserInfo[]
-  handleOutUser: (userId: number) => void
-}
-
-export const teamColorToCss = {
-  [teamEnum.RED]: 'text-red-400',
-  [teamEnum.BLUE]: 'text-blue-400',
-  [teamEnum.NONE]: 'text-gray-400',
-}
+import { ITeamInfoProps } from '../../lib/type'
+import { teamColorToCss } from '../../lib/util'
 
 const TeamInfo = ({ teamName, teamColor, userList, handleOutUser }: ITeamInfoProps) => {
   return (

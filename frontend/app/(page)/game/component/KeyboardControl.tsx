@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import { KeyboardControls } from '@react-three/drei'
-import ReactDOM from 'react-dom'
 
 export const controls = {
   forward: 'forward',

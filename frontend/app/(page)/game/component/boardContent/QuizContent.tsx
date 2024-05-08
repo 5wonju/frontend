@@ -1,28 +1,6 @@
 import { useEffect, useState } from 'react'
-
-const QuizAnswerList = [
-  {
-    answer: 'A',
-    content: '신라',
-  },
-  {
-    answer: 'B',
-    content: '고구려',
-  },
-  {
-    answer: 'C',
-    content: '백제',
-  },
-  {
-    answer: 'D',
-    content: '조선',
-  },
-]
-
-const formatTime = (time: number) => {
-  const seconds = time.toFixed(2) // 소수점 2자리까지 표시
-  return seconds
-}
+import { QuizAnswerList } from '../../lib/dummy'
+import { formatTime } from '../../lib/util'
 
 const QuizContent = () => {
   const question = '다음 중 삼국시대에 해당하지 않는 국가는?'
