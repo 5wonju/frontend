@@ -22,7 +22,18 @@ const GameField = () => {
 
       {/* 조명 */}
       <ambientLight intensity={2} />
-      <directionalLight position={[30, 50, 30]} intensity={2.8} castShadow color={'white'} />
+      <directionalLight
+        position={[30, 50, 30]}
+        intensity={2.8}
+        castShadow
+        color={'white'}
+        shadow-camera-top={10}
+        shadow-camera-right={10}
+        shadow-camera-bottom={-10}
+        shadow-camera-left={-10}
+        shadow-camera-near={10}
+        shadow-camera-far={100}
+      />
 
       {/* 배경 필드 */}
       <RigidBody colliders={false} type="fixed" name="void">
