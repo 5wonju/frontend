@@ -1,9 +1,9 @@
-// @ts-nocheck
 'use client'
 
 import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
 import { teamEnum, useCharacterSelectStore, useModalStore, usePlayerStore } from '../lib/store'
+import { IOtherStatus } from './OtherPlayers'
 
 /*
 모델별 scale 조정
@@ -17,28 +17,36 @@ model6 -> 1
 닉네임 y 위치
 1 -> 3
 0.64 -> 4.7
+
+안녕하세요 저는 이재민입니다
+저의 취미는 던전앤파이터입니다.
+제가 좋아하는 색깔은 연분홍입니다.
+저의 닮은꼴 캐릭터는 스누피의 찰리브라운입니다.
+저는 빨간 리본이 잘 어울립니다 ㅎ.ㅎ"></div>
 */
 
-const pathObj = {
-  0: '/models/custom/custom-model0.gltf',
-  1: '/models/custom/custom-model1.gltf',
-  2: '/models/custom/custom-model2.gltf',
-  3: '/models/custom/custom-model3.gltf',
-  4: '/models/custom/custom-model4.gltf',
-  5: '/models/custom/custom-model5.gltf',
-}
-export default function Character({ pos }) {
+const pathObj = [
+  '/models/custom/custom-model0.gltf',
+  '/models/custom/custom-model1.gltf',
+  '/models/custom/custom-model2.gltf',
+  '/models/custom/custom-model3.gltf',
+  '/models/custom/custom-model4.gltf',
+  '/models/custom/custom-model5.gltf',
+]
+export default function OtherCharacter({
+  pos,
+  moveState,
+  characterType,
+  direction,
+  nickname,
+  team,
+}: IOtherStatus) {
   const groupRef = useRef()
-  const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
-  const { characterIndex } = useCharacterSelectStore()
+  // const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
 
-  const { nodes, animations, scene } = useGLTF(pathObj[characterIndex])
+  const { nodes, animations, scene } = useGLTF(pathObj[characterType])
   const { actions } = useAnimations(animations, scene)
 
-  const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
-    playerMoveState: state.playerMoveState,
-    playerTeamState: state.playerTeamState,
-  }))
   const { isModalOpen } = useModalStore((state) => ({
     isModalOpen: state.isModalOpen,
   }))
@@ -54,12 +62,12 @@ export default function Character({ pos }) {
   useEffect(() => {
     if (!actions) return
 
-    actions[playerMoveState].reset().fadeIn(0.2).play()
+    actions[moveState].reset().fadeIn(0.2).play()
     return () => {
-      if (!actions[playerMoveState]) return
-      actions[playerMoveState].fadeOut(0.2)
+      if (!actions[moveState]) return
+      actions[moveState].fadeOut(0.2)
     }
-  }, [playerMoveState, actions])
+  }, [moveState, actions])
 
   return (
     <group ref={groupRef} scale={1}>
@@ -69,9 +77,9 @@ export default function Character({ pos }) {
         <Html position={[0, 3, 0]} className={`${isModalOpen ? 'hidden' : ''}`}>
           <div
             className={`text-sm w-20 overflow-hidden whitespace-nowrap select-none truncate ${
-              playerTeamState === teamEnum.BLUE
+              team === teamEnum.BLUE
                 ? 'text-blue-400'
-                : playerTeamState === teamEnum.RED
+                : team === teamEnum.RED
                 ? 'text-red-400'
                 : 'text-neutral-700'
             }`}

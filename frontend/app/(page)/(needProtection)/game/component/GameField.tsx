@@ -4,6 +4,7 @@ import AnswerSpot from './AnswerSpot'
 import React, { useEffect } from 'react'
 import CharacterController from './CharacterController'
 import { teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
+import OtherPlayers from './OtherPlayers'
 
 const GameField = () => {
   const { startGame, gameState } = useGameRoomStore()
@@ -64,6 +65,7 @@ const GameField = () => {
         {/* {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />} */}
         {/* <>TODO: OtherPlayers -> Socket에서 데이터 받기 map()
         안에다가 OtherCharacter -> pos, action, 이것저것 props 캐릭터 렌더링 </> */}
+        <OtherPlayers />
         <AnswerSpot />
         {/* <TeamSpot /> */}
       </group>
