@@ -81,6 +81,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           console.log('방 입장 성공 응답')
           successEnterRoom(responseData.data.userList)
           break
+        case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
+          console.log('팀 선택 성공 응답')
+          break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
           break

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
 import { useChatLogsStore, useMainSocketStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
+import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -44,7 +45,16 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'ENTER_ROOM', data: { roomId, roomPw } }))
   }
 
-  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList }
+  const selectTeam = (team: teamEnum) => {
+    if(!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('selectTeam:', team)
+    socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team } }))
+  }
+
+  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList, selectTeam }
 }
 
 // :: Chat
