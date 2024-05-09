@@ -20,7 +20,6 @@ export default function Character({ pos }) {
   const { userInfo } = useAuth()
   const { characterIndex } = useCharacterSelectStore()
 
-  console.log(userInfo)
   const { nodes, animations, scene } = useGLTF(`/models/custom/custom-model${characterIndex}.gltf`)
   const { actions } = useAnimations(animations, scene)
 

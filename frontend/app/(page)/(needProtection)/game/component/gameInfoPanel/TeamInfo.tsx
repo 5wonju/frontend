@@ -5,7 +5,6 @@ import { teamEnum } from '../../lib/store-type'
 import { teamColorToCss } from '../../lib/util'
 
 const TeamInfo = ({ teamName, teamColor, userList, handleOutUser }: ITeamInfoProps) => {
-  console.log("test", userList)
   return (
     <div
       className={`flex flex-col gap-1 w-full pb-2 ${

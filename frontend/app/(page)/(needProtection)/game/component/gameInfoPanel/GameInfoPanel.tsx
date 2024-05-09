@@ -12,7 +12,6 @@ const GameInfoPanel = () => {
     gameState: state.gameState,
   }))
 
-  console.log('gamestate: ', gameState, gameStateEnum.READY)
   return (
     <div className="h-1/4 px-10 absolute top-16 left-0 right-0 grid grid-cols-6 gap-6 items-start">
       {isTeamSetBoardOpen ? (
