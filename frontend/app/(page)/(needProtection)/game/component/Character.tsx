@@ -5,6 +5,7 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
 import { useCharacterSelectStore, useModalStore, usePlayerStore } from '../lib/store'
 import { teamEnum } from '../lib/store-type'
+import { useAuth } from '@/app/hooks/useAuth'
 
 const pathObj = {
   0: '/models/custom/custom-model0.gltf',
@@ -16,9 +17,10 @@ const pathObj = {
 }
 export default function Character({ pos }) {
   const groupRef = useRef()
-  const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
+  const { userInfo } = useAuth()
   const { characterIndex } = useCharacterSelectStore()
 
+  console.log(userInfo)
   const { nodes, animations, scene } = useGLTF(`/models/custom/custom-model${characterIndex}.gltf`)
   const { actions } = useAnimations(animations, scene)
 
@@ -63,7 +65,7 @@ export default function Character({ pos }) {
                 : 'text-neutral-700'
             }`}
           >
-            {nickname}
+            {userInfo && userInfo.nickname}
           </div>
         </Html>
       )}

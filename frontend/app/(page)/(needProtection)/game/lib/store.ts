@@ -14,6 +14,7 @@ import {
   playerMoveStateEnum,
   teamEnum,
 } from './store-type'
+import { IUserInfo } from './type'
 
 
 // :: RoomStore
@@ -22,7 +23,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
     immer((set) => ({
       // room 내 유저 정보 리스트
       gameUserList: [], // initial state
-      setGameUserList: (users: IOnGameUserInfo[] | null) =>
+      setGameUserList: (users: IUserInfo[] | null) =>
         set((state: IGameRoomState) => {
           state.gameUserList = users
         }),

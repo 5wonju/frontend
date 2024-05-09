@@ -1,3 +1,5 @@
+import { IUserInfo } from "./type"
+
 // :: 게임 상태
 export enum gameStateEnum {
   READY = '대기중',
@@ -14,9 +16,9 @@ export enum playerMoveStateEnum {
 
 // :: 팀 종류
 export enum teamEnum {
-  NONE = 'none',
-  RED = 'red',
-  BLUE = 'blue',
+  NONE = 'NONE',
+  RED = 'RED',
+  BLUE = 'BLUE',
 }
 
 // :: 정답 선택 종류
@@ -43,8 +45,8 @@ export interface IOnGameUserInfo {
 
 export interface IGameRoomState {
   gameState: gameStateEnum
-  gameUserList: IOnGameUserInfo[] | null
-  setGameUserList: (users: IOnGameUserInfo[] | null) => void
+  gameUserList: IUserInfo[] | null
+  setGameUserList: (users: IUserInfo[] | null) => void
   startGame: () => void
 }
 

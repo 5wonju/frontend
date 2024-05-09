@@ -15,6 +15,7 @@ interface RoomProps {
 const WaitingRoom = ({ room }: RoomProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const { enterRoom } = useWaitingRoom()
+  const { sendEnterRoom } = useEnterRoom()
 
   const handleRoomClick = () => {
     // 비밀번호 방 클릭 시
@@ -24,6 +25,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
     // 비밀번호 없는 방 클릭 시
     else {
       enterRoom(room.roomId)
+      sendEnterRoom(room)
     }
   }
 

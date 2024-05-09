@@ -1,16 +1,20 @@
 import TeamInfo from './TeamInfo'
 import { FaCaretDown } from 'react-icons/fa'
-import { useTeamSetBoardStore } from '../../lib/store'
+import { useGameRoomStore, useTeamSetBoardStore } from '../../lib/store'
 import { userList } from '../../lib/dummy'
 import { teamEnum } from '../../lib/store-type'
 
 const TeamSetBoard = () => {
   const { isTeamSetBoardOpen, setTeamSetBoardOpen } = useTeamSetBoardStore()
+  const { gameUserList } = useGameRoomStore((state) => ({
+    gameUserList: state.gameUserList,
+  }))
 
+  console.log(gameUserList)
   const toggleOpen = () => setTeamSetBoardOpen(!isTeamSetBoardOpen)
 
-  const handleOutUser = (userId: number) => {
-    alert(`유저 ${userId} 너 강퇴임`)
+  const handleOutUser = (userNickname: string) => {
+    alert(`유저 ${userNickname} 너 강퇴임`)
   }
 
   return (
@@ -25,19 +29,19 @@ const TeamSetBoard = () => {
       <TeamInfo
         teamName="RED TEAM"
         teamColor={teamEnum.RED}
-        userList={userList}
+        userList={gameUserList}
         handleOutUser={handleOutUser}
       />
       <TeamInfo
         teamName="BLUE TEAM"
         teamColor={teamEnum.BLUE}
-        userList={userList}
+        userList={gameUserList}
         handleOutUser={handleOutUser}
       />
       <TeamInfo
         teamName="NONE TEAM"
         teamColor={teamEnum.NONE}
-        userList={userList}
+        userList={gameUserList}
         handleOutUser={handleOutUser}
       />
     </div>
