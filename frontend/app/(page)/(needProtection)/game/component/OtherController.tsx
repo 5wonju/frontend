@@ -21,6 +21,7 @@ const OtherController = ({
   direction,
   nickname,
   team,
+  modelKey,
 }: IOtherStatus) => {
   // 플레이어 상태
 
@@ -94,6 +95,7 @@ const OtherController = ({
             direction={direction}
             nickname={nickname}
             team={team}
+            modelKey={modelKey}
           />
         </group>
       </RigidBody>

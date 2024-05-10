@@ -20,6 +20,7 @@ export interface IOtherStatus {
   direction: string
   nickname: string
   team: teamEnum
+  modelKey: number
 }
 
 const samplePlayers: IOtherStatus[] = [
@@ -31,15 +32,17 @@ const samplePlayers: IOtherStatus[] = [
     nickname: '??dsad',
     team: teamEnum.RED,
     linvel: { x: 0, y: 0, z: 0 },
+    modelKey: 6,
   },
   {
     pos: { x: 4, y: 0, z: 0 },
     moveState: playerMoveStateEnum.RUN,
-    characterType: 1,
+    characterType: 0,
     direction: 'right',
     nickname: '!!!옆에대단한사람이있어요',
     team: teamEnum.BLUE,
     linvel: { x: 0, y: 0, z: 3 },
+    modelKey: 7,
   },
 ]
 
@@ -47,7 +50,7 @@ export default function OtherPlayers() {
   const { socket } = useMainSocketStore()
   const { gameUserList } = useGameRoomStore()
   const { userInfo } = useAuth()
-  console.log(userInfo)
+  console.log(gameUserList)
   return (
     <>
       {gameUserList &&
@@ -64,6 +67,7 @@ export default function OtherPlayers() {
                 nickname={player.userNickname}
                 team={player.team}
                 linvel={player.linvel}
+                modelKey={index}
               />
             )
           })}

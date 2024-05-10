@@ -27,14 +27,15 @@ model6 -> 1
 */
 
 const pathObj = [
-  '/models/custom/custom-model0.gltf',
-  '/models/custom/custom-model1.gltf',
-  '/models/custom/custom-model2.gltf',
-  '/models/custom/custom-model3.gltf',
-  '/models/custom/custom-model4.gltf',
-  '/models/custom/custom-model5.gltf',
+  '/models/custom1/custom-model0.gltf',
+  '/models/custom1/custom-model1.gltf',
+  '/models/custom1/custom-model2.gltf',
+  '/models/custom1/custom-model3.gltf',
+  '/models/custom1/custom-modsel4.gltf',
+  '/models/custom1/custom-model5.gltf',
 ]
 export default function OtherCharacter({
+  modelKey,
   pos,
   moveState,
   characterType,
@@ -46,7 +47,9 @@ export default function OtherCharacter({
   // const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
   console.log('nickname', nickname, moveState, characterType, direction, nickname, team)
 
-  const { nodes, animations, scene } = useGLTF(pathObj[characterType])
+  const { nodes, animations, scene } = useGLTF(
+    `/models/custom${modelKey}/custom-model${characterType}.gltf`
+  )
   const { actions } = useAnimations(animations, scene)
   const { isModalOpen } = useModalStore()
   // 캐릭터에 그림자 효과
