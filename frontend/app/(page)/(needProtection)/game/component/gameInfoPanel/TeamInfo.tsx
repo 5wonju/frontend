@@ -28,10 +28,10 @@ const TeamInfo = ({ teamName, teamColor, userList, handleOutUser }: ITeamInfoPro
                   <span className="text-darkGray1 font-light text-xs">{user.userScore}</span>
                 </div>
 
-                {/* 방장만 보이는 버튼 */}
-                <button onClick={() => handleOutUser(user.userNickname)} className="text-lightGray1">
+                {/* TODO: 플레이어 강퇴 기능 추가하기 */}
+                {/* <button onClick={() => handleOutUser(user.userNickname)} className="text-lightGray1">
                   <IoIosCloseCircleOutline />
-                </button>
+                </button> */}
               </li>
             ))}
       </ul>
