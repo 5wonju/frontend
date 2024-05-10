@@ -1,4 +1,4 @@
-import { useMainSocketStore } from '@/app/(page)/(needProtection)/channel/lib/store'
+import { useMainSocketStore } from '@/app/lib/store'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 

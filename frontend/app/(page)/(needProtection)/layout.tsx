@@ -1,6 +1,6 @@
 'use client'
 
-import HeaderNavigationBar from '@/app/component/headerNavigation/HeaderNavigationBar'
+import HeaderNavigationBar from '@/app/component/Navigation/HeaderNavigationBar'
 import ProtectedLogin from '@/app/component/ProtectionComponent/ProtectedLogin'
 import ProtectedRoute from '@/app/component/ProtectionComponent/ProtectedRoute'
 import ProtectedSocket from '@/app/component/ProtectionComponent/ProtectedSocket'

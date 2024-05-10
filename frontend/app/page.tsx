@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import PreviewImage from './component/HomeUI/PreviewImage'
 import AutoInstruction from './component/HomeUI/AutoInstruction'
-import HeaderNavigationBar from './component/headerNavigation/HeaderNavigationBar'
+import HeaderNavigationBar from './component/Navigation/HeaderNavigationBar'
 
 export default function Home() {
   const { isLoggedIn } = useAuth()

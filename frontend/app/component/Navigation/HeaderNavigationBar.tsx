@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import CreateRoomButton from './CreateRoomButton'
 import QuickStart from './QuickStart'
 import { usePathname } from 'next/navigation'
+
+import Link from 'next/link'
+import LogoutButton from './LogoutButton'
 import ExitLobbyButton from './ExitLobbyButton'
 import ExitGameButton from './ExitGameButton'
-import LogoutButton from './LogoutButton'
-import Link from 'next/link'
 
 // 1. 메인 페이지
 // - 로고
