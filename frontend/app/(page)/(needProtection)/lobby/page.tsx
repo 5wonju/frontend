@@ -4,9 +4,9 @@ import React, { useEffect } from 'react'
 import WaitingRoomList from './component/WaitingRoomList'
 import UserInfo from '@/app/component/UserInfo'
 import Chat from '@/app/component/Chat'
-import { useMainSocketStore } from '../channel/lib/store'
 import ProtectedSocket from '@/app/component/ProtectionComponent/ProtectedSocket'
 import { useSetupSocket } from './../../../hooks/useSetupSocket'
+import { useMainSocketStore } from '@/app/lib/store'
 
 // overflow-y-scroll box-border
 const Lobby = () => {

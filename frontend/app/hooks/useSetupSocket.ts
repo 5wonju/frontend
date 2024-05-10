@@ -2,8 +2,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
-import { useChatLogsStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useEffect } from 'react'
+import { useChatLogsStore } from '../lib/store'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용

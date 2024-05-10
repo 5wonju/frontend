@@ -5,7 +5,6 @@ import { Lock } from 'lucide-react'
 import RoomPasswordModal from './RoomPasswordModal'
 import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
-import { useEnterRoom } from '../hooks/enterRoom'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 
 interface RoomProps {
