@@ -44,8 +44,8 @@ body {
     @apply bg-indigo-600 text-white rounded-full px-2.5 py-1 transition-colors font-semibold hover:bg-transparent hover:ring-[2.5px] hover:ring-indigo-600 ring-inset hover:text-indigo-600;
   }
 
-  .character-change-btn {
-    @apply bg-indigo-600 text-white rounded-full px-2.5 py-1 transition-colors font-semibold bg-gradient-to-bl from-indigo-400 to-indigo-600 border-4 border-lightGray4;
+  .icon-btn {
+    @apply bg-indigo-600 text-white transition-colors font-semibold bg-gradient-to-bl from-indigo-400 to-indigo-600 border-4 border-lightGray4 inline rounded-full py-3 px-3 shadow-md;
   }
 
   .indigo-btn-active {
