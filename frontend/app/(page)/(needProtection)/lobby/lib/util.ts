@@ -1,3 +1,5 @@
+import { ICreatedRoom, ProblemCategoryType, WaitingRoom } from "./type"
+
 export const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발']
 
 // api 연결 전에 더미 방 리스트 데이터 생성
