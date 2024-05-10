@@ -16,11 +16,17 @@ import {
 } from './store-type'
 import { IUserInfo } from './type'
 
-
 // :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
   devtools(
     immer((set) => ({
+      // 내가 방장인지 여부
+      isRoomOwner: false,
+      setIsRoomOwner: (isRoomOwner: boolean) =>
+        set((state: IGameRoomState) => {
+          state.isRoomOwner = isRoomOwner
+        }),
+
       // room 내 유저 정보 리스트
       gameUserList: [], // initial state
       setGameUserList: (users: IUserInfo[] | null) =>

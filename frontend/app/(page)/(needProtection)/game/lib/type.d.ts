@@ -33,6 +33,7 @@ export interface IUserInfo {
   escapeHistory?: number
   winRate?: number
   winCnt?: number
+  roomOwner: boolean
 }
 
 // 캐릭터 선택 타입

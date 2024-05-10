@@ -79,6 +79,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')
+          console.log('방 입장 성공시 받아오는 데이터', responseData.data)
           successEnterRoom(responseData.data.userList)
           break
         case SOCKET_RES_CODE.TEAM_SELECT_OWNER:

@@ -1,5 +1,11 @@
+/*
+  <게임 시작 버튼 활성화 조건>
+  - 모든 플레이어가 준비 상태일 때
+  - 방장도 팀을 선택했을 때
+*/
 const StartButton = () => {
-  const readyStatus = false
+  // const readyStatus = false
+  const readyStatus = true
 
   const handleGameStart = () => {
     console.log('game start')

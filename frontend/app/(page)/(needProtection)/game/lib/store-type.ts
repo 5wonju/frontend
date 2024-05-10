@@ -44,6 +44,8 @@ export interface IOnGameUserInfo {
 }
 
 export interface IGameRoomState {
+  isRoomOwner: boolean
+  setIsRoomOwner: (isRoomOwner: boolean) => void
   gameState: gameStateEnum
   gameUserList: IUserInfo[] | null
   setGameUserList: (users: IUserInfo[] | null) => void
