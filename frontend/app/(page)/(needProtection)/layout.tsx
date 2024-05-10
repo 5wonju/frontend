@@ -28,6 +28,8 @@ const ProtectedLayout = ({
       // 이 페이지만 예외적으로 적용
       return <>{children}</>
     case '/lobby':
+    case '/game':
+      console.log('game page in')
       return (
         <ProtectedRoute>
           <ProtectedSocket>
