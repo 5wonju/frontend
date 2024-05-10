@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMainSocketStore } from '../../channel/lib/store'
-import { playerMoveStateEnum } from '../lib/store'
+import { playerMoveStateEnum, useGameRoomStore } from '../lib/store'
 import OtherController from './OtherController'
 
 // forward: 'forward',
@@ -12,6 +12,7 @@ import OtherController from './OtherController'
 
 export interface IOtherStatus {
   pos: { x: number; y: number; z: number }
+  linvel: { x: number; y: number; z: number }
   moveState: string
   characterType: number
   direction: string
@@ -40,9 +41,10 @@ const samplePlayers: IOtherStatus[] = [
 
 export default function OtherPlayers() {
   const { socket } = useMainSocketStore()
+  const { gameUserList } = useGameRoomStore()
   return (
     <>
-      {samplePlayers.map((player, index) => {
+      {gameUserList?.map((player, index) => {
         return <OtherController key={index} {...player} />
       })}
     </>

@@ -1,9 +1,10 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
+import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useChatLogsStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useEffect } from 'react'
+import { IUserInfo } from '../(page)/(needProtection)/game/lib/type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -38,7 +39,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
   }
 
   // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successEnterRoom = (userList: onGameUserInfo[]) => {
+  const successEnterRoom = (userList: IUserInfo[]) => {
     setGameUserList(userList)
     router.push(`/game`)
     // router.push(`/game/${room.roomId}`)
@@ -79,6 +80,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')
           successEnterRoom(responseData.data.userList)
+          break
+        case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
+          console.log('팀 선택 성공 응답')
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

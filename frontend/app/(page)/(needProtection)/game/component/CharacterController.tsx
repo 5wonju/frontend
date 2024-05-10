@@ -1,18 +1,14 @@
+// @ts-nocheck
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
-import {
-  gameStateEnum,
-  playerMoveStateEnum,
-  useCharacterSelectStore,
-  useGameRoomStore,
-  usePlayerStore,
-} from '../lib/store'
+import { useCharacterSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { controls } from './KeyboardControl'
+import { gameStateEnum, playerMoveStateEnum } from '../lib/store-type'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1
@@ -47,8 +43,8 @@ const CharacterController = () => {
   useEffect(() => {
     if (!rigidbody.current) return
     // 캐릭터가 이동할 때마다 좌표 받아오기
-    console.log('rigidbody.current', rigidbody.current.linvel())
-  }, [jumpPressed, leftPressed, rightPressed, backPressed, forwardPressed])
+    // console.log('rigidbody.current', rigidbody.current.linvel())
+  })
 
   useFrame((state, delta) => {
     if (!rigidbody.current) return
@@ -105,13 +101,17 @@ const CharacterController = () => {
       characterWorldPosition.z + 14
     )
 
-    // 게임 시작 시 카메라 위치
-    if (gameState === gameStateEnum.GAME) {
-      targetCameraPosition.y = 6
-    }
-    // 게임 시작 전 카메라 위치
-    if (gameState !== gameStateEnum.GAME) {
-      targetCameraPosition.y = 0
+    targetCameraPosition.y = 0
+
+    // 게임 진행 상황에 따른 카메라 위치 변경
+    switch (gameState) {
+      case gameStateEnum.READY:
+      case gameStateEnum.DONE:
+        targetCameraPosition.y = 10
+        break
+      case gameStateEnum.GAME:
+        targetCameraPosition.y = 6
+        break
     }
 
     state.camera.position.lerp(targetCameraPosition, delta * 2)
@@ -161,12 +161,16 @@ const CharacterController = () => {
           }
         }}
       >
+<<<<<<< Updated upstream:frontend/app/(page)/(needProtection)/game/component/CharacterController.tsx
+        <CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
+=======
         <CapsuleCollider
           args={[0.8, 0.4]}
           position={[0, 1.2, 0]}
-          restitution={1} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
+          restitution={0} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
           friction={0.1} // 마찰력 설정
         />
+>>>>>>> Stashed changes:frontend/app/(page)/(needProtection)/game/component/CharacterController.jsx
         <group ref={character}>
           <Character pos={rigidbody.current && rigidbody.current.linvel()} />
         </group>

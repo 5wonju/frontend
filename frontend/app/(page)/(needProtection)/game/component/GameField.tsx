@@ -1,19 +1,19 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React, { useEffect } from 'react'
+import React from 'react'
 import CharacterController from './CharacterController'
-import { teamEnum, useGameRoomStore, usePlayerStore } from '../lib/store'
-import OtherPlayers from './OtherPlayers'
+import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
+import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
+import TeamSpot from './TeamSpot'
 
 const GameField = () => {
   const { startGame, gameState } = useGameRoomStore()
   const { setPlayerTeamState } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
   }))
-  useEffect(() => {
-    startGame()
-  })
+  const { setSelectAnswer } = useAnswerSelectStore()
+
   return (
     <>
       {/* 카메라 컨트롤 */}
@@ -22,7 +22,18 @@ const GameField = () => {
 
       {/* 조명 */}
       <ambientLight intensity={2} />
-      <directionalLight position={[30, 50, 30]} intensity={2.8} castShadow color={'white'} />
+      <directionalLight
+        position={[30, 50, 30]}
+        intensity={2.8}
+        castShadow
+        color={'white'}
+        shadow-camera-top={10}
+        shadow-camera-right={10}
+        shadow-camera-bottom={-10}
+        shadow-camera-left={-10}
+        shadow-camera-near={10}
+        shadow-camera-far={100}
+      />
 
       {/* 배경 필드 */}
       <RigidBody colliders={false} type="fixed" name="void">
@@ -52,7 +63,10 @@ const GameField = () => {
           type="fixed"
           position-y={-0.5}
           friction={4}
-          onCollisionEnter={() => setPlayerTeamState(teamEnum.NONE)}
+          onCollisionEnter={() => {
+            setPlayerTeamState(teamEnum.NONE)
+            setSelectAnswer(AnswerEnum.NONE)
+          }}
         >
           <CylinderCollider args={[1, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>
@@ -62,12 +76,10 @@ const GameField = () => {
 
         <CharacterController />
         {/* 게임 상태에 따른 필드 변경 */}
-        {/* {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />} */}
+        {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />}
         {/* <>TODO: OtherPlayers -> Socket에서 데이터 받기 map()
         안에다가 OtherCharacter -> pos, action, 이것저것 props 캐릭터 렌더링 </> */}
         <OtherPlayers />
-        <AnswerSpot />
-        {/* <TeamSpot /> */}
       </group>
     </>
   )

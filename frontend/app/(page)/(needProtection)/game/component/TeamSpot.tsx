@@ -1,12 +1,21 @@
 import { Center, Cylinder, Text3D } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
-import { teamEnum, usePlayerStore } from '../lib/store'
+import { usePlayerStore } from '../lib/store'
+import { teamEnum } from '../lib/store-type'
+import { useWaitingRoom } from '@/app/hooks/useSocket'
 
 const TeamSpot = () => {
+	const { selectTeam } = useWaitingRoom()
+	
 	const { setPlayerTeamState } = usePlayerStore((state) => ({
 		setPlayerTeamState: state.setPlayerTeamState,
 	}))
+
+	const handleEnterTeamSpot = (teamColor: teamEnum) => {
+		setPlayerTeamState(teamColor)
+		selectTeam(teamColor)
+	}
 
 	const answers = [teamEnum.RED, teamEnum.BLUE]
 	const RED_ROTATION = 5.5
@@ -18,7 +27,7 @@ const TeamSpot = () => {
 				<RigidBody
 					colliders={false}
 					type="fixed"
-					onCollisionEnter={() => setPlayerTeamState(teamColor)}
+					onCollisionEnter={() => handleEnterTeamSpot(teamColor)}
 				>
 					<CylinderCollider args={[2 / 2, 3]} />
 					<Cylinder scale={[3, 2, 3]}>

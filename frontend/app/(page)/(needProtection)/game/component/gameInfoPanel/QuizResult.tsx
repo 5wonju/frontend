@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { rankList, teamColorToCss } from '../../lib/util'
 import { wonUserList } from '../../lib/dummy'
+import { teamEnum } from '../../lib/store-type'
 
 const QuizResult = () => {
   const [result, setResult] = useState({
@@ -53,14 +54,14 @@ const QuizResult = () => {
             className={`${
               result[index as keyof typeof result] ? 'visible animate-fadeIn' : 'invisible'
             }
-            glass flex gap-4 justify-around items-end px-3 py-2`}
+            glass bg-opacity-60 flex gap-4 justify-around items-end px-3 py-2`}
           >
             <p className="font-semibold text-xl text-darkGray3">{rankList[wonUser.rank]}.</p>
             <p className="fle1 flex flex-col items-start">
               <span className="font-normal text-xs text-darkGray3 h-3">{wonUser.time}초</span>
               <span
                 className={`${
-                  teamColorToCss[wonUser.team]
+                  teamColorToCss[wonUser.team as teamEnum]
                 } font-medium text-xl overflow-hidden w-24 select-none truncate`}
               >
                 {wonUser.nickname}

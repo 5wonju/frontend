@@ -1,4 +1,4 @@
-import { playerMoveStateEnum, teamEnum } from "./store"
+import { AnswerEnum, playerMoveStateEnum, teamEnum } from "./store-type"
 import { IUserInfo, IWonUser } from "./type"
 
 
@@ -30,77 +30,67 @@ export const wonUserList: IWonUser[] = [
 // 대기시 방 내부 유저 리스트 더미데이터
 export const userList: IUserInfo[] = [
   {
-    nickname: 'user1',
-    userId: 1,
+    userNickname: 'user1',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.RED,
-    score: 0,
+    userScore: 0,
     moveState: playerMoveStateEnum.IDLE,
     characterType: 0,
     direction: 'right',
   },
   {
-    nickname: 'user2',
-    userId: 2,
+    userNickname: 'user2',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.RED,
-    score: 0,
+    userScore: 0,
   },
   {
-    nickname: 'user3',
-    userId: 3,
+    userNickname: 'user3',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.BLUE,
-    score: 0,
+    userScore: 0,
   },
   {
-    nickname: 'user4',
-    userId: 4,
+    userNickname: 'user4',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.BLUE,
-    score: 120,
+    userScore: 120,
   },
   {
-    nickname: 'user5',
-    userId: 5,
+    userNickname: 'user5',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.NONE,
-    score: 0,
+    userScore: 0,
   },
   {
-    nickname: 'user6',
-    userId: 6,
+    userNickname: 'user6',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.BLUE,
-    score: 200,
+    userScore: 200,
   },
   {
-    nickname: 'user7',
-    userId: 7,
+    userNickname: 'user7',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.BLUE,
-    score: 0,
+    userScore: 0,
   },
   {
-    nickname: 'user8',
-    userId: 8,
+    userNickname: 'user8',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.RED,
-    score: 930,
+    userScore: 930,
   },
   {
-    nickname: 'user9',
-    userId: 9,
+    userNickname: 'user9',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.NONE,
-    score: 0,
+    userScore: 0,
   },
   {
-    nickname: 'user10',
-    userId: 10,
+    userNickname: 'user10',
     position: { x: 0, y: 0, z: 0 },
     team: teamEnum.RED,
-    score: 10,
+    userScore: 10,
   },
 ]
 

@@ -114,7 +114,7 @@ const OtherController = ({
         <CapsuleCollider
           args={[0.8, 0.4]}
           position={[0, 1.2, 0]}
-          restitution={1} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
+          restitution={0} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
           friction={0.1} // 마찰력 설정
         />
         <group ref={character}>
