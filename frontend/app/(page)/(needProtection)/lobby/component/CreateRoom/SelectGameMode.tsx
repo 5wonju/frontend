@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+import { gameMode } from '../../lib/type'
 
 interface SelectGameModeProps {
   gameMode: string
-  setGameMode: (mode: string) => void
+  setGameMode: (mode: gameMode) => void
 }
 
 const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
@@ -40,7 +41,7 @@ const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
             className="absolute w-full border rounded mt-1 bg-white z-10"
             aria-labelledby="game-mode-button"
           >
-            {['basic', 'yoot'].map((mode) => (
+            {(['basic', 'yoot'] as gameMode[]).map((mode) => (
               <li
                 key={mode}
                 className={`p-2 hover:bg-blue-100 ${mode === gameMode ? 'bg-blue-200' : ''}`}

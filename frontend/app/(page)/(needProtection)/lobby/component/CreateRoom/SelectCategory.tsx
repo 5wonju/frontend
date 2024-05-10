@@ -2,12 +2,13 @@
 
 import React, { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+import { gameCategory } from '../../lib/type'
 
-const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발'] // 예시 카테고리 목록
+const CATEGORY_LIST: gameCategory[] = ['수학', '과학', '역사', '국어', '개발'] // 예시 카테고리 목록
 
 interface SelectCategoryProps {
   probCategory: string
-  setProbCategory: (category: string) => void
+  setProbCategory: (category: gameCategory) => void
 }
 
 const SelectCategory = ({ probCategory, setProbCategory }: SelectCategoryProps) => {

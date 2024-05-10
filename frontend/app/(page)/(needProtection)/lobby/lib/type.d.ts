@@ -7,7 +7,7 @@ interface WaitingRoom {
   isGameStart: boolean
   isRoomFull: boolean
   probCategory: '수학' | '과학' | '역사' | '국어' | '개발'
-  isHavePW: boolean
+  hasPassword: boolean
   curRound: number
   totalRound: number
   roomMode: 'basic' | 'yoot'
@@ -31,6 +31,9 @@ interface RoomListResponse {
   }
 }
 
+export type gameCategory = '수학' | '과학' | '역사' | '국어' | '개발'
+export type gameMode = 'basic' | 'yoot'
+
 interface IRoom {
   roomTitle: string | null
   roomOwnerName: string | null
@@ -39,9 +42,16 @@ interface IRoom {
   roomId: number | null
   isGameStart: boolean | null
   isRoomFull: boolean | null
-  probCategory: '수학' | '과학' | '역사' | '국어' | '개발' | null
-  isHavePW: boolean | null
+  probCategory: gameCategory | null
+  hasPassword: boolean | null
+  roomPW?: string | null
   curRound: number | null
   totalRound: number | null
-  roomMode: 'basic' | 'yoot' | null
+  roomMode: gameMode | null
+}
+
+interface IEditRoom {
+  roomTitle: string
+  roomPW: string
+  probCategory: gameCategory
 }

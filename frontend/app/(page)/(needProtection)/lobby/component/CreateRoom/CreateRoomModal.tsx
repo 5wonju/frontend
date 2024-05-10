@@ -8,6 +8,7 @@ import WriteProblemNumber from './WriteProblemNumber'
 import { isWaitingRoomData, validateCreateRoomData } from '../../lib/util'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useMainSocketStore } from '../../../channel/lib/store'
+import { ICreatedRoom } from '../../lib/type'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
   // :: Room Data
@@ -66,7 +67,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
           <button className="px-4 py-2 bg-gray-300 rounded" onClick={onModalClose}>
             취소
           </button>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleCreateRoom}>
+          <button className="px-4 py-2 bg-indigo-600 text-white rounded" onClick={handleCreateRoom}>
             방 생성
           </button>
         </div>
