@@ -10,7 +10,7 @@ const IntroductionContent = () => {
         <h2 className="text-4xl font-medium">원하는 팀을 고르세요</h2>
         <div className="text-md flex flex-col items-center gap-1">
           <p>
-            <span className="text-red-500">RED</span> 혹은 
+            <span className="text-red-500">RED</span> 혹은
             <span className="text-blue-500"> BLUE</span> 필드로 이동해 팀을 선택하세요
           </p>
           <p className="text-md text-center">

@@ -30,3 +30,18 @@ interface RoomListResponse {
     roomList: Room[]
   }
 }
+
+interface IRoom {
+  roomTitle: string | null
+  roomOwnerName: string | null
+  roomCurUserNum: number | null
+  roomMaxUserNum: number | null
+  roomId: number | null
+  isGameStart: boolean | null
+  isRoomFull: boolean | null
+  probCategory: '수학' | '과학' | '역사' | '국어' | '개발' | null
+  isHavePW: boolean | null
+  curRound: number | null
+  totalRound: number | null
+  roomMode: 'basic' | 'yoot' | null
+}
