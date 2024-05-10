@@ -47,7 +47,7 @@ const useWaitingRoom = () => {
 
   const selectTeam = (team: teamEnum) => {
     if(!socket) {
-      alert('Socket이 비어있습니다.')
+      console.log('Socket이 비어있습니다.')
       return
     }
     console.log('selectTeam:', team)

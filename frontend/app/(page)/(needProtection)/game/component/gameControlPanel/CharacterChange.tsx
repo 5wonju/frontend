@@ -59,7 +59,7 @@ const CharacterChange = ({ numItems = 6, radius = 2 }) => {
 
   return (
     <>
-      <button onClick={handleOpenModal} className="indigo-btn inline rounded-full size-14 shadow-md">
+      <button onClick={handleOpenModal} className="character-change-btn inline rounded-full py-3 px-3 shadow-md">
         <PiPersonArmsSpreadFill className='size-8 m-auto text-center'/>
       </button>
 
