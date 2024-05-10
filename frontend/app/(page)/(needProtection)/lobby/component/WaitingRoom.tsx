@@ -7,9 +7,10 @@ import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useCurrentRoomStore } from '../lib/store'
+import { IWaitingRoom } from '../lib/type'
 
 interface RoomProps {
-  room: WaitingRoom
+  room: IWaitingRoom
 }
 
 const WaitingRoom = ({ room }: RoomProps) => {

@@ -1,4 +1,4 @@
-interface WaitingRoom {
+export interface IWaitingRoom {
   roomTitle: string
   roomOwnerName: string
   roomCurUserNum: number

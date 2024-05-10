@@ -1,10 +1,10 @@
-import { ICreatedRoom, ProblemCategoryType, WaitingRoom } from "./type"
+import { ICreatedRoom, ProblemCategoryType, IWaitingRoom } from "./type"
 
 export const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발']
 
 // api 연결 전에 더미 방 리스트 데이터 생성
-export const generateRooms = (): WaitingRoom[] => {
-  const rooms: WaitingRoom[] = []
+export const generateRooms = (): IWaitingRoom[] => {
+  const rooms: IWaitingRoom[] = []
   for (let i = 1; i <= 100; i++) {
     const roomMaxUserNum = 10
     const roomCurUserNum = Math.floor(Math.random() * roomMaxUserNum) + 1
@@ -47,7 +47,7 @@ export const isWaitingRoomData = (room: any): room is ICreatedRoom => {
 
 // :: Validate Created Room Data Functions
 // - 입장 가능한 방인지 검사
-export const canEnterRoom = (room: WaitingRoom) => {
+export const canEnterRoom = (room: IWaitingRoom) => {
   const isRoomFull = room.roomCurUserNum === room.roomMaxUserNum
   const isGameStart = room.isGameStart
 

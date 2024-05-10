@@ -1,19 +1,19 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import { IRoom, WaitingRoom } from './type'
+import { IRoom, IWaitingRoom } from './type'
 
 // :: 대기방 리스트
 interface WaitingRoomListState {
-  roomList: WaitingRoom[]
-  setRoomList: (roomList: WaitingRoom[]) => void
+  roomList: IWaitingRoom[]
+  setRoomList: (roomList: IWaitingRoom[]) => void
 }
 
 export const useWaitingRoomStore = create<WaitingRoomListState>()(
   devtools(
     immer((set) => ({
       roomList: [], // initial state
-      setRoomList: (roomList: WaitingRoom[]) =>
+      setRoomList: (roomList: IWaitingRoom[]) =>
         set((state: WaitingRoomListState) => {
           state.roomList = roomList
         }),
