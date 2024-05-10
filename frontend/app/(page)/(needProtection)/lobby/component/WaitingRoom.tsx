@@ -19,7 +19,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
 
   const handleRoomClick = () => {
     // 비밀번호 방 클릭 시
-    if (room.isHavePW) {
+    if (room.hasPassword) {
       canEnterRoom(room) && setModalOpen(true)
     }
     // 비밀번호 없는 방 클릭 시
@@ -63,7 +63,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
       </div>
       <div className="text-right">
         <p>{`${room.roomCurUserNum}/${room.roomMaxUserNum}`}</p>
-        {room.isHavePW && <Lock size={24} />}
+        {room.hasPassword && <Lock size={24} />}
       </div>
       <RoomPasswordModal
         isOpen={isModalOpen}

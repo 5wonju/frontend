@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import { IRoom, WaitingRoom } from './type'
 
 // :: 대기방 리스트
 interface WaitingRoomListState {
@@ -39,7 +40,7 @@ export const useCurrentRoomStore = create<IRoomState>()(
         isGameStart: null,
         isRoomFull: null,
         probCategory: null,
-        isHavePW: null,
+        hasPassword: null,
         curRound: null,
         totalRound: null,
         roomMode: null,

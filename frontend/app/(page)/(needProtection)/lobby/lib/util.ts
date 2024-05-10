@@ -16,7 +16,7 @@ export const generateRooms = (): WaitingRoom[] => {
       isGameStart: Math.random() > 0.5,
       isRoomFull: roomCurUserNum === roomMaxUserNum,
       probCategory: (CATEGORY_LIST as ProblemCategoryType[])[Math.floor(Math.random() * 4)],
-      isHavePW: Math.random() > 0.5,
+      hasPassword: Math.random() > 0.5,
       curRound: Math.floor(Math.random() * 10),
       totalRound: 20,
       roomMode: ['basic', 'yoot'][Math.floor(Math.random() * 2)] as 'basic' | 'yoot',
