@@ -9,7 +9,10 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     refetch()
+  }, [])
 
+  useEffect(() => {
+    console.log(isLoggedIn, isLoading)
     if (!isLoggedIn && !isLoading) {
       router.push('/login')
     }

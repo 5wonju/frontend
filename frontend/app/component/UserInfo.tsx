@@ -21,9 +21,12 @@ const UserInfo = () => {
 
   return (
     <>
-      <p>유저 정보 컴포넌트</p>
+      <p className="sr-only">유저 정보 컴포넌트</p>
       {userInfo && (
-        <Link href={'/mypage'} className="bg-white p-4 shadow-md  flex flex-col gap-1 h-full">
+        <Link
+          href={'/mypage'}
+          className="bg-white p-4 shadow-md  flex flex-col justify-center gap-1 h-full"
+        >
           <div className="flex gap-4">
             <Image
               src={defaultProfileImg}

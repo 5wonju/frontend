@@ -50,7 +50,7 @@ const AutoInstruction = () => {
           index === currentDescIndex && (
             <div key={index} className="flex flex-col gap-5 select-none">
               <h2
-                className={`text-6xl text-neutral-800 font-black ${
+                className={`text-6xl text-neutral-800 font-black break-words ${
                   // 현재 나타날 문구일 경우에만 애니메이션 클래스 추가
                   index === currentDescIndex ? 'animate-faceInFromButtom1' : ''
                 }`}
