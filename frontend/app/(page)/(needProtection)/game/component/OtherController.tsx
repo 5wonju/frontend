@@ -39,49 +39,25 @@ const OtherController = ({
   useFrame((state, delta) => {
     if (!rigidbody.current) return
 
-    // vec3({ x: pos.x, y: pos.y, z: pos.z })
-
-    const impulse = { x: 0, y: 0, z: 0 }
+    // 점프 구현
     if (moveState === playerMoveStateEnum.JUMP && isOnFloor.current) {
-      impulse.y += JUMP_FORCE
+      const jumpImpulse = { x: 0, y: JUMP_FORCE, z: 0 }
+      rigidbody.current.applyImpulse(jumpImpulse, true)
       isOnFloor.current = false
     }
 
-    const curLinvel = rigidbody.current.linvel()
-    let changeRotation = false
-
-    if (moveState === playerMoveStateEnum.RUN && curLinvel.x < MAX_VEL && 0 < curLinvel.x)
-      impulse.x += MOVEMENT_SPEED
-    if (moveState === playerMoveStateEnum.RUN && curLinvel.x > -MAX_VEL && 0 > curLinvel.x)
-      impulse.x -= MOVEMENT_SPEED
-    changeRotation = true
-    if (direction === 'back') {
-      if (moveState === playerMoveStateEnum.RUN && curLinvel.z < MAX_VEL)
-        impulse.z += MOVEMENT_SPEED
-      changeRotation = true
+    // linvel을 기반으로 위치 업데이트
+    const currentTranslation = rigidbody.current.translation()
+    const newTranslation = {
+      x: currentTranslation.x + linvel.x * delta,
+      y: currentTranslation.y,
+      z: currentTranslation.z + linvel.z * delta,
     }
-    if (direction === 'forward') {
-      if (moveState === playerMoveStateEnum.RUN && curLinvel.z > -MAX_VEL)
-        impulse.z -= MOVEMENT_SPEED
-      changeRotation = true
-    }
+    rigidbody.current.setTranslation(vec3(newTranslation))
 
-    rigidbody.current.applyImpulse(impulse, true)
-
-    // if (Math.abs(linvel.x) > RUN_VEL || Math.abs(linvel.z) > RUN_VEL) {
-    //   if (isOnFloor.current && moveState !== playerMoveStateEnum.RUN) {
-    //     setPlayerMoveState(playerMoveStateEnum.RUN)
-    //   }
-    // } else {
-    //   if (isOnFloor.current && moveState !== playerMoveStateEnum.IDLE) {
-    //     setPlayerMoveState(playerMoveStateEnum.IDLE)
-    //   }
-    // }
-
-    if (changeRotation) {
-      const angle = Math.atan2(linvel.x, linvel.z)
-      character.current.rotation.y = angle
-    }
+    // 회전 업데이트
+    const angle = Math.atan2(linvel.x, linvel.z)
+    character.current.rotation.y = angle
   })
 
   const resetPosition = () => {

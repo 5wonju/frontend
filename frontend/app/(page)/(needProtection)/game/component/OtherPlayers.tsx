@@ -39,7 +39,7 @@ const samplePlayers: IOtherStatus[] = [
     direction: 'right',
     nickname: '!!!옆에대단한사람이있어요',
     team: teamEnum.BLUE,
-    linvel: { x: 1, y: 0, z: 0 },
+    linvel: { x: 0, y: 0, z: 3 },
   },
 ]
 
