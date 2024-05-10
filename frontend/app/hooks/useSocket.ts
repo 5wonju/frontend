@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
-import { useChatLogsStore, useMainSocketStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
+import { useChatLogsStore, useMainSocketStore } from '../lib/store'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
