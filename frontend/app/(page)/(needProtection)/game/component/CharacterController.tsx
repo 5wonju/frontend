@@ -161,16 +161,12 @@ const CharacterController = () => {
           }
         }}
       >
-<<<<<<< Updated upstream:frontend/app/(page)/(needProtection)/game/component/CharacterController.tsx
-        <CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
-=======
         <CapsuleCollider
           args={[0.8, 0.4]}
           position={[0, 1.2, 0]}
           restitution={0} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
           friction={0.1} // 마찰력 설정
         />
->>>>>>> Stashed changes:frontend/app/(page)/(needProtection)/game/component/CharacterController.jsx
         <group ref={character}>
           <Character pos={rigidbody.current && rigidbody.current.linvel()} />
         </group>
