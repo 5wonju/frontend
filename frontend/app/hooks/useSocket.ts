@@ -54,7 +54,16 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team } }))
   }
 
-  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList, selectTeam }
+  const getRoomInfo = (roomId: number) => {
+    if(!socket) {
+      console.log("소켓이 비었어")
+      return
+    }
+
+    socket.send(JSON.stringify({ eventType: 'SEARCH_ROOM_BY_ID', data: { roomId } }))
+  }
+
+  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList, selectTeam, getRoomInfo }
 }
 
 // :: Chat
