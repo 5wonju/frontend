@@ -2,8 +2,9 @@
 
 import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
-import { teamEnum, useCharacterSelectStore, useModalStore, usePlayerStore } from '../lib/store'
+import { useCharacterSelectStore, useModalStore } from '../lib/store'
 import { IOtherStatus } from './OtherPlayers'
+import { teamEnum } from '../lib/store-type'
 
 /*
 모델별 scale 조정
@@ -43,14 +44,11 @@ export default function OtherCharacter({
 }: IOtherStatus) {
   const groupRef = useRef()
   // const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
+  console.log('nickname', nickname, moveState, characterType, direction, nickname, team)
 
   const { nodes, animations, scene } = useGLTF(pathObj[characterType])
   const { actions } = useAnimations(animations, scene)
-
-  const { isModalOpen } = useModalStore((state) => ({
-    isModalOpen: state.isModalOpen,
-  }))
-
+  const { isModalOpen } = useModalStore()
   // 캐릭터에 그림자 효과
   scene.traverse((child) => {
     if (child.isMesh) {
@@ -76,7 +74,7 @@ export default function OtherCharacter({
       {pos && (
         <Html position={[0, 3, 0]} className={`${isModalOpen ? 'hidden' : ''}`}>
           <div
-            className={`text-sm w-20 overflow-hidden whitespace-nowrap select-none truncate ${
+            className={`text-sm w-20 overflow-hidd en whitespace-nowrap select-none truncate ${
               team === teamEnum.BLUE
                 ? 'text-blue-400'
                 : team === teamEnum.RED

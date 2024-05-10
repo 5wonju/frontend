@@ -4,17 +4,9 @@ import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import Character from './Character'
 
-import * as THREE from 'three'
-import {
-  gameStateEnum,
-  playerMoveStateEnum,
-  useCharacterSelectStore,
-  useGameRoomStore,
-  usePlayerStore,
-} from '../lib/store'
-import { controls } from './KeyboardControl'
 import OtherCharacter from './OtherCharacter'
 import { IOtherStatus } from './OtherPlayers'
+import { playerMoveStateEnum } from '../lib/store-type'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1
@@ -23,6 +15,7 @@ const RUN_VEL = 1.5
 
 const OtherController = ({
   pos,
+  linvel,
   moveState,
   characterType,
   direction,
@@ -36,12 +29,12 @@ const OtherController = ({
   const character = useRef()
 
   useEffect(() => {
-    if (!rigidbody.current) return
-    rigidbody.current.setTranslation(vec3({ x: pos.x, y: pos.y, z: pos.z }))
-    rigidbody.current.setLinvel(vec3({ x: pos.x, y: pos.y, z: pos.z }))
+    // if (!rigidbody.current) return
+    rigidbody.current.setTranslation(vec3({ x: Math.random() * 3, y: pos.y, z: Math.random() * 3 }))
+    rigidbody.current.setLinvel(vec3({ x: linvel.x, y: linvel.y, z: linvel.z }))
     // 캐릭터가 이동할 때마다 좌표 받아오기
     // console.log('rigidbody.current', rigidbody.current.linvel())
-  }, [pos])
+  }, [])
 
   useFrame((state, delta) => {
     if (!rigidbody.current) return
@@ -54,22 +47,22 @@ const OtherController = ({
       isOnFloor.current = false
     }
 
-    const linvel = rigidbody.current.linvel()
+    const curLinvel = rigidbody.current.linvel()
     let changeRotation = false
-    if (direction === 'right') {
-      if (moveState === playerMoveStateEnum.RUN && linvel.x < MAX_VEL) impulse.x += MOVEMENT_SPEED
-      changeRotation = true
-    }
-    if (direction === 'left') {
-      if (moveState === playerMoveStateEnum.RUN && linvel.x > -MAX_VEL) impulse.x -= MOVEMENT_SPEED
-      changeRotation = true
-    }
+
+    if (moveState === playerMoveStateEnum.RUN && curLinvel.x < MAX_VEL && 0 < curLinvel.x)
+      impulse.x += MOVEMENT_SPEED
+    if (moveState === playerMoveStateEnum.RUN && curLinvel.x > -MAX_VEL && 0 > curLinvel.x)
+      impulse.x -= MOVEMENT_SPEED
+    changeRotation = true
     if (direction === 'back') {
-      if (moveState === playerMoveStateEnum.RUN && linvel.z < MAX_VEL) impulse.z += MOVEMENT_SPEED
+      if (moveState === playerMoveStateEnum.RUN && curLinvel.z < MAX_VEL)
+        impulse.z += MOVEMENT_SPEED
       changeRotation = true
     }
     if (direction === 'forward') {
-      if (moveState === playerMoveStateEnum.RUN && linvel.z > -MAX_VEL) impulse.z -= MOVEMENT_SPEED
+      if (moveState === playerMoveStateEnum.RUN && curLinvel.z > -MAX_VEL)
+        impulse.z -= MOVEMENT_SPEED
       changeRotation = true
     }
 
@@ -93,7 +86,7 @@ const OtherController = ({
 
   const resetPosition = () => {
     rigidbody.current.setTranslation(vec3({ x: 0, y: 0, z: 0 }))
-    rigidbody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }))
+    rigidbody.current.setLinvel(vec3({ x: linvel.x, y: linvel.y, z: linvel.z }))
   }
   return (
     <group>

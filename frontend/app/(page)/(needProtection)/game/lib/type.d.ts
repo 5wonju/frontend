@@ -25,14 +25,19 @@ export interface IUserInfo {
     y: number
     z: number
   }
+  linvel: {
+    x: number
+    y: number
+    z: number
+  }
   team: teamEnum
   userScore: number
-  moveState?: playerMoveStateEnum.IDLE
-  characterType?: number
-  direction?: 'right'
-  escapeHistory?: number
-  winRate?: number
-  winCnt?: number
+  moveState: playerMoveStateEnum.IDLE
+  characterType: number
+  direction: 'right'
+  escapeHistory: number
+  winRate: number
+  winCnt: number
 }
 
 // 캐릭터 선택 타입

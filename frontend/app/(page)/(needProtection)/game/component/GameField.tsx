@@ -6,6 +6,7 @@ import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
 import TeamSpot from './TeamSpot'
+import OtherPlayers from './OtherPlayers'
 
 const GameField = () => {
   const { startGame, gameState } = useGameRoomStore()
