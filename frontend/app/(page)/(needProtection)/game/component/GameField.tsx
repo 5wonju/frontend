@@ -1,7 +1,7 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React, { use } from 'react'
+import React from 'react'
 import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'

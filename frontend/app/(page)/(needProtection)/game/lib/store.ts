@@ -8,7 +8,6 @@ import {
   ICharacterSelectState,
   IGameRoomState,
   IModalState,
-  IOnGameUserInfo,
   IPlayerState,
   ITeamSetBoardState,
   playerMoveStateEnum,
