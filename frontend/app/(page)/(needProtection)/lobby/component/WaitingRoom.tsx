@@ -16,10 +16,13 @@ interface RoomProps {
 const WaitingRoom = ({ room }: RoomProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const { enterRoom } = useWaitingRoom()
-  const { setRoom } = useCurrentRoomStore()
+  const { room: r, setRoom } = useCurrentRoomStore()
 
   const handleRoomClick = () => {
     if (!room) return
+    setRoom(room)
+    console.log('Room clicked:', room, r)
+
     // 비밀번호 방 클릭 시
     if (room.hasPassword) {
       canEnterRoom(room) && setModalOpen(true)
@@ -27,8 +30,6 @@ const WaitingRoom = ({ room }: RoomProps) => {
     // 비밀번호 없는 방 클릭 시
     else {
       if (room.roomId) enterRoom(room.roomId)
-      // 현재 방 정보 저장해두자
-      setRoom(room)
     }
   }
 

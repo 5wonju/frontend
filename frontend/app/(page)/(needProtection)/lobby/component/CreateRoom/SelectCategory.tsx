@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { use, useEffect, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
 import { ProblemCategoryType, RoomEditProps } from '../../lib/type'
 
@@ -8,9 +8,15 @@ const CATEGORY_LIST: ProblemCategoryType[] = ['개발', '과학', '컴퓨터', '
 
 const SelectCategory = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<ProblemCategoryType[]>(
+    roomInfo.probCategory || []
+  )
   const ref = useRef(null)
 
   useClickAway(ref, () => setIsCategoryOpen(false))
+  useEffect(() => {
+    setRoomInfo((prev) => ({ ...prev, probCategory: selectedCategory }))
+  }, [selectedCategory])
 
   return (
     <div className="mt-2">
@@ -39,14 +45,7 @@ const SelectCategory = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
                     roomInfo.probCategory.includes(category) ? 'bg-blue-200' : ''
                   }`}
                   onClick={() => {
-                    setRoomInfo((prev) => ({
-                      ...prev,
-                      probCategory: prev.probCategory.includes(category)
-                        ? prev.probCategory.filter(
-                            (selectedCategory) => selectedCategory !== category
-                          )
-                        : [...prev.probCategory, category],
-                    }))
+                    setSelectedCategory([category])
                     setIsCategoryOpen(false)
                   }}
                   role="menuitem"

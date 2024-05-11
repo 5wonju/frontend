@@ -1,23 +1,26 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RoomEditProps } from '../../lib/type'
 
 const WriteRoomPw = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [roomPW, setRoomPW] = useState(roomInfo.roomPW || '')
+
+  useEffect(() => {
+    setRoomInfo((prev) => ({ ...prev, roomPW }))
+  }, [roomPW])
 
   return (
     <div className="mt-2">
       <label className="block text-sm font-bold">Room Password (옵션)</label>
       <div className="relative">
-        {roomInfo.roomPW && (
-          <input
-            type={isPasswordVisible ? 'text' : 'password'}
-            value={roomInfo.roomPW}
-            onChange={(e) => setRoomInfo((prev) => ({ ...prev, roomPW: e.target.value }))}
-            placeholder="4자 이상 입력해주세요"
-            className="w-full border p-2 rounded"
-          />
-        )}
+        <input
+          type={isPasswordVisible ? 'text' : 'password'}
+          value={roomPW}
+          onChange={(e) => setRoomPW(e.target.value)}
+          placeholder="4자 이상 입력해주세요"
+          className="w-full border p-2 rounded"
+        />
         <button
           onClick={() => setIsPasswordVisible(!isPasswordVisible)}
           className="absolute inset-y-0 right-2 p-1"

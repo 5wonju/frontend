@@ -16,6 +16,7 @@ const RoomEditButton = () => {
   const { room } = useCurrentRoomStore((state) => ({
     room: state.room,
   }))
+  console.log('수정 room:', room)
   const { editRoom } = useWaitingRoom()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -30,15 +31,24 @@ const RoomEditButton = () => {
   })
 
   const openEditRoomModal = () => {
+    console.log('수정 클릭 room:', room)
     setIsModalOpen(true)
   }
 
   const closeEditRoomModal = () => {
     setIsModalOpen(false)
+    setRoomInfo({
+      roomTitle: room.roomTitle,
+      roomPW: room.roomPW,
+      probCategory: room.probCategory!,
+      roomMode: room.roomMode,
+      maxUserNum: room.roomMaxUserNum,
+      probNum: room.totalRound,
+    })
   }
 
   const handleEditRoomInfo = () => {
-    editRoom(roomInfo)
+    if (roomInfo) editRoom(roomInfo)
     closeEditRoomModal()
   }
 
