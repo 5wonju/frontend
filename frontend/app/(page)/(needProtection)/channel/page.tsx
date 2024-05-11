@@ -41,8 +41,9 @@ const Channel = async () => {
   // ]
 
   return (
-    <main className="flex flex-col">
-      <h1 className="sr-only">Channel Page</h1>
+    <section className="flex flex-col justify-center items-center h-full gap-8 ">
+      {/* <h1 className="sr-only">Channel Page</h1> */}
+      <h1 className="text-5xl font-bold">채널 선택</h1>
       <HydrationBoundary state={dehydratedChannelState}>
         <ChannelList />
         {/* <Suspense fallback={<div>Loading...</div>}>
@@ -51,7 +52,7 @@ const Channel = async () => {
         ))}
       </Suspense> */}
       </HydrationBoundary>
-    </main>
+    </section>
   )
 }
 
