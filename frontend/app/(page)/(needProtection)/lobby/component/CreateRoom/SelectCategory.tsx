@@ -2,12 +2,13 @@
 
 import React, { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+import { ProblemCategoryType } from '../../lib/type'
 
-const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발'] // 예시 카테고리 목록
+const CATEGORY_LIST: ProblemCategoryType[] = ['개발', '과학', '컴퓨터', '한국사', '근현대사']
 
 interface SelectCategoryProps {
-  probCategory: string
-  setProbCategory: (category: string) => void
+  probCategory: ProblemCategoryType[]
+  setProbCategory: React.Dispatch<React.SetStateAction<ProblemCategoryType[]>>
 }
 
 const SelectCategory = ({ probCategory, setProbCategory }: SelectCategoryProps) => {
@@ -38,10 +39,14 @@ const SelectCategory = ({ probCategory, setProbCategory }: SelectCategoryProps) 
               <li
                 key={category}
                 className={`p-2 hover:bg-blue-100 ${
-                  category === probCategory ? 'bg-blue-200' : ''
+                  probCategory.includes(category) ? 'bg-blue-200' : ''
                 }`}
                 onClick={() => {
-                  setProbCategory(category)
+                  setProbCategory((prev) =>
+                    prev.includes(category)
+                      ? prev.filter((selectedCategory) => selectedCategory !== category)
+                      : [...prev, category]
+                  )
                   setIsCategoryOpen(false)
                 }}
                 role="menuitem"

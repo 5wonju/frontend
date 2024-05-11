@@ -1,8 +1,10 @@
+import { IUserInfo } from "./type"
+
 // :: 게임 상태
 export enum gameStateEnum {
-  READY,
-  GAME,
-  DONE,
+  READY = '대기중',
+  GAME = '게임중',
+  DONE = '게임종료',
 }
 
 // :: 플레이어 액션 종류
@@ -14,18 +16,18 @@ export enum playerMoveStateEnum {
 
 // :: 팀 종류
 export enum teamEnum {
-  NONE = 'none',
-  RED = 'red',
-  BLUE = 'blue',
+  NONE = 'NONE',
+  RED = 'RED',
+  BLUE = 'BLUE',
 }
 
 // :: 정답 선택 종류
 export enum AnswerEnum {
-  A,
-  C,
-  D,
-  B,
-  NONE,
+  A = 'A',
+  C = 'C',
+  D = 'D',
+  B = 'B',
+  NONE = 'none',
 }
 
 // ------------------------------------------------
@@ -42,9 +44,11 @@ export interface IOnGameUserInfo {
 }
 
 export interface IGameRoomState {
+  isRoomOwner: boolean
+  setIsRoomOwner: (isRoomOwner: boolean) => void
   gameState: gameStateEnum
-  gameUserList: IOnGameUserInfo[] | null
-  setGameUserList: (users: IOnGameUserInfo[] | null) => void
+  gameUserList: IUserInfo[] | null
+  setGameUserList: (users: IUserInfo[] | null) => void
   startGame: () => void
 }
 

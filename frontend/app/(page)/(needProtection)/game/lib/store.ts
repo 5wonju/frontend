@@ -14,13 +14,22 @@ import {
   playerMoveStateEnum,
   teamEnum,
 } from './store-type'
+import { IUserInfo } from './type'
 
+// :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
   devtools(
     immer((set) => ({
+      // 내가 방장인지 여부
+      isRoomOwner: false,
+      setIsRoomOwner: (isRoomOwner: boolean) =>
+        set((state: IGameRoomState) => {
+          state.isRoomOwner = isRoomOwner
+        }),
+
       // room 내 유저 정보 리스트
       gameUserList: [], // initial state
-      setGameUserList: (users: IOnGameUserInfo[] | null) =>
+      setGameUserList: (users: IUserInfo[] | null) =>
         set((state: IGameRoomState) => {
           state.gameUserList = users
         }),
@@ -36,6 +45,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
   )
 )
 
+// :: PlayerStore
 export const usePlayerStore = create<IPlayerState>()(
   devtools(
     immer((set) => ({
@@ -106,7 +116,7 @@ export const useAnswerSelectStore = create<IAnswerState>()(
   devtools(
     immer((set) => ({
       selectAnswer: AnswerEnum.NONE,
-      setSelectAnswer: (selectAnswer: number) =>
+      setSelectAnswer: (selectAnswer: AnswerEnum) =>
         set((state) => {
           state.selectAnswer = selectAnswer
         }),

@@ -8,14 +8,15 @@ import SelectPlayerCount from './SelectPlayerCount'
 import WriteProblemNumber from './WriteProblemNumber'
 import WriteRoomName from './WriteRoomName'
 import WriteRoomPw from './WriteRoomPw'
+import { gameMode, ICreatedRoom, ProblemCategoryType } from '../../lib/type'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
   // :: Room Data
   const [roomName, setRoomName] = useState('')
   const [roomPw, setRoomPw] = useState('')
-  const [probCategory, setProbCategory] = useState('개발')
+  const [probCategory, setProbCategory] = useState(['개발'] as ProblemCategoryType[])
   const [playerCount, setPlayerCount] = useState(2)
-  const [gameMode, setGameMode] = useState('basic')
+  const [gameMode, setGameMode] = useState('BASIC' as gameMode)
   const [probNum, setProbNum] = useState(10)
 
   const { socket } = useMainSocketStore() // zustand에서 소켓 가져오기
@@ -27,7 +28,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
     const roomData = {
       roomTitle: roomName,
       roomPW: roomPw,
-      probCategory: [probCategory],
+      probCategory: probCategory,
       maxUserNum: playerCount,
       roomMode: gameMode,
       probNum,
@@ -66,7 +67,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
           <button className="px-4 py-2 bg-gray-300 rounded" onClick={onModalClose}>
             취소
           </button>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleCreateRoom}>
+          <button className="px-4 py-2 bg-indigo-600 text-white rounded" onClick={handleCreateRoom}>
             방 생성
           </button>
         </div>

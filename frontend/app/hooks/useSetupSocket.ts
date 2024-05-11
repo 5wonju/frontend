@@ -1,6 +1,8 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
+import { IUserInfo } from '../(page)/(needProtection)/game/lib/type'
+import { IWaitingRoom } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
 import { useEffect } from 'react'
 import { useChatLogsStore } from '../lib/store'
@@ -32,13 +34,13 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     // router.push(`/game/${roomId}`)
   }
 
-  const successGetRoomList = (rooms: WaitingRoom[]) => {
+  const successGetRoomList = (rooms: IWaitingRoom[]) => {
     console.log('Received rooms:', rooms)
     setRoomList(rooms)
   }
 
   // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successEnterRoom = (userList: onGameUserInfo[]) => {
+  const successEnterRoom = (userList: IUserInfo[]) => {
     setGameUserList(userList)
     router.push(`/game`)
     // router.push(`/game/${room.roomId}`)
@@ -78,7 +80,15 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')
+          console.log('방 입장 성공시 받아오는 데이터', responseData.data)
           successEnterRoom(responseData.data.userList)
+          break
+        case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
+          console.log('팀 선택 성공 응답')
+          break
+        case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OWNER:
+        case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OTHER:
+          console.log('방 정보 업데이트 성공 응답')
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

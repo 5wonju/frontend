@@ -13,24 +13,27 @@ export interface IWonUser {
 export interface ITeamInfoProps {
   teamName: string
   teamColor: teamEnum
-  userList: IUserInfo[]
-  handleOutUser: (userId: number) => void
+  userList: IUserInfo[] | null
+  handleOutUser: (userNickname: string) => void
 }
 
 // 게임방 내 유저 정보
 export interface IUserInfo {
-  nickname: string
-  userId: number
+  userNickname: string
   position: {
     x: number
     y: number
     z: number
   }
   team: teamEnum
-  score: number
+  userScore: number
   moveState?: playerMoveStateEnum.IDLE
   characterType?: number
   direction?: 'right'
+  escapeHistory?: number
+  winRate?: number
+  winCnt?: number
+  roomOwner: boolean
 }
 
 // 캐릭터 선택 타입

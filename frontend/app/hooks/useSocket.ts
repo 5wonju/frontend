@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { useChatLogsStore, useMainSocketStore } from '../lib/store'
+import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import { ICreatedRoom, IEditRoom } from '../(page)/(needProtection)/lobby/lib/type'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -16,6 +18,15 @@ const useWaitingRoom = () => {
     }
     console.log('createWaitingRoom:', roomInfo)
     socket.send(JSON.stringify({ eventType: 'CREATE_ROOM', data: roomInfo }))
+  }
+
+  const editRoom = (roomInfo: IEditRoom) => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('editRoom:', roomInfo)
+    socket.send(JSON.stringify({ eventType: 'UPDATE_ROOM_INFO', data: roomInfo }))
   }
 
   // Todo : 서버랑 예기해서 소켓 연결 끊기는 문제 해결 필요.
@@ -44,7 +55,33 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'ENTER_ROOM', data: { roomId, roomPw } }))
   }
 
-  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList }
+  const selectTeam = (team: teamEnum) => {
+    if (!socket) {
+      console.log('Socket이 비어있습니다.')
+      return
+    }
+    console.log('selectTeam:', team)
+    socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team } }))
+  }
+
+  const getRoomInfo = (roomId: number) => {
+    if (!socket) {
+      console.log('소켓이 비었어')
+      return
+    }
+
+    socket.send(JSON.stringify({ eventType: 'SEARCH_ROOM_BY_ID', data: { roomId } }))
+  }
+
+  return {
+    createWaitingRoom,
+    enterRoom,
+    getInitialRoomList,
+    roomList,
+    selectTeam,
+    getRoomInfo,
+    editRoom,
+  }
 }
 
 // :: Chat
