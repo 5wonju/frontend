@@ -1,4 +1,4 @@
-// 'use client'
+'use client'
 import { getChannelData, getChannelDataWithNextJS } from './lib/api'
 import { cookies } from 'next/headers'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
@@ -6,6 +6,7 @@ import ChannelList from './component/ChannelList'
 import { Suspense } from 'react'
 import RegionSelect from './component/RegionSelect'
 import { verifyToken } from '@/app/lib/api'
+import { usePreventUnload } from '@/app/hooks/useUnload'
 
 const prefetchChannelData = async (token: string | undefined) => {
   if (!!token) return
@@ -21,16 +22,20 @@ const prefetchChannelData = async (token: string | undefined) => {
   return dehydrate(queryClient)
 }
 
-const Channel = async () => {
-  const cookieStore = cookies()
-  const token = cookieStore.get('accessToken')?.value
+const Channel = () => {
+  // usePreventUnload()
+
+  console.log('Channel Page')
+  // const cookieStore = cookies()
+  // const token = cookieStore.get('accessToken')?.value
   // console.log(token)
+
   // 1. API ver.
   // const channelData: IChannelData[] | undefined = await getChannelData(token)
 
   // 2. ReactQuery ver.
-  const dehydratedChannelState = prefetchChannelData(token)
-  console.log(dehydratedChannelState)
+  // const dehydratedChannelState = prefetchChannelData(token)
+  // console.log(dehydratedChannelState)
 
   // queryClient.getQueryData()
 
@@ -43,14 +48,14 @@ const Channel = async () => {
   return (
     <div className="flex flex-col">
       <h1>Channel</h1>
-      <HydrationBoundary state={dehydratedChannelState}>
-        <ChannelList />
-        {/* <Suspense fallback={<div>Loading...</div>}>
+      {/* <HydrationBoundary state={dehydratedChannelState}> */}
+      <ChannelList />
+      {/* <Suspense fallback={<div>Loading...</div>}>
         {channelData.map((channel, index) => (
           <RegionSelect key={index} channel={channel} />
         ))}
       </Suspense> */}
-      </HydrationBoundary>
+      {/* </HydrationBoundary> */}
     </div>
   )
 }

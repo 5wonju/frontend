@@ -13,7 +13,7 @@ const RegionSelect = ({ channel }: { channel: IChannelData }) => {
 
   useEffect(() => {
     if (isConnected && socket) {
-      console.log(socket)
+      console.log('채널 선택 후 소켓 연결 완료.')
       router.push(`/lobby?region=${channel.name}`)
     }
   }, [isConnected, socket])
