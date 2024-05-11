@@ -1,19 +1,19 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import { IRoom, IWaitingRoom } from './type'
+import { IRoomOfLobby } from './type'
 
 // :: 대기방 리스트
 interface WaitingRoomListState {
-  roomList: IWaitingRoom[]
-  setRoomList: (roomList: IWaitingRoom[]) => void
+  roomList: IRoomOfLobby[]
+  setRoomList: (roomList: IRoomOfLobby[]) => void
 }
 
 export const useWaitingRoomStore = create<WaitingRoomListState>()(
   devtools(
     immer((set) => ({
       roomList: [], // initial state
-      setRoomList: (roomList: IWaitingRoom[]) =>
+      setRoomList: (roomList: IRoomOfLobby[]) =>
         set((state: WaitingRoomListState) => {
           state.roomList = roomList
         }),
@@ -24,8 +24,8 @@ export const useWaitingRoomStore = create<WaitingRoomListState>()(
 
 // :: 현재방 정보
 interface IRoomState {
-  room: IRoom
-  setRoom: (room: IRoom) => void
+  room: IRoomOfLobby
+  setRoom: (room: IRoomOfLobby) => void
 }
 
 export const useCurrentRoomStore = create<IRoomState>()(
@@ -35,17 +35,18 @@ export const useCurrentRoomStore = create<IRoomState>()(
         roomTitle: null,
         roomOwnerName: null,
         roomCurUserNum: null,
-        roomMaxUserNum: null,
+        roomMaxUserNum: 2,
         roomId: null,
+        roomPW: null,
         isGameStart: null,
         isRoomFull: null,
         probCategory: null,
         hasPassword: null,
         curRound: null,
-        totalRound: null,
-        roomMode: null,
+        totalRound: 10,
+        roomMode: 'BASIC',
       },
-      setRoom: (room: IRoom) =>
+      setRoom: (room: IRoomOfLobby) =>
         set((state: IRoomState) => {
           state.room = room
         }),

@@ -1,8 +1,11 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
-import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
+import {
+  useCurrentRoomStore,
+  useWaitingRoomStore,
+} from '../(page)/(needProtection)/lobby/lib/store'
 import { IUserInfo } from '../(page)/(needProtection)/game/lib/type'
-import { IWaitingRoom } from '../(page)/(needProtection)/lobby/lib/type'
+import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
 import { useEffect } from 'react'
 import { useChatLogsStore } from '../lib/store'
@@ -25,6 +28,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
   const { setRoomList } = useWaitingRoomStore()
   const { setGameUserList } = useGameRoomStore()
+  const { setRoom } = useCurrentRoomStore()
   const router = useRouter()
 
   // :: Handler Functions
@@ -34,7 +38,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     // router.push(`/game/${roomId}`)
   }
 
-  const successGetRoomList = (rooms: IWaitingRoom[]) => {
+  const successGetRoomList = (rooms: IRoomOfLobby[]) => {
     console.log('Received rooms:', rooms)
     setRoomList(rooms)
   }
@@ -88,7 +92,8 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OWNER:
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OTHER:
-          console.log('방 정보 업데이트 성공 응답')
+          setRoom(responseData.data.roomInfo)
+          console.log('방 정보 업데이트 성공 응답', responseData.data.roomInfo)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

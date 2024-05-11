@@ -7,10 +7,10 @@ import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useCurrentRoomStore } from '../lib/store'
-import { IWaitingRoom } from '../lib/type'
+import { IRoomOfLobby } from '../lib/type'
 
 interface RoomProps {
-  room: IWaitingRoom
+  room: IRoomOfLobby
 }
 
 const WaitingRoom = ({ room }: RoomProps) => {
@@ -19,13 +19,14 @@ const WaitingRoom = ({ room }: RoomProps) => {
   const { setRoom } = useCurrentRoomStore()
 
   const handleRoomClick = () => {
+    if (!room) return
     // 비밀번호 방 클릭 시
     if (room.hasPassword) {
       canEnterRoom(room) && setModalOpen(true)
     }
     // 비밀번호 없는 방 클릭 시
     else {
-      enterRoom(room.roomId)
+      if (room.roomId) enterRoom(room.roomId)
       // 현재 방 정보 저장해두자
       setRoom(room)
     }
@@ -33,7 +34,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
 
   const submitPassword = (password: string) => {
     console.log('Password entered:', password)
-    enterRoom(room.roomId, password)
+    if (room.roomId) enterRoom(room.roomId, password)
     setModalOpen(false)
   }
 
