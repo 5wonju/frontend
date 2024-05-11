@@ -1,14 +1,17 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
 import clsx from 'clsx'
-import { useSocket } from '@/app/hooks/useSocket'
 import { getCongestion } from '../lib/util'
 import { ArrowRightIcon } from 'lucide-react'
 
-const RegionSelect = ({ channel }: { channel: IChannelData }) => {
-  const router = useRouter()
+const RegionSelect = ({
+  channel,
+  setSelectedChannel,
+}: {
+  channel: IChannelData
+  setSelectedChannel: React.Dispatch<React.SetStateAction<string>>
+}) => {
   const channelData = useMemo(() => {
     const currentUsers = parseInt(channel.count.split('/')[0])
     const maxUsers = parseInt(channel.count.split('/')[1])
@@ -20,17 +23,9 @@ const RegionSelect = ({ channel }: { channel: IChannelData }) => {
       congestion: getCongestion(currentUsers),
     }
   }, [channel])
-  const { socket, connectSocket, isConnected } = useSocket()
-
-  useEffect(() => {
-    if (isConnected && socket) {
-      console.log(socket)
-      router.push(`/lobby?region=${channel.name}`)
-    }
-  }, [isConnected, socket])
 
   const handleRegionSelect = async () => {
-    await connectSocket(channel.name)
+    setSelectedChannel(channel.name)
   }
 
   return (
