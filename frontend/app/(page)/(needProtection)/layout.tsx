@@ -4,7 +4,6 @@ import HeaderNavigationBar from '@/app/component/Navigation/HeaderNavigationBar'
 import ProtectedLogin from '@/app/component/ProtectionComponent/ProtectedLogin'
 import ProtectedRoute from '@/app/component/ProtectionComponent/ProtectedRoute'
 import ProtectedSocket from '@/app/component/ProtectionComponent/ProtectedSocket'
-import { usePreventUnload } from '@/app/hooks/useUnload'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
@@ -13,7 +12,6 @@ const ProtectedLayout = ({
 }: Readonly<{
   children: React.ReactNode
 }>) => {
-  usePreventUnload()
   const currentPath = usePathname()
 
   switch (currentPath) {

@@ -6,7 +6,6 @@ import ChannelList from './component/ChannelList'
 import { Suspense } from 'react'
 import RegionSelect from './component/RegionSelect'
 import { verifyToken } from '@/app/lib/api'
-import { usePreventUnload } from '@/app/hooks/useUnload'
 
 const prefetchChannelData = async (token: string | undefined) => {
   if (!!token) return
@@ -23,8 +22,6 @@ const prefetchChannelData = async (token: string | undefined) => {
 }
 
 const Channel = () => {
-  // usePreventUnload()
-
   console.log('Channel Page')
   // const cookieStore = cookies()
   // const token = cookieStore.get('accessToken')?.value
