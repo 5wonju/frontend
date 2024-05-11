@@ -1,38 +1,61 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSocket } from '@/app/hooks/useSocket'
-// import { useSocketStore } from '../lib/store'
-// import { getSocketToken } from '../lib/api'
+import { useMemo } from 'react'
+import clsx from 'clsx'
+import { getCongestion } from '../lib/util'
+import { ArrowRightIcon } from 'lucide-react'
 
-const RegionSelect = ({ channel }: { channel: IChannelData }) => {
-  const router = useRouter()
-  // const { connect } = useSocketStore()
-  const { socket, connectSocket, isConnected } = useSocket()
+const RegionSelect = ({
+  channel,
+  setSelectedChannel,
+}: {
+  channel: IChannelData
+  setSelectedChannel: React.Dispatch<React.SetStateAction<string>>
+}) => {
+  const channelData = useMemo(() => {
+    const currentUsers = parseInt(channel.count.split('/')[0])
+    const maxUsers = parseInt(channel.count.split('/')[1])
 
-  useEffect(() => {
-    if (isConnected && socket) {
-      console.log(socket)
-      router.push(`/lobby?region=${channel.name}`)
+    return {
+      region: channel.name,
+      currentUsers,
+      maxUsers,
+      congestion: getCongestion(currentUsers),
     }
-  }, [isConnected, socket])
+  }, [channel])
 
   const handleRegionSelect = async () => {
-    await connectSocket(channel.name)
+    setSelectedChannel(channel.name)
   }
 
-  // const handleRegionSelect = async () => {
-  //   const response = await getSocketToken()
-  //   localStorage.setItem('socketToken', response.data)
-  //   await connect(channel.name, response.data)
-  //   router.push(`/lobby?region=${channel.name}`)
-  // }
-
   return (
-    <button className="flex items-center justify-between w-96" onClick={handleRegionSelect}>
-      <p>{channel.name}</p>
-      <p>{channel.count}</p>
+    <button
+      className={clsx(
+        'group flex items-center justify-between w-full text-xl font-bold text-black border-[3px] border-darkGray3 rounded px-12 py-12',
+        {
+          ' hover:border-green-500': channelData.congestion === '쾌적',
+          ' hover:border-yellow-400': channelData.congestion === '보통',
+          ' hover:border-orange-500': channelData.congestion === '혼잡',
+          ' hover:border-pink-500': channelData.congestion === '포화',
+        }
+      )}
+      onClick={handleRegionSelect}
+    >
+      <p className="font-bold text-3xl">{channelData.region}</p>
+      <p className={clsx('text-lightGray1 font-medium group-hover:text-black', {})}>
+        {channelData.currentUsers} / {channelData.maxUsers}
+      </p>
+      <p
+        className={clsx('text-2xl', {
+          'text-green-500': channelData.congestion === '쾌적',
+          'text-yellow-400': channelData.congestion === '보통',
+          'text-orange-500': channelData.congestion === '혼잡',
+          'text-pink-500': channelData.congestion === '포화',
+        })}
+      >
+        {channelData.congestion}
+      </p>
+      <ArrowRightIcon className={clsx('w-8 h-8')} />
     </button>
   )
 }
