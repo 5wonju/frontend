@@ -1,13 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
-import { gameMode } from '../../lib/type'
+import { gameMode, RoomEditProps } from '../../lib/type'
 
-interface SelectGameModeProps {
-  gameMode: gameMode
-  setGameMode: (mode: gameMode) => void
-}
-
-const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
+const SelectGameMode = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
   const [isGameModeOpen, setIsGameModeOpen] = useState(false)
   const ref = useRef(null)
 
@@ -33,7 +28,7 @@ const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
           onClick={() => setIsGameModeOpen(!isGameModeOpen)}
           className="w-full border p-2 rounded cursor-pointer"
         >
-          {gameMode === 'BASIC' ? '베이직' : '윷놀이'}
+          {roomInfo.roomMode === 'BASIC' ? '베이직' : '윷놀이'}
         </button>
         {isGameModeOpen && (
           <ul
@@ -43,9 +38,9 @@ const SelectGameMode = ({ gameMode, setGameMode }: SelectGameModeProps) => {
             {(['BASIC', 'YOOT'] as gameMode[]).map((mode) => (
               <li
                 key={mode}
-                className={`p-2 hover:bg-blue-100 ${mode === gameMode ? 'bg-blue-200' : ''}`}
+                className={`p-2 hover:bg-blue-100 ${mode === roomInfo.roomMode ? 'bg-blue-200' : ''}`}
                 onClick={() => {
-                  setGameMode(mode)
+                  setRoomInfo((prev) => ({ ...prev, roomMode: mode }))
                   setIsGameModeOpen(false)
                 }}
                 role="menuitem"
