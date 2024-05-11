@@ -39,6 +39,9 @@ body {
   .nav-btn {
     @apply text-indigo-950 bg-purple-200 my-auto font-semibold text-center px-4 py-2 rounded-xl border-2 border-purple-200 hover:bg-white hover:border-2 hover:border-solid hover:border-indigo-500 hover:text-indigo-500 transition-colors select-none;
   }
+  .nav-btn-mono {
+    @apply text-white bg-lightGray2 border-lightGray2 my-auto font-semibold text-center px-4 py-2 rounded-xl border-2 hover:bg-darkGray1 hover:border-2 hover:border-solid hover:border-darkGray1 hover:text-white transition-colors select-none;
+  }
 
   .indigo-btn {
     @apply bg-indigo-600 text-white rounded-full px-2.5 py-1 transition-colors font-semibold hover:bg-transparent hover:ring-[2.5px] hover:ring-indigo-600 ring-inset hover:text-indigo-600;
@@ -52,9 +55,9 @@ body {
     @apply bg-indigo-600 text-white rounded-full px-2.5 py-1 transition-colors font-semibold active:bg-transparent active:ring-[2.5px] active:ring-indigo-600 ring-inset active:text-indigo-600;
   }
 
-	.glass {
-		@apply bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm shadow-sm border border-white border-opacity-60 rounded-xl
-	}
+  .glass {
+    @apply bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm shadow-sm border border-white border-opacity-60 rounded-xl;
+  }
 
   .board {
     @apply min-h-full glass;

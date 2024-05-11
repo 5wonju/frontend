@@ -4,30 +4,29 @@ import React, { useEffect } from 'react'
 import WaitingRoomList from './component/WaitingRoomList'
 import UserInfo from '@/app/component/UserInfo'
 import Chat from '@/app/component/Chat'
-import { useMainSocketStore } from '../channel/lib/store'
 import ProtectedSocket from '@/app/component/ProtectionComponent/ProtectedSocket'
 import { useSetupSocket } from './../../../hooks/useSetupSocket'
+import { useMainSocketStore } from '@/app/lib/store'
 
+// overflow-y-scroll box-border
 const Lobby = () => {
   const { socket } = useMainSocketStore()
   useSetupSocket(socket)
 
   return (
-    <ProtectedSocket>
-      <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-48px)]">
-        <section className="col-span-3 row-span-2 overflow-y-scroll">
-          <WaitingRoomList />
+    <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-3.5rem)]">
+      <section className="col-span-3 row-span-2 ">
+        <WaitingRoomList />
+      </section>
+      <div className="flex col-span-3 gap-6">
+        <section className="">
+          <UserInfo />
         </section>
-        <div className="flex col-span-3 gap-6">
-          <section className="">
-            <UserInfo />
-          </section>
-          <section className="">
-            <Chat />
-          </section>
-        </div>
-      </main>
-    </ProtectedSocket>
+        <section className="">
+          <Chat />
+        </section>
+      </div>
+    </main>
   )
 }
 

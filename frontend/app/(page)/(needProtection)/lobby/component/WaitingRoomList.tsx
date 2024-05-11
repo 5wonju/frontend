@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react'
 import WaitingRoom from './WaitingRoom'
 import { useWaitingRoomStore } from '../lib/store'
-import { useSocketStore } from '../../channel/lib/store'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 // import { generateRooms } from '../lib/util'
 
@@ -26,7 +25,7 @@ const WaitingRoomList: React.FC = () => {
   // }, [roomList])
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-4">
+    <div className="grid grid-cols-2 gap-4 p-4 ">
       {roomList.map((room) => (
         <WaitingRoom key={room.roomId} room={room} />
       ))}

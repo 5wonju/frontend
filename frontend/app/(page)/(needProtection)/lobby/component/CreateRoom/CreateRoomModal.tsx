@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import SelectPlayerCount from './SelectPlayerCount'
+import { useWaitingRoom } from '@/app/hooks/useSocket'
+import { useMainSocketStore } from '@/app/lib/store'
+import { useState } from 'react'
+import { isWaitingRoomData, validateCreateRoomData } from '../../lib/util'
+import SelectCategory from './SelectCategory'
 import SelectGameMode from './SelectGameMode'
+import SelectPlayerCount from './SelectPlayerCount'
+import WriteProblemNumber from './WriteProblemNumber'
 import WriteRoomName from './WriteRoomName'
 import WriteRoomPw from './WriteRoomPw'
-import SelectCategory from './SelectCategory'
-import WriteProblemNumber from './WriteProblemNumber'
-import { isWaitingRoomData, validateCreateRoomData } from '../../lib/util'
-import { useWaitingRoom } from '@/app/hooks/useSocket'
-import { useMainSocketStore } from '../../../channel/lib/store'
-import { ProblemCategoryType, gameMode, ICreatedRoom } from '../../lib/type'
+import { gameMode, ICreatedRoom, ProblemCategoryType } from '../../lib/type'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
   // :: Room Data

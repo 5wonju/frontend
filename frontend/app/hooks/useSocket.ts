@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
-import { useChatLogsStore, useMainSocketStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
+import { useChatLogsStore, useMainSocketStore } from '../lib/store'
 import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 import { ICreatedRoom, IEditRoom } from '../(page)/(needProtection)/lobby/lib/type'
 
