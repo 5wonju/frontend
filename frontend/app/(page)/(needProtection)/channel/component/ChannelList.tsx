@@ -12,11 +12,13 @@ const ChannelList = () => {
 
   console.log('in list', channelData)
   return (
-    <>
+    <ul>
       {channelData?.map((data, key) => (
-        <RegionSelect key={key} channel={data} />
+        <li key={key}>
+          <RegionSelect channel={data} />
+        </li>
       ))}
-    </>
+    </ul>
   )
 }
 
