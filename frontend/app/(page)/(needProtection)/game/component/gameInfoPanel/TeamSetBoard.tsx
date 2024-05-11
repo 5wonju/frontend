@@ -1,7 +1,6 @@
 import TeamInfo from './TeamInfo'
 import { FaCaretDown } from 'react-icons/fa'
 import { useGameRoomStore, useTeamSetBoardStore } from '../../lib/store'
-import { userList } from '../../lib/dummy'
 import { teamEnum } from '../../lib/store-type'
 
 const TeamSetBoard = () => {

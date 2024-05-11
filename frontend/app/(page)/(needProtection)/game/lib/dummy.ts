@@ -28,71 +28,71 @@ export const wonUserList: IWonUser[] = [
 ]
 
 // 대기시 방 내부 유저 리스트 더미데이터
-export const userList: IUserInfo[] = [
-  {
-    userNickname: 'user1',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.RED,
-    userScore: 0,
-    moveState: playerMoveStateEnum.IDLE,
-    characterType: 0,
-    direction: 'right',
-  },
-  {
-    userNickname: 'user2',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.RED,
-    userScore: 0,
-  },
-  {
-    userNickname: 'user3',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.BLUE,
-    userScore: 0,
-  },
-  {
-    userNickname: 'user4',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.BLUE,
-    userScore: 120,
-  },
-  {
-    userNickname: 'user5',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.NONE,
-    userScore: 0,
-  },
-  {
-    userNickname: 'user6',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.BLUE,
-    userScore: 200,
-  },
-  {
-    userNickname: 'user7',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.BLUE,
-    userScore: 0,
-  },
-  {
-    userNickname: 'user8',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.RED,
-    userScore: 930,
-  },
-  {
-    userNickname: 'user9',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.NONE,
-    userScore: 0,
-  },
-  {
-    userNickname: 'user10',
-    position: { x: 0, y: 0, z: 0 },
-    team: teamEnum.RED,
-    userScore: 10,
-  },
-]
+// export const userList: IUserInfo[] = [
+//   {
+//     userNickname: 'user1',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.RED,
+//     userScore: 0,
+//     moveState: playerMoveStateEnum.IDLE,
+//     characterType: 0,
+//     direction: 'right',
+//   },
+//   {
+//     userNickname: 'user2',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.RED,
+//     userScore: 0,
+//   },
+//   {
+//     userNickname: 'user3',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.BLUE,
+//     userScore: 0,
+//   },
+//   {
+//     userNickname: 'user4',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.BLUE,
+//     userScore: 120,
+//   },
+//   {
+//     userNickname: 'user5',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.NONE,
+//     userScore: 0,
+//   },
+//   {
+//     userNickname: 'user6',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.BLUE,
+//     userScore: 200,
+//   },
+//   {
+//     userNickname: 'user7',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.BLUE,
+//     userScore: 0,
+//   },
+//   {
+//     userNickname: 'user8',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.RED,
+//     userScore: 930,
+//   },
+//   {
+//     userNickname: 'user9',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.NONE,
+//     userScore: 0,
+//   },
+//   {
+//     userNickname: 'user10',
+//     position: { x: 0, y: 0, z: 0 },
+//     team: teamEnum.RED,
+//     userScore: 10,
+//   },
+// ]
 
 // 퀴즈 정답 리스트 더미 데이터
 export const QuizAnswerList = [
