@@ -8,15 +8,15 @@ import WriteProblemNumber from './WriteProblemNumber'
 import { isWaitingRoomData, validateCreateRoomData } from '../../lib/util'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useMainSocketStore } from '../../../channel/lib/store'
-import { ICreatedRoom } from '../../lib/type'
+import { ProblemCategoryType, gameMode, ICreatedRoom } from '../../lib/type'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
   // :: Room Data
   const [roomName, setRoomName] = useState('')
   const [roomPw, setRoomPw] = useState('')
-  const [probCategory, setProbCategory] = useState('개발')
+  const [probCategory, setProbCategory] = useState(['개발'] as ProblemCategoryType[])
   const [playerCount, setPlayerCount] = useState(2)
-  const [gameMode, setGameMode] = useState('basic')
+  const [gameMode, setGameMode] = useState('BASIC' as gameMode)
   const [probNum, setProbNum] = useState(10)
 
   const { socket } = useMainSocketStore() // zustand에서 소켓 가져오기
@@ -28,7 +28,7 @@ export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) 
     const roomData = {
       roomTitle: roomName,
       roomPW: roomPw,
-      probCategory: [probCategory],
+      probCategory: probCategory,
       maxUserNum: playerCount,
       roomMode: gameMode,
       probNum,

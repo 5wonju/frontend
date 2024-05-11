@@ -42,12 +42,12 @@ export default function Character({ pos }) {
   useEffect(() => {
     if (!actions) return
 
-    actions[playerMoveState].reset().fadeIn(0.2).play()
+    actions[playerMoveState].reset().fadeIn(0.2).play( )
     return () => {
       if (!actions[playerMoveState]) return
       actions[playerMoveState].fadeOut(0.2)
     }
-  }, [playerMoveState, actions])
+  }, [playerMoveState])
 
   return (
     <group ref={groupRef} scale={1}>

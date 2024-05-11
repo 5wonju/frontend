@@ -5,6 +5,7 @@ import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useChatLogsStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useEffect } from 'react'
 import { IUserInfo } from '../(page)/(needProtection)/game/lib/type'
+import { IWaitingRoom } from '../(page)/(needProtection)/lobby/lib/type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -33,7 +34,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     // router.push(`/game/${roomId}`)
   }
 
-  const successGetRoomList = (rooms: WaitingRoom[]) => {
+  const successGetRoomList = (rooms: IWaitingRoom[]) => {
     console.log('Received rooms:', rooms)
     setRoomList(rooms)
   }
@@ -84,6 +85,10 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
           console.log('팀 선택 성공 응답')
+          break
+        case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OWNER:
+        case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OTHER:
+          console.log('방 정보 업데이트 성공 응답')
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

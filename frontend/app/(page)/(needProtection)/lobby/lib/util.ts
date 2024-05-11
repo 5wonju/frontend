@@ -1,6 +1,6 @@
-import { ICreatedRoom, ProblemCategoryType, IWaitingRoom } from "./type"
+import { ICreatedRoom, IWaitingRoom, ProblemCategoryType, gameMode } from './type'
 
-export const CATEGORY_LIST = ['수학', '과학', '역사', '국어', '개발']
+export const CATEGORY_LIST: ProblemCategoryType[] = ['개발', '과학', '컴퓨터', '한국사', '근현대사']
 
 // api 연결 전에 더미 방 리스트 데이터 생성
 export const generateRooms = (): IWaitingRoom[] => {
@@ -17,11 +17,11 @@ export const generateRooms = (): IWaitingRoom[] => {
       roomMaxUserNum: 10,
       isGameStart: Math.random() > 0.5,
       isRoomFull: roomCurUserNum === roomMaxUserNum,
-      probCategory: (CATEGORY_LIST as ProblemCategoryType[])[Math.floor(Math.random() * 4)],
+      probCategory: [(CATEGORY_LIST as ProblemCategoryType[])[Math.floor(Math.random() * 4)]],
       hasPassword: Math.random() > 0.5,
       curRound: Math.floor(Math.random() * 10),
       totalRound: 20,
-      roomMode: ['basic', 'yoot'][Math.floor(Math.random() * 2)] as 'basic' | 'yoot',
+      roomMode: ['BASIC', 'YOOT'][Math.floor(Math.random() * 2)] as 'BASIC' | 'YOOT',
     })
   }
 
@@ -40,7 +40,7 @@ export const isWaitingRoomData = (room: any): room is ICreatedRoom => {
       CATEGORY_LIST.includes(selectedCategory)
     ) &&
     typeof room.maxUserNum === 'number' &&
-    (room.roomMode === 'basic' || room.roomMode === 'yoot') &&
+    (room.roomMode === 'BASIC' || room.roomMode === 'YOOT') &&
     typeof room.probNum === 'number'
   )
 }
@@ -73,9 +73,9 @@ export const validateCreateRoomData = ({
 }: {
   roomTitle: string
   roomPW: string
-  probCategory: string[]
+  probCategory: ProblemCategoryType[]
   maxUserNum: number
-  roomMode: string
+  roomMode: gameMode
   probNum: number
 }): boolean => {
   if (!roomTitle || !probCategory || !maxUserNum || !roomMode || !probNum) {
@@ -107,7 +107,7 @@ export const validateCreateRoomData = ({
     return false
   }
 
-  if (roomMode !== 'basic' && roomMode !== 'yoot') {
+  if (roomMode !== 'BASIC' && roomMode !== 'YOOT') {
     alert('유효하지 않은 게임 모드 정보입니다.')
     return false
   }

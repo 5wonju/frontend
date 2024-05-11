@@ -6,21 +6,21 @@ export interface IWaitingRoom {
   roomId: number
   isGameStart: boolean
   isRoomFull: boolean
-  probCategory: '수학' | '과학' | '역사' | '국어' | '개발'
+  probCategory: ProblemCategoryType[]
   hasPassword: boolean
   curRound: number
   totalRound: number
-  roomMode: 'basic' | 'yoot'
+  roomMode: gameMode
 }
 
-type ProblemCategoryType = '수학' | '과학' | '역사' | '국어' | '개발'
+type ProblemCategoryType = '개발' | '과학' | '컴퓨터' | '한국사' | '근현대사'
 
 interface ICreatedRoom {
   roomTitle: string
   roomPW: string
   probCategory: ProblemCategoryType[]
   maxUserNum: number
-  roomMode: 'basic' | 'yoot'
+  roomMode: 'BASIC' | 'YOOT'
   probNum: number
 }
 
@@ -31,8 +31,7 @@ interface RoomListResponse {
   }
 }
 
-export type gameCategory = '수학' | '과학' | '역사' | '국어' | '개발'
-export type gameMode = 'basic' | 'yoot'
+export type gameMode = 'BASIC' | 'YOOT'
 
 interface IRoom {
   roomTitle: string | null
@@ -42,7 +41,7 @@ interface IRoom {
   roomId: number | null
   isGameStart: boolean | null
   isRoomFull: boolean | null
-  probCategory: gameCategory | null
+  probCategory: ProblemCategoryType[] | null
   hasPassword: boolean | null
   roomPW?: string | null
   curRound: number | null
@@ -53,5 +52,8 @@ interface IRoom {
 interface IEditRoom {
   roomTitle: string
   roomPW: string
-  probCategory: gameCategory
+  probCategory: ProblemCategoryType[]
+  roomMode: gameMode
+  maxUserNum: number
+  probNum: number
 }
