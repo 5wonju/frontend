@@ -7,13 +7,15 @@ import {
   IAnswerState,
   ICharacterSelectState,
   IGameRoomState,
+  IGameScoreState,
   IModalState,
   IPlayerState,
+  IQuizState,
   ITeamSetBoardState,
   playerMoveStateEnum,
   teamEnum,
 } from './store-type'
-import { IUserInfo } from './type'
+import { IQuiz, IUserInfo } from './type'
 
 // :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
@@ -39,6 +41,11 @@ export const useGameRoomStore = create<IGameRoomState>()(
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.GAME
         }),
+      countdownGame: () =>
+        set((state: IGameRoomState) => {
+          state.gameState = gameStateEnum.COUNTDOWN
+        }),
+
 
       // 방 정보 상태
       roomInfo: {
@@ -136,5 +143,39 @@ export const useAnswerSelectStore = create<IAnswerState>()(
         }),
     })),
     { name: 'AnswerSelectStore' }
+  )
+)
+
+// :: 현재 퀴즈 정보
+export const useQuizStore = create<IQuizState>()(
+  devtools(
+    immer((set) => ({
+      quiz: {
+        currentRound: 0,
+        questionId: null,
+        question: '',
+        options: [],
+        timeLimit: 0,
+      },
+      setQuiz: (quiz: IQuiz) =>
+        set((state) => {
+          state.quiz = quiz
+        }),
+    })),
+    { name: 'QuizStore' }
+  )
+)
+
+// :: 점수 정보
+export const useGameScoreStore = create<IGameScoreState>()(
+  devtools(
+    immer((set) => ({
+      gameScore: null,
+      setGameScore: (gameScore) =>
+        set((state) => {
+          state.gameScore = gameScore
+        }),
+    })),
+    { name: 'GameScoreStore' }
   )
 )

@@ -1,7 +1,7 @@
 import { teamEnum } from './store'
 
 // 퀴즈 정답자
-export interface IWonUser {
+interface IWonUser {
   nickname: string
   team: teamEnum
   userId: number
@@ -10,15 +10,17 @@ export interface IWonUser {
 }
 
 // 팀 정보 props
-export interface ITeamInfoProps {
+interface ITeamInfoProps {
   teamName: string
   teamColor: teamEnum
   userList: IUserInfo[] | null
+  gameUserScore?: IUserScore[] | null
   handleOutUser: (userNickname: string) => void
+  teamScore?: number
 }
 
 // 게임방 내 유저 정보
-export interface IUserInfo {
+interface IUserInfo {
   userNickname: string
   position: {
     x: number
@@ -37,7 +39,7 @@ export interface IUserInfo {
 }
 
 // 캐릭터 선택 타입
-export interface ICarouselItemProp {
+interface ICarouselItemProp {
   modelPath: string
   position: [number, number, number]
   index: number
@@ -45,8 +47,28 @@ export interface ICarouselItemProp {
 }
 
 // 캐릭터 선택 캐러셀 타입
-export interface ICarouselProp {
+interface ICarouselProp {
   numItems?: number
   radius?: number
   rotation: number
+}
+
+interface IQuiz {
+  currentRound: number
+  questionId: number | null
+  question: string
+  options: string[]
+  timeLimit: number
+}
+
+interface IUserScore {
+  nickname: string
+  point: number
+}
+
+interface IGameScore {
+  redTeamPoint: number
+  blueTeamPoint: number
+  redTeamUsers: IUserScore[]
+  blueTeamUsers: IUserScore[]
 }
