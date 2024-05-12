@@ -6,7 +6,6 @@ import RoomPasswordModal from './RoomPasswordModal'
 import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
-import { useCurrentRoomStore } from '../lib/store'
 import { IRoomOfLobby } from '../lib/type'
 import { useGameRoomStore } from '../../game/lib/store'
 
@@ -24,6 +23,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
   const handleRoomClick = () => {
     if (!room) return
     setRoomInfo({
+      roomId: room.roomId,
       roomTitle: room.roomTitle,
       roomPW: room.roomPW,
       probCategory: room.probCategory,

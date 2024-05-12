@@ -3,7 +3,7 @@ import { Dispatch } from 'react'
 type ProblemCategoryType = '개발' | '과학' | '컴퓨터' | '한국사' | '근현대사'
 
 interface IRoomInfo {
-  roomId?: number | null
+  roomId: number | null
   roomTitle: string | null
   roomPW: string | null
   probCategory: ProblemCategoryType[]

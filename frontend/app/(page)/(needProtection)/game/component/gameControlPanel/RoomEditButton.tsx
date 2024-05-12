@@ -20,6 +20,7 @@ const RoomEditButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [roomInfo, setRoomInfo] = useState<IRoomInfo>({
+    roomId: prevRoomInfo.roomId,
     roomTitle: prevRoomInfo.roomTitle,
     roomPW: prevRoomInfo.roomPW,
     probCategory: prevRoomInfo.probCategory,
@@ -35,6 +36,7 @@ const RoomEditButton = () => {
   const closeEditRoomModal = () => {
     setIsModalOpen(false)
     setRoomInfo({
+      roomId: prevRoomInfo.roomId,
       roomTitle: prevRoomInfo.roomTitle,
       roomPW: prevRoomInfo.roomPW,
       probCategory: prevRoomInfo.probCategory,

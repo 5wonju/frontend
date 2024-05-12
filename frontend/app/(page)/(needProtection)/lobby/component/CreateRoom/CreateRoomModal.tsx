@@ -13,6 +13,7 @@ import { IRoomInfo } from '../../lib/type'
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
   // :: Room Data
   const [roomInfo, setRoomInfo] = useState<IRoomInfo>({
+    roomId: null,
     roomTitle: null,
     roomPW: null,
     probCategory: ['개발'],

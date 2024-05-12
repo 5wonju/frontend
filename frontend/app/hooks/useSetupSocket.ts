@@ -51,8 +51,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
   const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
     setRoomInfo({
-      roomTitle: roomInfo.roomTitle || '',
-      roomPW: roomInfo.roomPW || '',
+      roomId: roomInfo.roomId,
+      roomTitle: roomInfo.roomTitle,
+      roomPW: roomInfo.roomPW,
       probCategory: roomInfo.probCategory,
       roomMode: roomInfo.roomMode,
       maxUserNum: roomInfo.roomMaxUserNum,

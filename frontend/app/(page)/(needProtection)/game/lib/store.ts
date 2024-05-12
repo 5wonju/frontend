@@ -42,6 +42,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
 
       // 방 정보 상태
       roomInfo: {
+        roomId: null,
         roomTitle: '',
         roomPW: '',
         probCategory: ['개발'],
