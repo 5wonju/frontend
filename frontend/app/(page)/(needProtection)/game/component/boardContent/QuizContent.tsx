@@ -35,7 +35,7 @@ const QuizContent = () => {
   }, [])
 
   return (
-    <div className="flex flex-col items-center gap-5 select-none h-full">
+    <div className="flex flex-col items-center gap-5 select-none w-full h-full">
       <RoomInfo quizNum={quiz.currentRound} />
       {/* 문제 정보 (문제 번호, 시간초) */}
       <div className="flex flex-col items-center pt-8">
