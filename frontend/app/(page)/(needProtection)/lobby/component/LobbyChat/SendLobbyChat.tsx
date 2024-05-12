@@ -25,7 +25,6 @@ const SendLobbyChat = () => {
     return true
   }
 
-  // Todo: 최대 50자 제한 로직 추가
   // Todo: 수신 메세지 최대 100개로 수정
   return (
     <div className="flex w-full z-10 bg-black rounded  gap-2">
@@ -36,7 +35,12 @@ const SendLobbyChat = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key !== 'Enter' || !messageLengthValidation(message) || message.trim() === '')
+          if (
+            e.key !== 'Enter' ||
+            !messageLengthValidation(message) ||
+            message.trim() === '' ||
+            e.nativeEvent.isComposing // 한글 입력 시 발생하는 이벤트 무시
+          )
             return
 
           console.log('키 다운 이벤트 발생:', e.key)
