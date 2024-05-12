@@ -81,25 +81,25 @@ export const useChatSocketStore = create<ChatSocket>()(
 )
 
 // Todo : Chat은 sender 포함한 형식으로 변경 필요(API 문서 참고)
-interface IChat {
+export interface IChat {
   nickname: string
   message: string
   timestamp: string
 }
 
 interface IChatLogsState {
-  chatLogs: string[]
-  setChatLogs: (chatLogs: string[]) => void
-  addChatLogs: (message: string) => void
+  chatLogs: IChat[]
+  setChatLogs: (chatLogs: IChat[]) => void
+  addChatLogs: (message: IChat) => void
 }
 
 export const useChatLogsStore = create<IChatLogsState>()(
   devtools((set, get) => ({
     chatLogs: [],
-    setChatLogs: (chatLogs) => {
+    setChatLogs: (chatLogs: IChat[]) => {
       set({ chatLogs })
     },
-    addChatLogs: (message) => {
+    addChatLogs: (message: IChat) => {
       set((state) => ({ chatLogs: [...state.chatLogs, message] }))
       const maxLenth = 3
       if (get().chatLogs.length > maxLenth) {
