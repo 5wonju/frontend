@@ -1,17 +1,21 @@
 import React from 'react'
-import { IoIosCloseCircleOutline } from 'react-icons/io'
 import { ITeamInfoProps } from '../../lib/type'
 import { teamEnum } from '../../lib/store-type'
 import { teamColorToCss } from '../../lib/util'
 
-const TeamInfo = ({ teamName, teamColor, userList, handleOutUser }: ITeamInfoProps) => {
+const TeamInfo = ({ teamName, teamColor, userList, handleOutUser, teamScore = 0 }: ITeamInfoProps) => {
   return (
     <div
       className={`flex flex-col gap-1 w-full pb-2 ${
         teamColor === teamEnum.NONE ? '' : 'border-b border-lightGray5'
       }`}
     >
-      <h2 className={`${teamColorToCss[teamColor as teamEnum]} font-bold`}>{teamName}</h2>
+      <div>
+        <h2 className={`${teamColorToCss[teamColor as teamEnum]} font-bold`}>{teamName}</h2>
+        {teamColor !== teamEnum.NONE && (
+          <p className={`${teamColorToCss[teamColor as teamEnum]}`}>팀 점수 {teamScore}</p>
+        )}
+      </div>
       <ul className="">
         {userList &&
           userList

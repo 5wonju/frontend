@@ -4,11 +4,11 @@ import { useGameRoomStore, useTeamSetBoardStore } from '../../lib/store'
 import { teamEnum } from '../../lib/store-type'
 
 const TeamSetBoard = () => {
+  const teamScore = 0
   const { isTeamSetBoardOpen, setTeamSetBoardOpen } = useTeamSetBoardStore()
   const { gameUserList } = useGameRoomStore((state) => ({
     gameUserList: state.gameUserList,
   }))
-
   console.log(gameUserList)
   const toggleOpen = () => setTeamSetBoardOpen(!isTeamSetBoardOpen)
 
@@ -30,18 +30,21 @@ const TeamSetBoard = () => {
         teamColor={teamEnum.RED}
         userList={gameUserList}
         handleOutUser={handleOutUser}
+        teamScore={teamScore}
       />
       <TeamInfo
         teamName="BLUE TEAM"
         teamColor={teamEnum.BLUE}
         userList={gameUserList}
         handleOutUser={handleOutUser}
+        teamScore={teamScore}
       />
       <TeamInfo
         teamName="NONE TEAM"
         teamColor={teamEnum.NONE}
         userList={gameUserList}
         handleOutUser={handleOutUser}
+        teamScore={teamScore}
       />
     </div>
   )

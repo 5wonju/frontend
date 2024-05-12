@@ -15,6 +15,7 @@ export interface ITeamInfoProps {
   teamColor: teamEnum
   userList: IUserInfo[] | null
   handleOutUser: (userNickname: string) => void
+  teamScore: number
 }
 
 // 게임방 내 유저 정보
