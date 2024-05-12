@@ -21,7 +21,7 @@ const Lobby = () => {
         <section className="col-span-1">
           <UserInfo />
         </section>
-        <section className="col-span-2 relative ">
+        <section className="col-span-2 relative rounded overflow-hidden">
           <LobbyChat />
         </section>
       </div>
