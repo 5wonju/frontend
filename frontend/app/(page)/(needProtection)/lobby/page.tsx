@@ -17,11 +17,11 @@ const Lobby = () => {
       <section className="col-span-3 row-span-2 ">
         <WaitingRoomList />
       </section>
-      <div className="flex col-span-3 gap-6">
-        <section className="">
+      <div className="col-span-3 grid grid-cols-3">
+        <section className="col-span-1">
           <UserInfo />
         </section>
-        <section className="">
+        <section className="col-span-2 relative ">
           <LobbyChat />
         </section>
       </div>

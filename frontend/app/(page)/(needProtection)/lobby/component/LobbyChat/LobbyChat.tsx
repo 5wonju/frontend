@@ -6,10 +6,13 @@ import SendLobbyChat from './SendLobbyChat'
 
 const LobbyChat = () => {
   return (
-    <div>
-      <LobbyChatLog />
-      <SendLobbyChat />
-    </div>
+    <>
+      <div className="bg-[#000000] opacity-80 absolute top-0 left-0 w-full h-full"></div>
+      <div className="absolute top-0 left-0 w-full h-full z-10 flex flex-col justify-end p-3 gap-2">
+        <LobbyChatLog />
+        <SendLobbyChat />
+      </div>
+    </>
   )
 }
 
