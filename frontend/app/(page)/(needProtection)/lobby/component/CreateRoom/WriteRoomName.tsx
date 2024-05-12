@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { RoomEditProps } from '../../lib/type'
 
-interface WriteRoomNameProps {
-  roomName: string
-  setRoomName: (name: string) => void
-}
+const WriteRoomName = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
+  const [roomTitle, setRoomTitle] = useState(roomInfo.roomTitle || '')
 
-const WriteRoomName = ({ roomName, setRoomName }: WriteRoomNameProps) => {
+  useEffect(() => {
+    setRoomInfo((prev) => ({ ...prev, roomTitle }))
+  }, [roomTitle])
+
   return (
     <div className="mt-2">
-      <label className="block text-sm font-bold">Room Name</label>
+      <p className="block text-sm font-bold">Room Name</p>
       <input
         type="text"
         className="w-full border p-2 rounded"
-        value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
+        value={roomTitle}
+        onChange={(e) => setRoomTitle(e.target.value)}
         placeholder="Enter room name"
       />
     </div>

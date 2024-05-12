@@ -3,7 +3,7 @@ import { getSocketToken } from '../lib/api'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { useChatLogsStore, useMainSocketStore } from '../lib/store'
 import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
-import { ICreatedRoom, IEditRoom } from '../(page)/(needProtection)/lobby/lib/type'
+import { IRoomInfo } from '../(page)/(needProtection)/lobby/lib/type'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -11,7 +11,7 @@ const useWaitingRoom = () => {
   const { socket } = useMainSocketStore()
   const { roomList } = useWaitingRoomStore()
 
-  const createWaitingRoom = (roomInfo: ICreatedRoom) => {
+  const createWaitingRoom = (roomInfo: IRoomInfo) => {
     if (!socket) {
       alert('Socket이 비어있습니다.')
       return
@@ -20,7 +20,7 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'CREATE_ROOM', data: roomInfo }))
   }
 
-  const editRoom = (roomInfo: IEditRoom) => {
+  const editRoom = (roomInfo: IRoomInfo) => {
     if (!socket) {
       alert('Socket이 비어있습니다.')
       return

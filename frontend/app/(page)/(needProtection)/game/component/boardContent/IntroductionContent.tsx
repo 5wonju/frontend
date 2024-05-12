@@ -1,10 +1,9 @@
 import RoomInfo from './RoomInfo'
 
 const IntroductionContent = () => {
-  const roomId = 2
   return (
     <div className="select-none flex flex-col justify-around h-full">
-      <RoomInfo roomId={roomId} />
+      <RoomInfo />
       <fieldset className="flex flex-col gap-4 pt-2 items-center justify-around text-black">
         {/* TODO: 문구 의논해서 정하기 */}
         <h2 className="text-4xl font-medium">원하는 팀을 고르세요</h2>

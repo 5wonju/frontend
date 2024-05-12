@@ -1,5 +1,5 @@
-import { AnswerEnum, playerMoveStateEnum, teamEnum } from "./store-type"
-import { IUserInfo, IWonUser } from "./type"
+import { teamEnum } from "./store-type"
+import { IWonUser } from "./type"
 
 
 // 퀴즈 정답자 더미 데이터

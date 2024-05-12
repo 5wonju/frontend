@@ -1,3 +1,4 @@
+import { IRoomInfo } from "../../lobby/lib/type"
 import { IUserInfo } from "./type"
 
 // :: 게임 상태
@@ -50,6 +51,8 @@ export interface IGameRoomState {
   gameUserList: IUserInfo[] | null
   setGameUserList: (users: IUserInfo[] | null) => void
   startGame: () => void
+  roomInfo: IRoomInfo
+  setRoomInfo: (roomInfo: IRoomInfo) => void
 }
 
 export interface IPlayerState {

@@ -2,8 +2,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { IUserInfo } from '../(page)/(needProtection)/game/lib/type'
-import { IWaitingRoom } from '../(page)/(needProtection)/lobby/lib/type'
-import { SOCKET_RES_CODE, onGameUserInfo } from '../lib/type.d'
+import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
+import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { useChatLogsStore } from '../lib/store'
 
@@ -24,7 +24,10 @@ const useSetUpChat = () => {
 const useSetUpRoom = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
   const { setRoomList } = useWaitingRoomStore()
-  const { setGameUserList } = useGameRoomStore()
+  const { setGameUserList, setRoomInfo } = useGameRoomStore((state) => ({
+    setGameUserList: state.setGameUserList,
+    setRoomInfo: state.setRoomInfo,
+  }))
   const router = useRouter()
 
   // :: Handler Functions
@@ -34,7 +37,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     // router.push(`/game/${roomId}`)
   }
 
-  const successGetRoomList = (rooms: IWaitingRoom[]) => {
+  const successGetRoomList = (rooms: IRoomOfLobby[]) => {
     console.log('Received rooms:', rooms)
     setRoomList(rooms)
   }
@@ -44,6 +47,17 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     setGameUserList(userList)
     router.push(`/game`)
     // router.push(`/game/${room.roomId}`)
+  }
+
+  const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
+    setRoomInfo({
+      roomTitle: roomInfo.roomTitle || '',
+      roomPW: roomInfo.roomPW || '',
+      probCategory: roomInfo.probCategory,
+      roomMode: roomInfo.roomMode,
+      maxUserNum: roomInfo.roomMaxUserNum,
+      probNum: roomInfo.totalRound,
+    })
   }
 
   const setUpRoom = () => {
@@ -88,7 +102,8 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OWNER:
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OTHER:
-          console.log('방 정보 업데이트 성공 응답')
+          console.log('방 정보 업데이트 성공 응답', responseData.data)
+          successUpdateRoomInfo(responseData.data)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

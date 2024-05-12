@@ -7,33 +7,44 @@ import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useCurrentRoomStore } from '../lib/store'
-import { IWaitingRoom } from '../lib/type'
+import { IRoomOfLobby } from '../lib/type'
+import { useGameRoomStore } from '../../game/lib/store'
 
 interface RoomProps {
-  room: IWaitingRoom
+  room: IRoomOfLobby
 }
 
 const WaitingRoom = ({ room }: RoomProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const { enterRoom } = useWaitingRoom()
-  const { setRoom } = useCurrentRoomStore()
+  const { setRoomInfo } = useGameRoomStore((state) => ({
+    setRoomInfo: state.setRoomInfo,
+  }))
 
   const handleRoomClick = () => {
+    if (!room) return
+    setRoomInfo({
+      roomTitle: room.roomTitle,
+      roomPW: room.roomPW,
+      probCategory: room.probCategory,
+      roomMode: room.roomMode,
+      maxUserNum: room.roomMaxUserNum,
+      probNum: room.totalRound,
+    })
+
     // 비밀번호 방 클릭 시
     if (room.hasPassword) {
       canEnterRoom(room) && setModalOpen(true)
     }
     // 비밀번호 없는 방 클릭 시
     else {
-      enterRoom(room.roomId)
-      // 현재 방 정보 저장해두자
-      setRoom(room)
+      if (room.roomId) enterRoom(room.roomId)
     }
   }
 
   const submitPassword = (password: string) => {
     console.log('Password entered:', password)
-    enterRoom(room.roomId, password)
+    if (room.roomId) enterRoom(room.roomId, password)
     setModalOpen(false)
   }
 

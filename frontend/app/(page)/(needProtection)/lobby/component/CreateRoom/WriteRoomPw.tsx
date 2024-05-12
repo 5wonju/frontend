@@ -1,13 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { RoomEditProps } from '../../lib/type'
 
-interface WriteRoomPwProps {
-  roomPw: string
-  setRoomPw: (pw: string) => void
-}
-
-const WriteRoomPw = ({ roomPw, setRoomPw }: WriteRoomPwProps) => {
+const WriteRoomPw = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [roomPW, setRoomPW] = useState(roomInfo.roomPW || '')
+
+  useEffect(() => {
+    setRoomInfo((prev) => ({ ...prev, roomPW }))
+  }, [roomPW])
 
   return (
     <div className="mt-2">
@@ -15,8 +16,8 @@ const WriteRoomPw = ({ roomPw, setRoomPw }: WriteRoomPwProps) => {
       <div className="relative">
         <input
           type={isPasswordVisible ? 'text' : 'password'}
-          value={roomPw}
-          onChange={(e) => setRoomPw(e.target.value)}
+          value={roomPW}
+          onChange={(e) => setRoomPW(e.target.value)}
           placeholder="4자 이상 입력해주세요"
           className="w-full border p-2 rounded"
         />

@@ -1,4 +1,3 @@
-import { Divide } from 'lucide-react'
 import { useGameRoomStore, useTeamSetBoardStore } from '../../lib/store'
 import GameBoard from './GameBoard'
 import QuizResult from './QuizResult'
