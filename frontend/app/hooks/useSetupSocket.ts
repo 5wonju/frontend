@@ -1,11 +1,16 @@
 import { usePathname, useRouter } from 'next/navigation'
-import { useGameRoomStore, useQuizStore } from '../(page)/(needProtection)/game/lib/store'
+import {
+  useGameRoomStore,
+  useGameScoreStore,
+  useQuizStore,
+} from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
+import { IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
 import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { useChatLogsStore } from '../lib/store'
+import { setUserScores } from '../lib/util'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -24,11 +29,13 @@ const useSetUpChat = () => {
 const useSetUpRoom = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
   const { setRoomList } = useWaitingRoomStore()
-  const { setGameUserList, setRoomInfo } = useGameRoomStore((state) => ({
+  const { setGameUserList, setRoomInfo, gameUserList } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
     setRoomInfo: state.setRoomInfo,
+    gameUserList: state.gameUserList,
   }))
   const { setQuiz } = useQuizStore()
+  const { setGameScore } = useGameScoreStore()
   const router = useRouter()
 
   // :: Handler Functions
@@ -66,7 +73,31 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     console.log('다음 문제 출제 성공')
     setQuiz(quiz)
   }
-  
+
+  const successStartGame = () => {
+    console.log('게임 시작 성공')
+
+    if (gameUserList === null) return
+    const redTeams = setUserScores(gameUserList.filter((user) => user.team === 'red'))
+    const blueTeams = setUserScores(gameUserList.filter((user) => user.team === 'blue'))
+
+    // 게임 시작 시
+    // 1. 유저 스코어 초기화
+    setGameScore({
+      redTeamPoint: 0,
+      blueTeamPoint: 0,
+      redTeamUsers: redTeams,
+      blueTeamUsers: blueTeams,
+    })
+
+    // 2. 게임 상태 변경
+  }
+
+  const successGetTeamPoint = (gameScore: IGameScore) => {
+    console.log('현재 팀 별 총 점수와 개인 점수 응답')
+    setGameScore(gameScore)
+
+  }
 
   const setUpRoom = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
@@ -116,6 +147,14 @@ const useSetUpRoom = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.NEXT_QUESTION:
           console.log('다음 문제 출제 응답', responseData.data)
           successNextQuestion(responseData.data)
+          break
+        case SOCKET_RES_CODE.START_GAME:
+          console.log('게임 시작 응답')
+          successStartGame()
+          break
+        case SOCKET_RES_CODE.ONE_PROBLEM_END_GET_TEAM_POINT:
+          console.log('현재 팀 별 총 점수와 개인 점수 응답')
+          successGetTeamPoint(responseData.data)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

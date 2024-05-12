@@ -7,6 +7,7 @@ import {
   IAnswerState,
   ICharacterSelectState,
   IGameRoomState,
+  IGameScoreState,
   IModalState,
   IPlayerState,
   IQuizState,
@@ -44,7 +45,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.COUNTDOWN
         }),
-        
+
 
       // 방 정보 상태
       roomInfo: {
@@ -162,5 +163,19 @@ export const useQuizStore = create<IQuizState>()(
         }),
     })),
     { name: 'QuizStore' }
+  )
+)
+
+// :: 점수 정보
+export const useGameScoreStore = create<IGameScoreState>()(
+  devtools(
+    immer((set) => ({
+      gameScore: null,
+      setGameScore: (gameScore) =>
+        set((state) => {
+          state.gameScore = gameScore
+        }),
+    })),
+    { name: 'GameScoreStore' }
   )
 )

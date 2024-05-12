@@ -14,8 +14,9 @@ interface ITeamInfoProps {
   teamName: string
   teamColor: teamEnum
   userList: IUserInfo[] | null
+  gameUserScore?: IUserScore[] | null
   handleOutUser: (userNickname: string) => void
-  teamScore: number
+  teamScore?: number
 }
 
 // 게임방 내 유저 정보
@@ -58,4 +59,16 @@ interface IQuiz {
   question: string
   options: string[]
   timeLimit: number
+}
+
+interface IUserScore {
+  nickname: string
+  point: number
+}
+
+interface IGameScore {
+  redTeamPoint: number
+  blueTeamPoint: number
+  redTeamUsers: IUserScore[]
+  blueTeamUsers: IUserScore[]
 }
