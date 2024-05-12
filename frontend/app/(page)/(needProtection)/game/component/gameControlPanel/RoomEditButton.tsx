@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { TbEditCircle } from 'react-icons/tb'
-import { useCurrentRoomStore } from '../../../lobby/lib/store'
 import WriteRoomName from '../../../lobby/component/CreateRoom/WriteRoomName'
 import WriteRoomPw from '../../../lobby/component/CreateRoom/WriteRoomPw'
 import SelectCategory from '../../../lobby/component/CreateRoom/SelectCategory'
@@ -11,45 +10,45 @@ import SelectPlayerCount from '../../../lobby/component/CreateRoom/SelectPlayerC
 import SelectGameMode from '../../../lobby/component/CreateRoom/SelectGameMode'
 import WriteProblemNumber from '../../../lobby/component/CreateRoom/WriteProblemNumber'
 import { IRoomInfo } from '../../../lobby/lib/type'
+import { useGameRoomStore } from '../../lib/store'
 
 const RoomEditButton = () => {
-  const { room } = useCurrentRoomStore((state) => ({
-    room: state.room,
-  }))
-  console.log('수정 room:', room)
+  const { roomInfo: prevRoomInfo } = useGameRoomStore((state) => ({ roomInfo: state.roomInfo }))
+
   const { editRoom } = useWaitingRoom()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [roomInfo, setRoomInfo] = useState<IRoomInfo>({
-    roomTitle: room.roomTitle,
-    roomPW: room.roomPW,
-    probCategory: room.probCategory!,
-    roomMode: room.roomMode,
-    maxUserNum: room.roomMaxUserNum,
-    probNum: room.totalRound,
+    roomTitle: prevRoomInfo.roomTitle,
+    roomPW: prevRoomInfo.roomPW,
+    probCategory: prevRoomInfo.probCategory,
+    roomMode: prevRoomInfo.roomMode,
+    maxUserNum: prevRoomInfo.maxUserNum ,
+    probNum: prevRoomInfo.probNum,
   })
 
   const openEditRoomModal = () => {
-    console.log('수정 클릭 room:', room)
     setIsModalOpen(true)
   }
 
   const closeEditRoomModal = () => {
     setIsModalOpen(false)
     setRoomInfo({
-      roomTitle: room.roomTitle,
-      roomPW: room.roomPW,
-      probCategory: room.probCategory!,
-      roomMode: room.roomMode,
-      maxUserNum: room.roomMaxUserNum,
-      probNum: room.totalRound,
+      roomTitle: prevRoomInfo.roomTitle,
+      roomPW: prevRoomInfo.roomPW,
+      probCategory: prevRoomInfo.probCategory,
+      roomMode: prevRoomInfo.roomMode,
+      maxUserNum: prevRoomInfo.maxUserNum ,
+      probNum: prevRoomInfo.probNum,
     })
   }
 
   const handleEditRoomInfo = () => {
-    if (roomInfo) editRoom(roomInfo)
-    closeEditRoomModal()
+    if (roomInfo) {
+      editRoom(roomInfo)
+      closeEditRoomModal()
+    }
   }
 
   return (

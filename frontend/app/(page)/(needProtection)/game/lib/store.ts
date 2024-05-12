@@ -39,6 +39,20 @@ export const useGameRoomStore = create<IGameRoomState>()(
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.GAME
         }),
+
+      // 방 정보 상태
+      roomInfo: {
+        roomTitle: '',
+        roomPW: '',
+        probCategory: ['개발'],
+        roomMode: 'BASIC',
+        maxUserNum: 2,
+        probNum: 10,
+      },
+      setRoomInfo: (roomInfo) =>
+        set((state: IGameRoomState) => {
+          state.roomInfo = roomInfo
+        }),
     })),
     { name: 'RoomStore' } // This name will appear in Redux DevTools
   )

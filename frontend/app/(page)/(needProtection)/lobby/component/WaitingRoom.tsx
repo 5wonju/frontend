@@ -8,6 +8,7 @@ import clsx from 'clsx'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useCurrentRoomStore } from '../lib/store'
 import { IRoomOfLobby } from '../lib/type'
+import { useGameRoomStore } from '../../game/lib/store'
 
 interface RoomProps {
   room: IRoomOfLobby
@@ -16,12 +17,20 @@ interface RoomProps {
 const WaitingRoom = ({ room }: RoomProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const { enterRoom } = useWaitingRoom()
-  const { room: r, setRoom } = useCurrentRoomStore()
+  const { setRoomInfo } = useGameRoomStore((state) => ({
+    setRoomInfo: state.setRoomInfo,
+  }))
 
   const handleRoomClick = () => {
     if (!room) return
-    setRoom(room)
-    console.log('Room clicked:', room, r)
+    setRoomInfo({
+      roomTitle: room.roomTitle,
+      roomPW: room.roomPW,
+      probCategory: room.probCategory,
+      roomMode: room.roomMode,
+      maxUserNum: room.roomMaxUserNum,
+      probNum: room.totalRound,
+    })
 
     // 비밀번호 방 클릭 시
     if (room.hasPassword) {
