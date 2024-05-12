@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { useChatLogsStore, useMainSocketStore } from '../lib/store'
+import { IChat, useChatLogsStore, useMainSocketStore } from '../lib/store'
 import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 import { IRoomInfo } from '../(page)/(needProtection)/lobby/lib/type'
 
@@ -103,6 +103,7 @@ const useChat = () => {
       return
     }
 
+    console.log('보내지는 채팅', message)
     socket.send(JSON.stringify({ eventType: 'CHATTING', data: { message: message } }))
   }
 

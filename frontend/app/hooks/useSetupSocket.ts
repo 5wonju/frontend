@@ -9,7 +9,7 @@ import { IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/li
 import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
-import { useChatLogsStore } from '../lib/store'
+import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
 
 // 채팅 관련 소켓 셋팅
@@ -17,9 +17,20 @@ import { setUserScores } from '../lib/util'
 const useSetUpChat = () => {
   const { addChatLogs } = useChatLogsStore()
 
-  const successReceiveChat = (message: string) => {
+  const successReceiveChat = (message: string | IChat) => {
     console.log('Received message:', message)
-    addChatLogs(message)
+
+    if (typeof message === 'string') {
+      message = {
+        nickname: '닉네임 null',
+        message: message,
+        timestamp: '시간 null',
+      }
+
+      addChatLogs(message)
+    } else {
+      addChatLogs(message)
+    }
   }
 
   return { successReceiveChat }
@@ -96,7 +107,6 @@ const useSetUpRoom = (socket: WebSocket | null) => {
   const successGetTeamPoint = (gameScore: IGameScore) => {
     console.log('현재 팀 별 총 점수와 개인 점수 응답')
     setGameScore(gameScore)
-
   }
 
   const setUpRoom = () => {
@@ -114,7 +124,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
         responseData = JSON.parse(event.data)
         eventType = parseInt(responseData.code)
       } catch (error) {
-        console.log('socket 응답 데이터를 확인하세요.', error)
+        responseData = event.data
+        eventType = SOCKET_RES_CODE.CHATTING
+        // console.log('socket 응답 데이터를 확인하세요.', error)
       }
       // const { eventType, data } = JSON.parse(event.data)
 
