@@ -1,7 +1,7 @@
 import { usePathname, useRouter } from 'next/navigation'
-import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
+import { useGameRoomStore, useQuizStore } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { IUserInfo } from '../(page)/(needProtection)/game/lib/type'
+import { IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
 import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
@@ -28,6 +28,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     setGameUserList: state.setGameUserList,
     setRoomInfo: state.setRoomInfo,
   }))
+  const { setQuiz } = useQuizStore()
   const router = useRouter()
 
   // :: Handler Functions
@@ -60,6 +61,12 @@ const useSetUpRoom = (socket: WebSocket | null) => {
       probNum: roomInfo.totalRound,
     })
   }
+
+  const successNextQuestion = (quiz: IQuiz) => {
+    console.log('다음 문제 출제 성공')
+    setQuiz(quiz)
+  }
+  
 
   const setUpRoom = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
@@ -105,6 +112,10 @@ const useSetUpRoom = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OTHER:
           console.log('방 정보 업데이트 성공 응답', responseData.data)
           successUpdateRoomInfo(responseData.data)
+          break
+        case SOCKET_RES_CODE.NEXT_QUESTION:
+          console.log('다음 문제 출제 응답', responseData.data)
+          successNextQuestion(responseData.data)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

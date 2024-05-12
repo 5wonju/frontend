@@ -1,5 +1,5 @@
 import { IRoomInfo } from "../../lobby/lib/type"
-import { IUserInfo } from "./type"
+import { IQuiz, IUserInfo } from "./type"
 
 // :: 게임 상태
 export enum gameStateEnum {
@@ -84,4 +84,9 @@ export interface ITeamSetBoardState {
 export interface IAnswerState {
   selectAnswer: AnswerEnum
   setSelectAnswer: (selectAnswer: AnswerEnum) => void
+}
+
+export interface IQuizState {
+  quiz: IQuiz
+  setQuiz: (quiz: IQuiz) => void
 }

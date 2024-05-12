@@ -1,4 +1,4 @@
-import { teamEnum } from "./store-type"
+import { AnswerEnum, teamEnum } from './store-type'
 
 // 정답자 순위 표현
 export const rankList: { [key: number]: string } = {
@@ -37,4 +37,12 @@ export const models = [
 export const formatTime = (time: number) => {
   const seconds = time.toFixed(2) // 소수점 2자리까지 표시
   return seconds
+}
+
+// 정답 선택 번호
+export const QuizAnswer: { [key: number]: AnswerEnum } = {
+  0: AnswerEnum.A,
+  1: AnswerEnum.B,
+  2: AnswerEnum.C,
+  3: AnswerEnum.D,
 }

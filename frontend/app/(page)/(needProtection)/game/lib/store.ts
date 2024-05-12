@@ -9,11 +9,12 @@ import {
   IGameRoomState,
   IModalState,
   IPlayerState,
+  IQuizState,
   ITeamSetBoardState,
   playerMoveStateEnum,
   teamEnum,
 } from './store-type'
-import { IUserInfo } from './type'
+import { IQuiz, IUserInfo } from './type'
 
 // :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
@@ -136,5 +137,25 @@ export const useAnswerSelectStore = create<IAnswerState>()(
         }),
     })),
     { name: 'AnswerSelectStore' }
+  )
+)
+
+// :: 현재 퀴즈 정보
+export const useQuizStore = create<IQuizState>()(
+  devtools(
+    immer((set) => ({
+      quiz: {
+        currentRound: 0,
+        questionId: null,
+        question: '',
+        options: [],
+        timeLimit: 0,
+      },
+      setQuiz: (quiz: IQuiz) =>
+        set((state) => {
+          state.quiz = quiz
+        }),
+    })),
+    { name: 'QuizStore' }
   )
 )

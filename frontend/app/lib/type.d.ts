@@ -28,7 +28,7 @@ export enum SOCKET_RES_CODE {
   CHANGE_ZONE_OWNER = 120, // null,
   CHANGE_ZONE_OTHER = 121, // null,
   ANSWER_TOP = 130, // null,
-  NEXT_QUESTION = 140, // null,
+  NEXT_QUESTION = 140, // "다음 문제 출제",
   GAME_RESULT_INFO = 150, // null,
   GAME_END = 160, // null,
 }
