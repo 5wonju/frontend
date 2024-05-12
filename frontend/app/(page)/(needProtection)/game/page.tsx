@@ -8,6 +8,7 @@ import KeyboardControl from './component/KeyboardControl'
 import GameControlPanel from './component/gameControlPanel/GameControlPanel'
 import GameInfoPanel from './component/gameInfoPanel/GameInfoPanel'
 import { useGameRoomStore } from './lib/store'
+import GameResult from './component/GameResult'
 
 const page = () => {
   return (
@@ -26,6 +27,7 @@ const page = () => {
       </Canvas>
       <GameInfoPanel />
       <GameControlPanel />
+      <GameResult />
     </KeyboardControl>
   )
 }
