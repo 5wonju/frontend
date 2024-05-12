@@ -9,7 +9,7 @@ const GameBoard = () => {
   }))
 
   return (
-    <div className="board h-full col-span-4 mt-2 p-4 ring-2 ring-indigo-300 ring-offset-indigo-500 ring-offset-[6px]">
+    <div className="board col-span-4 mt-2 p-4 ring-2 ring-indigo-300 ring-offset-indigo-500 ring-offset-[6px]">
       {gameState === gameStateEnum.READY ? <IntroductionContent /> : <QuizContent />}
     </div>
   )
