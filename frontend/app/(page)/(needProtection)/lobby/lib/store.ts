@@ -40,7 +40,7 @@ export const useCurrentRoomStore = create<IRoomState>()(
         roomPW: null,
         isGameStart: null,
         isRoomFull: null,
-        probCategory: null,
+        probCategory: ['개발'],
         hasPassword: null,
         curRound: null,
         totalRound: 10,

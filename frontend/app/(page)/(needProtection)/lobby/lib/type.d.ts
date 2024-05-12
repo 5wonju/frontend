@@ -29,7 +29,7 @@ interface IRoomOfLobby {
   roomId: number | null
   isGameStart: boolean | null
   isRoomFull: boolean | null
-  probCategory: ProblemCategoryType[] | null
+  probCategory: ProblemCategoryType[]
   hasPassword: boolean | null
   roomPW: string | null
   curRound: number | null

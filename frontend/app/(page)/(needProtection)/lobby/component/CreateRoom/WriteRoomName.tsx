@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RoomEditProps } from '../../lib/type'
 
 const WriteRoomName = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
