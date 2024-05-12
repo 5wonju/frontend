@@ -7,6 +7,7 @@ import GameField from './component/GameField'
 import KeyboardControl from './component/KeyboardControl'
 import GameControlPanel from './component/gameControlPanel/GameControlPanel'
 import GameInfoPanel from './component/gameInfoPanel/GameInfoPanel'
+import { useGameRoomStore } from './lib/store'
 
 const page = () => {
   return (

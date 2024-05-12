@@ -1,7 +1,7 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React from 'react'
+import React, { useEffect } from 'react'
 import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
@@ -45,6 +45,11 @@ const GameField = () => {
       setIsRoomOwner(roomOwner)
     }
   }
+
+  // 개발용 게임 시작
+  useEffect(() => {
+    startGame()
+  }, [])
 
   return (
     <>
