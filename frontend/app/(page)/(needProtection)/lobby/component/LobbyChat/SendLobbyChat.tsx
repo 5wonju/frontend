@@ -7,7 +7,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 const MAX_CHAT_LEN = 50
 
 const SendLobbyChat = () => {
-  // const { socket } = useSocketStore()
   const { sendChat } = useChat()
   const [message, setMessage] = useState('')
   const searchParams = useSearchParams()

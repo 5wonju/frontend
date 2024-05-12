@@ -4,7 +4,7 @@ import React from 'react'
 const LobbyChatLog = () => {
   const { chatLogs } = useChat()
   return (
-    <ul className="max-w-full z-10 text-white px-2">
+    <ul className="max-w-full z-10 text-white px-2 overflow-y-scroll">
       {chatLogs.map((log, index) => (
         <li key={index} className="flex gap-4">
           <span className="shrink-0">{log.nickname} : </span>

@@ -101,7 +101,7 @@ export const useChatLogsStore = create<IChatLogsState>()(
     },
     addChatLogs: (message: IChat) => {
       set((state) => ({ chatLogs: [...state.chatLogs, message] }))
-      const maxLenth = 3
+      const maxLenth = 100
       if (get().chatLogs.length > maxLenth) {
         set((state) => ({ chatLogs: state.chatLogs.slice(-1 * maxLenth) }))
       }
