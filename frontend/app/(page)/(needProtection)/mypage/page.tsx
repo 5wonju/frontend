@@ -1,19 +1,14 @@
 'use client'
 import React, { useEffect } from 'react'
 import UserInfo from '../../../component/UserInfo'
-import { useAuth } from '@/app/hooks/useAuth'
+import ModifyNickname from './component/ModifyNickname'
 
 const Mypage = () => {
-  const { refetch } = useAuth()
-
-  useEffect(() => {
-    refetch()
-  }, [])
-
   return (
-    <div>
+    <section className="">
       <UserInfo />
-    </div>
+      <ModifyNickname />
+    </section>
   )
 }
 
