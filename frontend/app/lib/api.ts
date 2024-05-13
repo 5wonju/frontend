@@ -23,7 +23,7 @@ export const verifyToken = async () => {
 
 export const handleLogout = async () => {
   try {
-    await tokenInstance.get('/api/logout')
+    await tokenInstance.post('/users/logout')
   } catch (error) {
     console.error(error)
     throw error

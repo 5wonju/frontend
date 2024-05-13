@@ -8,6 +8,7 @@ import Link from 'next/link'
 import LogoutButton from './LogoutButton'
 import ExitLobbyButton from './ExitLobbyButton'
 import ExitGameButton from './ExitGameButton'
+import GoBackButton from './GoBackButton'
 
 // 1. 메인 페이지
 // - 로고
@@ -25,6 +26,10 @@ import ExitGameButton from './ExitGameButton'
 // 4. 게임 페이지
 // - 로고
 // - 게임 나가기 버튼
+
+// 5. 마이페이지
+// - 로고
+// - 돌아가기 버튼
 
 const renderChannelNavbarButtons = () => {
   return (
@@ -51,10 +56,19 @@ const renderGameNavbarButtons = () => {
   )
 }
 
+const renderMyPageNavbarButtons = () => {
+  return (
+    <>
+      <GoBackButton />
+    </>
+  )
+}
+
 const conditionalNavbarInfo: Record<string, () => React.JSX.Element> = {
   '/channel': renderChannelNavbarButtons,
   '/lobby': renderLobbyNavbarButtons,
   '/game': renderGameNavbarButtons,
+  '/mypage': renderMyPageNavbarButtons,
 }
 
 const HeaderNavigationBar = () => {

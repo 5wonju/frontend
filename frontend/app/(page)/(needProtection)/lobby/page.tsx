@@ -3,10 +3,9 @@
 import React, { useEffect } from 'react'
 import WaitingRoomList from './component/WaitingRoomList'
 import UserInfo from '@/app/component/UserInfo'
-import Chat from '@/app/component/Chat'
-import ProtectedSocket from '@/app/component/ProtectionComponent/ProtectedSocket'
 import { useSetupSocket } from './../../../hooks/useSetupSocket'
 import { useMainSocketStore } from '@/app/lib/store'
+import LobbyChat from './component/LobbyChat/LobbyChat'
 
 // overflow-y-scroll box-border
 const Lobby = () => {
@@ -18,12 +17,12 @@ const Lobby = () => {
       <section className="col-span-3 row-span-2 ">
         <WaitingRoomList />
       </section>
-      <div className="flex col-span-3 gap-6">
-        <section className="">
+      <div className="col-span-3 grid grid-cols-3">
+        <section className="col-span-1 flex items-center justify-center shadow-inner">
           <UserInfo />
         </section>
-        <section className="">
-          <Chat />
+        <section className="col-span-2 relative rounded overflow-hidden">
+          <LobbyChat />
         </section>
       </div>
     </main>
