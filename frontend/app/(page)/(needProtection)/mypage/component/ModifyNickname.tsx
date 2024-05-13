@@ -39,6 +39,7 @@ const ModifyNickname = () => {
         type="text"
         defaultValue={nickname}
         name="nickname"
+        placeholder="수정할 닉네임을 입력해주세요."
         className="w-full px-10 py-3 text-2xl font-bold text-center text-black border-b-2 px- border-lightGray2 focus:outline-none"
       />
       <p
@@ -52,6 +53,11 @@ const ModifyNickname = () => {
       <button type="submit" className={clsx(`py-4  text-white rounded bg-darkGray1 `, {})}>
         수정
       </button>
+      <ul className="text-darkGray1">
+        <li>* 10자 이상으로 작성해주세요.</li>
+        <li>* 알파벳 소문자와 한글만 입력해주세요.</li>
+        <li>* 특수문자로 _와 .만 입력해주세요.</li>
+      </ul>
     </form>
   )
 }
