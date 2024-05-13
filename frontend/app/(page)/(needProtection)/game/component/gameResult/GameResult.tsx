@@ -1,9 +1,12 @@
-import { useGameResultStore } from '../../lib/store'
-import { teamEnum } from '../../lib/store-type'
+import { useGameResultStore, useGameRoomStore } from '../../lib/store'
+import { gameStateEnum, teamEnum } from '../../lib/store-type'
 import { IGameResult } from '../../lib/type'
 import TeamResult from './TeamResult'
 
 const GameResult = () => {
+  const { gameState } = useGameRoomStore((state) => ({
+    gameState: state.gameState,
+  }))
   // const { gameResult } = useGameResultStore()
   // 더미 데이터
   const gameResult: IGameResult = {
@@ -53,7 +56,11 @@ const GameResult = () => {
   }
 
   return (
-    <div className="fixed top-0 left-0 z-20 w-full h-full bg-black bg-opacity-20 flex items-center justify-center">
+    <div
+      className={`${
+        gameState === gameStateEnum.DONE ? 'visible' : 'hidden'
+      } fixed top-0 left-0 z-20 w-full h-full bg-black bg-opacity-20 flex items-center justify-center`}
+    >
       <div className="bg-white z-30 inset-32 flex flex-col gap-10 justify-center items-center bg-opacity-60 backdrop-filter backdrop-blur-md shadow-lg border border-white border-opacity-60 fixed rounded-3xl p-4">
         <div className="flex items-center gap-2 font-bold text-7xl animate-floating">
           <span className={`text-red-400`}>{gameResult.winTeam}</span>
