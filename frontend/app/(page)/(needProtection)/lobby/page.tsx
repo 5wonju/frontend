@@ -18,7 +18,7 @@ const Lobby = () => {
         <WaitingRoomList />
       </section>
       <div className="col-span-3 grid grid-cols-3">
-        <section className="col-span-1">
+        <section className="col-span-1 flex items-center justify-center shadow-inner">
           <UserInfo />
         </section>
         <section className="col-span-2 relative rounded overflow-hidden">
