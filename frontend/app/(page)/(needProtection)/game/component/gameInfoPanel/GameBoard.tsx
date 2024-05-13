@@ -11,9 +11,9 @@ const GameBoard = () => {
     countdownGame: state.countdownGame,
   }))
 
-  useEffect(() => {
-    countdownGame()
-  }, [])
+  // useEffect(() => {
+  //   countdownGame()
+  // }, [])
 
   const getCurrentContent = () => {
     switch (gameState) {

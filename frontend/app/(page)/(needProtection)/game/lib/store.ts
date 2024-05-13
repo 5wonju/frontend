@@ -6,6 +6,7 @@ import {
   gameStateEnum,
   IAnswerState,
   ICharacterSelectState,
+  IGameResultState,
   IGameRoomState,
   IGameScoreState,
   IModalState,
@@ -45,7 +46,6 @@ export const useGameRoomStore = create<IGameRoomState>()(
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.COUNTDOWN
         }),
-
 
       // 방 정보 상태
       roomInfo: {
@@ -177,5 +177,19 @@ export const useGameScoreStore = create<IGameScoreState>()(
         }),
     })),
     { name: 'GameScoreStore' }
+  )
+)
+
+// :: 게임 결과 (우승 팀 및 유저별 획득 포인트)
+export const useGameResultStore = create<IGameResultState>()(
+  devtools(
+    immer((set) => ({
+      gameResult: null,
+      setGameResult: (gameResult) =>
+        set((state) => {
+          state.gameResult = gameResult
+        }),
+    })),
+    { name: 'GameResultStore' }
   )
 )

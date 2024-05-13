@@ -7,11 +7,18 @@ export const rankList: { [key: number]: string } = {
   3: '3rd',
 }
 
-// 팀 색상 css
-export const teamColorToCss = {
+// 팀 색상 text css
+export const teamColorToCssText = {
   [teamEnum.RED]: 'text-red-400',
   [teamEnum.BLUE]: 'text-blue-400',
   [teamEnum.NONE]: 'text-gray-400',
+}
+
+// 팀 색상 bg css
+export const teamColorToCssBg = {
+  [teamEnum.RED]: 'bg-red-400',
+  [teamEnum.BLUE]: 'bg-blue-400',
+  [teamEnum.NONE]: 'bg-gray-400',
 }
 
 // 캐러셀 위치 계산 함수

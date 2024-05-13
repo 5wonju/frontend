@@ -1,11 +1,12 @@
 import { usePathname, useRouter } from 'next/navigation'
 import {
+  useGameResultStore,
   useGameRoomStore,
   useGameScoreStore,
   useQuizStore,
 } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
+import { IGameResult, IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
 import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
@@ -47,6 +48,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
   }))
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
+  const { setGameResult } = useGameResultStore()
   const router = useRouter()
 
   // :: Handler Functions
@@ -109,6 +111,11 @@ const useSetUpRoom = (socket: WebSocket | null) => {
     setGameScore(gameScore)
   }
 
+  const successGameResultInfo = (gameResult: IGameResult) => {
+    console.log('게임 결과 응답')
+    setGameResult(gameResult)
+  }
+
   const setUpRoom = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
       console.log('Socket is null or not connected.')
@@ -167,6 +174,10 @@ const useSetUpRoom = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.ONE_PROBLEM_END_GET_TEAM_POINT:
           console.log('현재 팀 별 총 점수와 개인 점수 응답')
           successGetTeamPoint(responseData.data)
+          break
+        case SOCKET_RES_CODE.GAME_RESULT_INFO:
+          console.log('게임 결과 응답')
+          successGameResultInfo(responseData.data)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
