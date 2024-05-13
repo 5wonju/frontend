@@ -23,8 +23,8 @@ const UserInfo = () => {
           href={'/mypage'}
           className="bg-white p-4  flex flex-col justify-center gap-1 items-center"
         >
-          <div className="flex gap-4">
-            <div className="flex flex-col justify-center items-center gap-2">
+          <div className="flex gap-8">
+            <div className="flex flex-col justify-center items-center gap-4">
               <Image
                 src={defaultProfileImg}
                 alt="Profile Image"
@@ -32,9 +32,9 @@ const UserInfo = () => {
                 height={100}
                 className="rounded-full"
               />
-              <div className="font-bold text-lg">{userInfo.nickname}</div>
+              <div className="font-bold text-2xl">{userInfo.nickname}</div>
             </div>
-            <dl className="grid grid-cols-2 gap-1 grow">
+            <dl className="grid grid-cols-2 gap-1 grow text-lg">
               <dt className="font-bold inline-block">승리 : </dt>
               <dd className="inline-block">{userInfo.winCnt}승</dd>
               <dt className="font-bold inline-block">승률 : </dt>
