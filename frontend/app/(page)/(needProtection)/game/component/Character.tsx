@@ -26,7 +26,7 @@ export default function Character({ pos }) {
 
   // 캐릭터에 그림자 효과
   scene.traverse((child) => {
-    if (child.isMesh) {
+    if (child.amIMesh) {
       child.castShadow = true
     }
   })

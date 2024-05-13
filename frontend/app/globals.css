@@ -62,4 +62,12 @@ body {
   .board {
     @apply min-h-full glass;
   }
+
+  .redTeam {
+    @apply bg-red-400 bg-opacity-90 shadow-sm border-4 border-red-100 border-opacity-60 rounded-xl text-lightGray5;
+  }
+
+  .blueTeam {
+    @apply bg-blue-400 bg-opacity-90 shadow-sm border-4 border-blue-100 border-opacity-60 rounded-xl text-lightGray5;
+  }
 }

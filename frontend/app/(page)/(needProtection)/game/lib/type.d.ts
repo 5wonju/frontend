@@ -72,3 +72,25 @@ interface IGameScore {
   redTeamUsers: IUserScore[]
   blueTeamUsers: IUserScore[]
 }
+
+interface IUserResult {
+  userId: number
+  username: string
+  earnPoint: number
+  amIMe: boolean
+}
+
+interface IGameResult {
+  winTeam: teamEnum
+  redTeamTotalPoint: number
+  blueTeamTotalPoint: number
+  redTeam: IUserResult[]
+  blueTeam: IUserResult[]
+}
+
+interface TeamResultProps {
+  team: teamEnum
+  isWin: boolean
+  teamPoint: number
+  teamResult: IUserResult[]
+}
