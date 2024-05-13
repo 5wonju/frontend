@@ -3,10 +3,10 @@ import { IGameResult, IGameScore, IQuiz, IUserInfo } from './type'
 
 // :: 게임 상태
 export enum gameStateEnum {
-  READY = '대기중',
-  COUNTDOWN = '카운트다운',
-  GAME = '게임중',
-  DONE = '게임종료',
+  READY = 'READY',
+  COUNTDOWN = 'COUNTDOWN',
+  GAME = 'GAME',
+  DONE = 'DONE',
 }
 
 // :: 플레이어 액션 종류
