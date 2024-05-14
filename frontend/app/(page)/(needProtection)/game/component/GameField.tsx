@@ -7,7 +7,7 @@ import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/s
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
 import TeamSpot from './TeamSpot'
 import OtherPlayers from './OtherPlayers'
-import { useWaitingRoom } from '@/app/hooks/useSocket'
+import { useGame } from '@/app/hooks/useSocket'
 import { useAuth } from '@/app/hooks/useAuth'
 
 const GameField = () => {
@@ -17,7 +17,7 @@ const GameField = () => {
     setIsRoomOwner: state.setIsRoomOwner,
     gameUserList: state.gameUserList,
   }))
-  const { selectTeam } = useWaitingRoom()
+  const { selectTeam } = useGame()
   const { setPlayerTeamState } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
   }))

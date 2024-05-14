@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
 
 import { Html, useAnimations, useGLTF } from '@react-three/drei'
