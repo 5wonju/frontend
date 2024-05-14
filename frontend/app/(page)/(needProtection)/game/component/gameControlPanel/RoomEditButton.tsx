@@ -5,7 +5,7 @@ import { TbEditCircle } from 'react-icons/tb'
 import WriteRoomName from '../../../lobby/component/CreateRoom/WriteRoomName'
 import WriteRoomPw from '../../../lobby/component/CreateRoom/WriteRoomPw'
 import SelectCategory from '../../../lobby/component/CreateRoom/SelectCategory'
-import { useWaitingRoom } from '@/app/hooks/useSocket'
+import { useGame } from '@/app/hooks/useSocket'
 import SelectPlayerCount from '../../../lobby/component/CreateRoom/SelectPlayerCount'
 import SelectGameMode from '../../../lobby/component/CreateRoom/SelectGameMode'
 import WriteProblemNumber from '../../../lobby/component/CreateRoom/WriteProblemNumber'
@@ -15,7 +15,7 @@ import { useGameRoomStore } from '../../lib/store'
 const RoomEditButton = () => {
   const { roomInfo: prevRoomInfo } = useGameRoomStore((state) => ({ roomInfo: state.roomInfo }))
 
-  const { editRoom } = useWaitingRoom()
+  const { editRoom } = useGame()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -25,7 +25,7 @@ const RoomEditButton = () => {
     roomPW: prevRoomInfo.roomPW,
     probCategory: prevRoomInfo.probCategory,
     roomMode: prevRoomInfo.roomMode,
-    maxUserNum: prevRoomInfo.maxUserNum ,
+    maxUserNum: prevRoomInfo.maxUserNum,
     probNum: prevRoomInfo.probNum,
   })
 
@@ -41,7 +41,7 @@ const RoomEditButton = () => {
       roomPW: prevRoomInfo.roomPW,
       probCategory: prevRoomInfo.probCategory,
       roomMode: prevRoomInfo.roomMode,
-      maxUserNum: prevRoomInfo.maxUserNum ,
+      maxUserNum: prevRoomInfo.maxUserNum,
       probNum: prevRoomInfo.probNum,
     })
   }
