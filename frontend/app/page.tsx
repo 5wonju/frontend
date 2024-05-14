@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <HeaderNavigationBar />
-      <main className="flex h-full items-center justify-between mx-10 px-10 pt-14">
+      <main className="flex h-full items-center justify-between mx-10 px-10 pt-12">
         <fieldset className="flex flex-col gap-16 w-1/2">
           <AutoInstruction />
           <button
