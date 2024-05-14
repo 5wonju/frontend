@@ -23,7 +23,7 @@ const Game = () => {
         camera={{ position: [0, 40, 20], fov: 42 }}
         className="absolute top-0 bottom-0"
       >
-        {/* <WebGLContextManager /> */}
+        <WebGLContextManager />
         <color attach="background" args={['#dbecfb']} />
         <Suspense>
           <Physics>

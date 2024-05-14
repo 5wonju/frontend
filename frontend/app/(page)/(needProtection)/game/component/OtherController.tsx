@@ -47,13 +47,13 @@ const OtherController = ({
       rigidbody.current.applyImpulse(jumpImpulse, true)
       isOnFloor.current = false
     }
-    const norm = Math.sqrt(linvel.x ** 2 + linvel.z ** 2)
+    const norm = 3
     // linvel을 기반으로 위치 업데이트
     const currentTranslation = rigidbody.current.translation()
     const newTranslation = {
-      x: currentTranslation.x + (linvel.x * delta) / norm,
+      x: currentTranslation.x + (linvel.x * delta) / 2,
       y: currentTranslation.y,
-      z: currentTranslation.z + (linvel.z * delta) / norm,
+      z: currentTranslation.z + (linvel.z * delta) / 2,
     }
     rigidbody.current.setTranslation(vec3(newTranslation))
 
