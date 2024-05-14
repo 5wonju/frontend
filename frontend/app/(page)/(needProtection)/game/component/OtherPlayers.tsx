@@ -48,12 +48,12 @@ export default function OtherPlayers() {
   // test test test test test
   // const [players, setPlayers] = useState([
   //   {
-  //     pos: { x: 0, y: 0, z: 3 },
+  //     pos: { x: 0, y: 0, z: 0 },
   //     moveState: playerMoveStateEnum.RUN,
   //     characterType: 2,
   //     nickname: '??dsad',
   //     team: teamEnum.RED,
-  //     linvel: { x: 0, y: 0, z: 3 },
+  //     linvel: { x: -3, y: 0, z: 3 },
   //     modelKey: 6,
   //   },
   // ])
@@ -63,12 +63,6 @@ export default function OtherPlayers() {
   //     setPlayers((currentPlayers) =>
   //       currentPlayers.map((player) => ({
   //         ...player,
-  //         pos: {
-  //           ...player.pos,
-  //           x: player.pos.x,
-  //           y: -0.6,
-  //           z: player.pos.z + 1 > 10 ? 0 : player.pos.z + 3,
-  //         },
   //         linvel: {
   //           ...player.linvel,
   //           x: player.linvel.x,
@@ -78,7 +72,6 @@ export default function OtherPlayers() {
   //       }))
   //     )
   //   }, 1000) // 0.1초 마다 실행
-
   //   return () => clearInterval(intervalId)
   // }, [])
   // test test test test test
