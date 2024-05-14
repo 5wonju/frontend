@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
+import { CapsuleCollider, RapierRigidBody, RigidBody, vec3 } from '@react-three/rapier'
 import React, { useEffect, useRef, useState } from 'react'
 import Character from './Character'
 
@@ -38,7 +38,7 @@ const CharacterController = () => {
   const rightPressed = useKeyboardControls((state) => state[controls.right])
   const backPressed = useKeyboardControls((state) => state[controls.back])
   const forwardPressed = useKeyboardControls((state) => state[controls.forward])
-  const rigidbody = useRef()
+  const rigidbody = useRef<RapierRigidBody>()
   const isOnFloor = useRef(true)
   const character = useRef()
   const cameraLookAt = useRef(new THREE.Vector3()).current
