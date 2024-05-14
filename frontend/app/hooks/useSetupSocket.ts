@@ -7,7 +7,7 @@ import {
 } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { IGameResult, IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
-import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
+import { IRoomInfo, IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
@@ -41,7 +41,7 @@ const useSetUpChat = () => {
 const useSetUpRoom = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
   const { setRoomList } = useWaitingRoomStore()
-  const { setGameUserList } = useGameRoomStore((state) => ({
+  const { setGameUserList, setRoomInfo } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
     setRoomInfo: state.setRoomInfo,
     gameUserList: state.gameUserList,
@@ -51,8 +51,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
   // :: Handler Functions
   // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successCreateRoom = (roomId: number) => {
+  const successCreateRoom = (roomInfo: IRoomInfo) => {
     router.push(`/game`)
+    setRoomInfo(roomInfo)
     // router.push(`/game/${roomId}`)
   }
 

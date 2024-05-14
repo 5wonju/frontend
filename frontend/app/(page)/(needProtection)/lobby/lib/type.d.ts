@@ -4,8 +4,10 @@ type ProblemCategoryType = '개발' | '과학' | '컴퓨터' | '한국사' | '�
 
 interface IRoomInfo {
   roomId: number | null
+  roomOwnerNickname?: string | null
   roomTitle: string | null
-  roomPW: string | null
+  roomPwExist?: boolean
+  roomPW?: string | null
   probCategory: ProblemCategoryType[]
   roomMode: gameMode
   maxUserNum: number

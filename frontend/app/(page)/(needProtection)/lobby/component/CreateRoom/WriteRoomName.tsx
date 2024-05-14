@@ -16,7 +16,7 @@ const WriteRoomName = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
         className="w-full border p-2 rounded"
         value={roomTitle}
         onChange={(e) => setRoomTitle(e.target.value)}
-        placeholder="Enter room name"
+        placeholder="방 제목을 입력하세요"
       />
     </div>
   )
