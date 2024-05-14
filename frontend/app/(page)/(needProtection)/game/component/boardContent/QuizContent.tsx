@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { formatTime, QuizAnswer } from '../../lib/util'
-import { useAnswerSelectStore, useQuizStore } from '../../lib/store'
+import { useAnswerSelectStore, useQuizStore, useRoundResultStore } from '../../lib/store'
 import RoomInfo from './RoomInfo'
 
 const QuizContent = () => {
@@ -17,7 +17,11 @@ const QuizContent = () => {
   }
   const [time, setTime] = useState(quiz.timeLimit) // 초기 시간: 10초
   const { selectAnswer } = useAnswerSelectStore()
+  const { answer: quizAnswer } = useRoundResultStore((state) => ({
+    answer: state.answer,
+  }))
 
+  // const quizAnswer = 'A'
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -58,7 +62,11 @@ const QuizContent = () => {
           <li
             key={index}
             className={`flex items-center gap-3 glass ${
-              selectAnswer === QuizAnswer[index] ? 'bg-indigo-400 bg-opacity-40' : ''
+              selectAnswer === QuizAnswer[index]
+                ? 'bg-indigo-400 bg-opacity-40'
+                : QuizAnswer[index] === quizAnswer
+                ? 'bg-lime-400 bg-opacity-40'
+                : ''
             } text-black gap-1 w-full rounded-xl transition-colors border-2 backdrop-blur-md border-opacity-75 border-white px-4 py-2`}
           >
             <span className="font-medium bg-indigo-600 text-white rounded-full size-6 flex items-center justify-center">
