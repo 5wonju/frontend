@@ -21,7 +21,7 @@ const RoomInfo = ({ quizNum = 0 }: { quizNum?: number }) => {
             <span>{roomInfo.probCategory}</span>
             <span>{roomInfo.probNum} Round</span>
             {/* 게임 시작 후에 보일 부분 */}
-            <span>2/8</span>
+            <span>{quizNum}/{roomInfo.probNum}</span>
           </fieldset>
         </>
       )}

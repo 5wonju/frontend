@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useGameRoomStore } from '../../lib/store'
+import { useGameRoomStore, useRoundResultStore } from '../../lib/store'
 import { gameStateEnum } from '../../lib/store-type'
 import CountdownContent from '../boardContent/CountContent'
 import IntroductionContent from '../boardContent/IntroductionContent'
@@ -9,6 +9,9 @@ const GameBoard = () => {
   const { gameState, countdownGame } = useGameRoomStore((state) => ({
     gameState: state.gameState,
     countdownGame: state.countdownGame,
+  }))
+  const { setAnswer } = useRoundResultStore((state) => ({
+    setAnswer: state.setAnswer,
   }))
 
   // useEffect(() => {
@@ -20,6 +23,7 @@ const GameBoard = () => {
       case gameStateEnum.READY:
         return <IntroductionContent />
       case gameStateEnum.COUNTDOWN:
+        setAnswer(null)
         return <CountdownContent />
       case gameStateEnum.GAME:
         return <QuizContent />

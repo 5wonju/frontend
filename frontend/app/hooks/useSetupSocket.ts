@@ -4,14 +4,22 @@ import {
   useGameRoomStore,
   useGameScoreStore,
   useQuizStore,
+  useRoundResultStore,
 } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
-import { IGameResult, IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
+import {
+  IGameResult,
+  IGameScore,
+  IQuiz,
+  IUserInfo,
+  IUserRoundResult,
+} from '../(page)/(needProtection)/game/lib/type'
 import { IRoomInfo, IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
+import { AnswerEnum } from '../(page)/(needProtection)/game/lib/store-type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -129,9 +137,14 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
   const { setGameResult } = useGameResultStore()
+  const { setAnswer, setRoundResults } = useRoundResultStore((state) => ({
+    setAnswer: state.setAnswer,
+    setRoundResults: state.setRoundResults,
+  }))
   const router = useRouter()
 
   const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
+    console.log('방 정보 업데이트 성공 응답', roomInfo)
     setRoomInfo({
       roomId: roomInfo.roomId,
       roomTitle: roomInfo.roomTitle,
@@ -180,6 +193,12 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successOtherUserExit = (newUserList: IUserInfo[]) => {
     console.log('다른 유저 방 나갔음 응답')
     setGameUserList(newUserList)
+  }
+
+  const successQuizAnswerRank = (data: { answer: AnswerEnum; userRank: IUserRoundResult[] }) => {
+    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
+    setAnswer(data.answer)
+    setRoundResults(data.userRank)
   }
 
   const setUpGame = () => {
@@ -238,6 +257,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.EXIT_ROOM_OTHER:
           console.log('다른 유저 방 나갔음 응답')
           successOtherUserExit(responseData.data.userList)
+          break
+        case SOCKET_RES_CODE.ANSWER_TOP:
+          console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
+          successQuizAnswerRank(responseData.data)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

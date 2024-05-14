@@ -48,9 +48,9 @@ const GameField = () => {
   }
 
   // 개발용 게임 시작
-  // useEffect(() => {
-  //   startGame()
-  // }, [])
+  useEffect(() => {
+    startGame()
+  }, [])
 
   return (
     <>
