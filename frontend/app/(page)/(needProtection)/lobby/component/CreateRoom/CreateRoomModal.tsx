@@ -9,6 +9,7 @@ import WriteProblemNumber from './WriteProblemNumber'
 import WriteRoomName from './WriteRoomName'
 import WriteRoomPw from './WriteRoomPw'
 import { IRoomInfo } from '../../lib/type'
+import { useGameRoomStore } from '../../../game/lib/store'
 
 export function CreateRoomModal({ onModalClose }: { onModalClose: () => void }) {
   // :: Room Data
