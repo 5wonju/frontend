@@ -4,6 +4,7 @@ import { immer } from 'zustand/middleware/immer'
 import {
   AnswerEnum,
   gameStateEnum,
+
   IAnswerState,
   ICharacterSelectState,
   IGameResultState,
@@ -38,6 +39,11 @@ export const useGameRoomStore = create<IGameRoomState>()(
 
       // game 상태
       gameState: gameStateEnum.READY,
+      setGameState: (gameState: gameStateEnum) => {
+        set((state: IGameRoomState) => {
+          state.gameState = gameState
+        })
+      },
       startGame: () =>
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.GAME

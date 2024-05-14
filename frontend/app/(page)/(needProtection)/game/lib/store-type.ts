@@ -51,6 +51,7 @@ export interface IGameRoomState {
   gameUserList: IUserInfo[] | null
   setGameUserList: (users: IUserInfo[] | null) => void
   gameState: gameStateEnum
+  setGameState: (gameState: gameStateEnum) => void
   startGame: () => void
   countdownGame: () => void
   roomInfo: IRoomInfo
@@ -95,7 +96,7 @@ export interface IQuizState {
 
 export interface IGameScoreState {
   gameScore: IGameScore | null
-  setGameScore: (gameScore: IGameScore) => void
+  setGameScore: (gameScore: IGameScore | null) => void
 }
 
 export interface IGameResultState {

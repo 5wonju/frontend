@@ -31,7 +31,9 @@ const Game = () => {
           </Physics>
         </Suspense>
       </Canvas>
+      {/* 팀 정보, 문제 보드, 게임 순위 */}
       <GameInfoPanel />
+      {/* 게임 시작 및 방 수정 버튼 */}
       <GameControlPanel />
       <GameResult />
     </KeyboardControl>

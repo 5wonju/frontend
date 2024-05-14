@@ -12,6 +12,7 @@ import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
+import { gameStateEnum } from '../(page)/(needProtection)/game/lib/store-type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -120,11 +121,14 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList } = useGameRoomStore((state) => ({
-    setGameUserList: state.setGameUserList,
-    setRoomInfo: state.setRoomInfo,
-    gameUserList: state.gameUserList,
-  }))
+  const { setRoomInfo, gameUserList, setGameUserList, setGameState } = useGameRoomStore(
+    (state) => ({
+      setGameUserList: state.setGameUserList,
+      setRoomInfo: state.setRoomInfo,
+      gameUserList: state.gameUserList,
+      setGameState: state.setGameState,
+    })
+  )
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
@@ -180,6 +184,13 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successOtherUserExit = (newUserList: IUserInfo[]) => {
     console.log('다른 유저 방 나갔음 응답')
     setGameUserList(newUserList)
+  }
+
+  // Todo: 자리 다시 랜덤 배치 필요(서버에서 새로운 자리를 받아오는지 확인해서 처리 필요)
+  const successEndGame = () => {
+    console.log('한 세트 게임이 종료됨')
+    setGameScore(null)
+    setGameState(gameStateEnum.READY)
   }
 
   const setUpGame = () => {
@@ -238,6 +249,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.EXIT_ROOM_OTHER:
           console.log('다른 유저 방 나갔음 응답')
           successOtherUserExit(responseData.data.userList)
+          break
+        case SOCKET_RES_CODE.ONE_PROBLEM_END_GET_TEAM_POINT:
+          console.log('한 세트 게임이 종료됨')
+          // Todo: 게임 종료 시 처리 작성 필요
+          successEndGame()
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')

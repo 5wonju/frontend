@@ -23,6 +23,10 @@ const TeamInfo = ({
           <p className={`${teamColorToCssText[teamColor as teamEnum]}`}>팀 점수 {teamScore}</p>
         )}
       </div>
+      {/* 
+          게임 실행 중 : 점수판으로 표시
+          게임 실행 전 : 참가자 목록으로 표시
+        */}
       <ul>
         {gameUserScore
           ? gameUserScore.map((user) => (

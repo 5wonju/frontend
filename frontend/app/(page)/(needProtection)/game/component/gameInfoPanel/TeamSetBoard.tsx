@@ -21,9 +21,11 @@ const TeamSetBoard = () => {
         isTeamSetBoardOpen ? '' : 'invisible'
       }`}
     >
+      {/* 접기 버튼 */}
       <button onClick={toggleOpen} className="self-end absolute top-2 text-darkGray1">
         <FaCaretDown className="text-black size-5" />
       </button>
+      {/* RED 팀 */}
       <TeamInfo
         teamName="RED TEAM"
         teamColor={teamEnum.RED}
@@ -32,6 +34,7 @@ const TeamSetBoard = () => {
         handleOutUser={handleOutUser}
         teamScore={gameScore?.redTeamPoint}
       />
+      {/* BLUE 팀 */}
       <TeamInfo
         teamName="BLUE TEAM"
         teamColor={teamEnum.BLUE}
@@ -40,6 +43,7 @@ const TeamSetBoard = () => {
         handleOutUser={handleOutUser}
         teamScore={gameScore?.blueTeamPoint}
       />
+      {/* NO 팀 */}
       <TeamInfo
         teamName="NONE TEAM"
         teamColor={teamEnum.NONE}
