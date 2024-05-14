@@ -53,8 +53,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
   // :: Handler Functions
   // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successCreateRoom = (roomId: number) => {
+  const successCreateRoom = (roomInfo: IRoomInfo) => {
     router.push(`/game`)
+    setRoomInfo(roomInfo)
     // router.push(`/game/${roomId}`)
   }
 
@@ -148,7 +149,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.CREATE_ROOM:
           console.log('방 생성 성공 응답')
-          successCreateRoom(responseData.data.roomId)
+          successCreateRoom(responseData.data)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')
@@ -191,12 +192,6 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
-  const { setRoomInfo } = useGameRoomStore((state) => ({ setRoomInfo: state.setRoomInfo }))
-
-  const successCreateRoom = (roomInfo: IRoomInfo) => {
-    console.log('방 생성 성공 응답', roomInfo)
-    setRoomInfo(roomInfo)
-  }
 
   const setUpGame = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
@@ -221,10 +216,6 @@ const useSetUpGame = (socket: WebSocket | null) => {
         case SOCKET_RES_CODE.CHATTING:
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
-          break
-        case SOCKET_RES_CODE.CREATE_ROOM:
-          console.log('방 생성 성공 응답')
-          successCreateRoom(event.data)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
