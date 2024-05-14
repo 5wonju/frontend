@@ -12,11 +12,12 @@ import {
   IModalState,
   IPlayerState,
   IQuizState,
+  IRoundResultState,
   ITeamSetBoardState,
   playerMoveStateEnum,
   teamEnum,
 } from './store-type'
-import { IQuiz, IUserInfo } from './type'
+import { IQuiz, IUserInfo, IUserRoundResult } from './type'
 
 // :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
@@ -191,5 +192,19 @@ export const useGameResultStore = create<IGameResultState>()(
         }),
     })),
     { name: 'GameResultStore' }
+  )
+)
+
+// :: 매 라운드 결과 (정답 팀, 정답자 순위, 정답 팀의 획득 포인트)
+export const useRoundResultStore = create<IRoundResultState>()(
+  devtools(
+    immer((set) => ({
+      roundResults: null,
+      setRoundResults: (roundResults: IUserRoundResult[]) =>
+        set((state) => {
+          state.roundResults = roundResults
+        }),
+    })),
+    { name: 'RoundResultStore' }
   )
 )

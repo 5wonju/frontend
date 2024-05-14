@@ -71,6 +71,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
   }
 
   const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
+    console.log('방 정보 업데이트 성공 응답', roomInfo)
     setRoomInfo({
       roomId: roomInfo.roomId,
       roomTitle: roomInfo.roomTitle,

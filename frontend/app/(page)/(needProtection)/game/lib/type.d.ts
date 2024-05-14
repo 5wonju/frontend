@@ -94,3 +94,11 @@ interface TeamResultProps {
   teamPoint: number
   teamResult: IUserResult[]
 }
+
+interface IUserRoundResult {
+  nickname: string
+  team: teamEnum
+  userId: number
+  rank: number
+  time: number
+}
