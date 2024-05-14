@@ -104,6 +104,8 @@ export interface IGameResultState {
 }
 
 export interface IRoundResultState {
+  answer: AnswerEnum | null
   roundResults: IUserRoundResult[] | null
+  setAnswer: (answer: AnswerEnum) => void
   setRoundResults: (gameResults: IUserRoundResult[]) => void
 }

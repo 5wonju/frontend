@@ -199,7 +199,12 @@ export const useGameResultStore = create<IGameResultState>()(
 export const useRoundResultStore = create<IRoundResultState>()(
   devtools(
     immer((set) => ({
+      answer: null,
       roundResults: null,
+      setAnswer: (answer: AnswerEnum) =>
+        set((state) => {
+          state.answer = answer
+        }),
       setRoundResults: (roundResults: IUserRoundResult[]) =>
         set((state) => {
           state.roundResults = roundResults
