@@ -6,6 +6,7 @@ import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
 import TeamSpot from './TeamSpot'
+import OtherPlayers from './OtherPlayers'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useAuth } from '@/app/hooks/useAuth'
 
@@ -113,6 +114,7 @@ const GameField = () => {
         {gameState === gameStateEnum.GAME ? <AnswerSpot /> : <TeamSpot />}
         {/* <>TODO: OtherPlayers -> Socket에서 데이터 받기 map()
         안에다가 OtherCharacter -> pos, action, 이것저것 props 캐릭터 렌더링 </> */}
+        <OtherPlayers />
       </group>
     </>
   )
