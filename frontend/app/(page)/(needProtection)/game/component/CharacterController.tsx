@@ -65,6 +65,7 @@ const CharacterController = () => {
     if (socket === null) return
     if (!rigidbody.current) return
     // 플레이어 위치 정보 및 상태 소켓으로 전송
+    console.log(playerMoveState)
     socket.send(
       JSON.stringify({
         eventType: 'MOVE_CHARACTER',

@@ -61,7 +61,8 @@ export default function OtherCharacter({
   // 캐릭터 움직임 애니메이션
   useEffect(() => {
     if (!actions) return
-
+    console.log(actions)
+    console.log('moveState', moveState, actions[moveState])
     actions[moveState].reset().fadeIn(0.2).play()
     return () => {
       if (!actions[moveState]) return
