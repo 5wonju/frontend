@@ -120,7 +120,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList } = useGameRoomStore((state) => ({
+  const { setRoomInfo, gameUserList, setGameUserList } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
     setRoomInfo: state.setRoomInfo,
     gameUserList: state.gameUserList,
@@ -175,6 +175,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successGameResultInfo = (gameResult: IGameResult) => {
     console.log('게임 결과 응답')
     setGameResult(gameResult)
+  }
+
+  const successOtherUserExit = (newUserList: IUserInfo[]) => {
+    console.log('다른 유저 방 나갔음 응답')
+    setGameUserList(newUserList)
   }
 
   const setUpGame = () => {
@@ -232,7 +237,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.EXIT_ROOM_OTHER:
           console.log('다른 유저 방 나갔음 응답')
-          // Todo: 방을 나간 유저 외의 유저들에게 나간 유저 정보를 지워주는 로직 필요
+          successOtherUserExit(responseData.data.userList)
           break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
