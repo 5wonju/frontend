@@ -20,16 +20,6 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'CREATE_ROOM', data: roomInfo }))
   }
 
-  const editRoom = (roomInfo: IRoomInfo) => {
-    if (!socket) {
-      alert('Socket이 비어있습니다.')
-      return
-    }
-    console.log('editRoom:', roomInfo)
-    socket.send(JSON.stringify({ eventType: 'UPDATE_ROOM_INFO', data: roomInfo }))
-  }
-
-  // Todo : 서버랑 예기해서 소켓 연결 끊기는 문제 해결 필요.
   const getInitialRoomList = () => {
     if (!socket) {
       alert('Socket이 비어있습니다.')
@@ -55,6 +45,35 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'ENTER_ROOM', data: { roomId, roomPw } }))
   }
 
+  return {
+    createWaitingRoom,
+    enterRoom,
+    getInitialRoomList,
+    roomList,
+  }
+}
+
+const useGame = () => {
+  const { socket } = useMainSocketStore()
+
+  const exitRoom = () => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('exitRoom:')
+    socket.send(JSON.stringify({ eventType: 'EXIT_ROOM' }))
+  }
+
+  const editRoom = (roomInfo: IRoomInfo) => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('editRoom:', roomInfo)
+    socket.send(JSON.stringify({ eventType: 'UPDATE_ROOM_INFO', data: roomInfo }))
+  }
+
   const selectTeam = (team: teamEnum) => {
     if (!socket) {
       console.log('Socket이 비어있습니다.')
@@ -73,15 +92,7 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'SEARCH_ROOM_BY_ID', data: { roomId } }))
   }
 
-  return {
-    createWaitingRoom,
-    enterRoom,
-    getInitialRoomList,
-    roomList,
-    selectTeam,
-    getRoomInfo,
-    editRoom,
-  }
+  return { selectTeam, getRoomInfo, editRoom, exitRoom }
 }
 
 // :: Chat
@@ -176,4 +187,4 @@ const useSocket = () => {
   return { connectSocket, isConnected, socket }
 }
 
-export { useWaitingRoom, useChat, useSocket }
+export { useWaitingRoom, useGame, useChat, useSocket }

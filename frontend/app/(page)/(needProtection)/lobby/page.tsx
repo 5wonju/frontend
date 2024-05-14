@@ -13,7 +13,7 @@ const Lobby = () => {
   useSetupSocket(socket)
 
   return (
-    <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-3.5rem)]">
+    <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-3rem)]">
       <section className="col-span-3 row-span-2 ">
         <WaitingRoomList />
       </section>

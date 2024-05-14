@@ -1,5 +1,5 @@
 import { IRoomInfo } from '../../lobby/lib/type'
-import { IGameResult, IGameScore, IQuiz, IUserInfo } from './type'
+import { IGameResult, IGameScore, IQuiz, IUserInfo, IUserRoundResult } from './type'
 
 // :: 게임 상태
 export enum gameStateEnum {
@@ -101,4 +101,11 @@ export interface IGameScoreState {
 export interface IGameResultState {
   gameResult: IGameResult | null
   setGameResult: (gameResult: IGameResult) => void
+}
+
+export interface IRoundResultState {
+  answer: AnswerEnum | null
+  roundResults: IUserRoundResult[] | null
+  setAnswer: (answer: AnswerEnum | null) => void
+  setRoundResults: (gameResults: IUserRoundResult[]) => void
 }

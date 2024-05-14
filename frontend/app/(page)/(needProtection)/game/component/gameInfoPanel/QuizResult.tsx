@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import { rankList, teamColorToCssText } from '../../lib/util'
-import { wonUserList } from '../../lib/dummy'
+import { wonUserList } from '../../lib/dummy' // dummy data
 import { teamEnum } from '../../lib/store-type'
+import { useRoundResultStore } from '../../lib/store'
 
 const QuizResult = () => {
+  const { roundResults } = useRoundResultStore((state) => ({
+    roundResults: state.roundResults,
+  }))
   const [result, setResult] = useState({
     winTeam: false,
     0: false,
@@ -48,27 +52,28 @@ const QuizResult = () => {
       </section>
       {/* 리스트 요소 하나씩 등장하기 */}
       <ul className="flex-1 flex flex-col gap-3 pt-5 justify-around">
-        {wonUserList.map((wonUser, index) => (
-          <li
-            key={index}
-            className={`${
-              result[index as keyof typeof result] ? 'visible animate-fadeIn' : 'invisible'
-            }
+        {roundResults &&
+          roundResults.map((wonUser, index) => (
+            <li
+              key={index}
+              className={`${
+                result[index as keyof typeof result] ? 'visible animate-fadeIn' : 'invisible'
+              }
             glass bg-opacity-60 flex gap-4 justify-around items-end px-3 py-2`}
-          >
-            <p className="font-semibold text-xl text-darkGray3">{rankList[wonUser.rank]}.</p>
-            <p className="fle1 flex flex-col items-start">
-              <span className="font-normal text-xs text-darkGray3 h-3">{wonUser.time}초</span>
-              <span
-                className={`${
-                  teamColorToCssText[wonUser.team as teamEnum]
-                } font-medium text-xl overflow-hidden w-24 select-none truncate`}
-              >
-                {wonUser.nickname}
-              </span>
-            </p>
-          </li>
-        ))}
+            >
+              <p className="font-semibold text-xl text-darkGray3">{rankList[wonUser.rank]}.</p>
+              <p className="fle1 flex flex-col items-start">
+                <span className="font-normal text-xs text-darkGray3 h-3">{wonUser.time}초</span>
+                <span
+                  className={`${
+                    teamColorToCssText[wonUser.team as teamEnum]
+                  } font-medium text-xl overflow-hidden w-24 select-none truncate`}
+                >
+                  {wonUser.nickname}
+                </span>
+              </p>
+            </li>
+          ))}
       </ul>
     </div>
   )

@@ -3,10 +3,10 @@ import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
 import { usePlayerStore } from '../lib/store'
 import { teamEnum } from '../lib/store-type'
-import { useWaitingRoom } from '@/app/hooks/useSocket'
+import { useGame } from '@/app/hooks/useSocket'
 
 const TeamSpot = () => {
-  const { selectTeam } = useWaitingRoom()
+  const { selectTeam } = useGame()
 
   const { setPlayerTeamState } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,

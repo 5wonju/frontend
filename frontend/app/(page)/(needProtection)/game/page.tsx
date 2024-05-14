@@ -8,9 +8,14 @@ import KeyboardControl from './component/KeyboardControl'
 import GameControlPanel from './component/gameControlPanel/GameControlPanel'
 import GameInfoPanel from './component/gameInfoPanel/GameInfoPanel'
 import GameResult from './component/gameResult/GameResult'
+import { useMainSocketStore } from '@/app/lib/store'
+import { useSetupSocket } from '@/app/hooks/useSetupSocket'
 import WebGLContextManager from './component/WebGLContextManager'
 
-const page = () => {
+const Game = () => {
+  const { socket } = useMainSocketStore()
+  useSetupSocket(socket)
+
   return (
     <KeyboardControl>
       <Canvas
@@ -33,4 +38,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Game

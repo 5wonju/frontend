@@ -27,7 +27,7 @@ export enum SOCKET_RES_CODE {
   MOVE_CHARACTER = 110, // "유저 이동",
   CHANGE_ZONE_OWNER = 120, // null,
   CHANGE_ZONE_OTHER = 121, // null,
-  ANSWER_TOP = 130, // null,
+  ANSWER_TOP = 130, // "매 라운드 퀴즈 정답 및 정답자 순위 발표",
   NEXT_QUESTION = 140, // "다음 문제 출제",
   GAME_RESULT_INFO = 150, // "게임 결과(우승팀 및 유저별 획득 포인트)",
   ONE_PROBLEM_END_GET_TEAM_POINT = 160, // "현재 팀 별 총 점수와 개인 점수 응답",

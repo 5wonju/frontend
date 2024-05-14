@@ -2,12 +2,12 @@ import { Center, Cylinder, Text3D } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
 import { AnswerEnum } from '../lib/store-type'
-import { useAnswerSelectStore } from '../lib/store'
+import { useAnswerSelectStore, useRoundResultStore } from '../lib/store'
 
 const AnswerSpot = () => {
   const answers = Object.values(AnswerEnum).slice(0, 4)
   const { selectAnswer, setSelectAnswer } = useAnswerSelectStore()
-
+  
   return answers.map((answer, index) => (
     <group key={answer} rotation-y={((index + 1) / 4) * Math.PI * 2}>
       <group position-x={8} position-z={-8}>
