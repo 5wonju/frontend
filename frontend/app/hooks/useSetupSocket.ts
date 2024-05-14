@@ -191,6 +191,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
+  const router = useRouter()
 
   const setUpGame = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
@@ -217,6 +218,14 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successReceiveChat(event.data)
           break
         // 추가적인 이벤트 핸들러 등록..
+        case SOCKET_RES_CODE.EXIT_ROOM_OWNER:
+          console.log('방 나가기 성공 응답')
+          router.push('/lobby')
+          break
+        case SOCKET_RES_CODE.EXIT_ROOM_OTHER:
+          console.log('다른 유저 방 나갔음 응답')
+          // Todo: 방을 나간 유저 외의 유저들에게 나간 유저 정보를 지워주는 로직 필요
+          break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
           break

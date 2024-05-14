@@ -1,11 +1,11 @@
-import { useRouter } from 'next/navigation'
+import { useGame } from '@/app/hooks/useSocket'
 import React from 'react'
 
 const ExitGameButton = () => {
-  const router = useRouter()
+  const { exitRoom } = useGame()
 
   const handleExitGame = () => {
-    router.push('/lobby')
+    exitRoom()
   }
 
   return (
