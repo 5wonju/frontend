@@ -90,6 +90,8 @@ const CharacterController = () => {
     if (!rigidbody.current) return
     // 플레이어 위치 정보 및 상태 소켓으로 전송
     console.log('살려줘', linVelocity)
+    console.log('크아악', position)
+    console.log(playerTeamState)
     socket.send(
       JSON.stringify({
         eventType: 'MOVE_CHARACTER',
@@ -100,10 +102,11 @@ const CharacterController = () => {
           characterType: characterIndex,
           nickname: userInfo.nickname,
           direction: 'left',
+          team: playerTeamState,
         },
       })
     )
-  }, [playerMoveState, characterIndex, position, linVelocity])
+  }, [playerMoveState, characterIndex, position, linVelocity, playerTeamState])
 
   useEffect(() => {
     if (!rigidbody.current) return
@@ -230,7 +233,7 @@ const CharacterController = () => {
           args={[0.8, 0.4]}
           position={[0, 1.2, 0]}
           restitution={0} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
-          friction={0.1} // 마찰력 설정
+          friction={1} // 마찰력 설정
         />
         <group ref={character}>
           <Character pos={rigidbody.current && rigidbody.current.linvel()} />
