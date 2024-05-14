@@ -9,8 +9,13 @@ import GameControlPanel from './component/gameControlPanel/GameControlPanel'
 import GameInfoPanel from './component/gameInfoPanel/GameInfoPanel'
 import { useGameRoomStore } from './lib/store'
 import GameResult from './component/gameResult/GameResult'
+import { useMainSocketStore } from '@/app/lib/store'
+import { useSetupSocket } from '@/app/hooks/useSetupSocket'
 
-const page = () => {
+const Game = () => {
+  const { socket } = useMainSocketStore()
+  useSetupSocket(socket)
+
   return (
     <KeyboardControl>
       <Canvas
@@ -32,4 +37,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Game
