@@ -6,12 +6,9 @@ import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
 import TeamSpot from './TeamSpot'
-<<<<<<< HEAD
 import OtherPlayers from './OtherPlayers'
-=======
 import { useWaitingRoom } from '@/app/hooks/useSocket'
 import { useAuth } from '@/app/hooks/useAuth'
->>>>>>> 077bfa4d7a34dd6508c7cd29d913d6db8441d51b
 
 const GameField = () => {
   const { startGame, gameState, setIsRoomOwner, gameUserList } = useGameRoomStore((state) => ({

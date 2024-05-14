@@ -27,21 +27,8 @@ interface IUserInfo {
     y: number
     z: number
   }
-  linvel: {
-    x: number
-    y: number
-    z: number
-  }
   team: teamEnum
   userScore: number
-<<<<<<< HEAD
-  moveState: playerMoveStateEnum.IDLE
-  characterType: number
-  direction: 'right'
-  escapeHistory: number
-  winRate: number
-  winCnt: number
-=======
   moveState?: playerMoveStateEnum.IDLE
   characterType?: number
   direction?: 'right'
@@ -49,7 +36,6 @@ interface IUserInfo {
   winRate?: number
   winCnt?: number
   roomOwner: boolean
->>>>>>> 077bfa4d7a34dd6508c7cd29d913d6db8441d51b
 }
 
 // 캐릭터 선택 타입
