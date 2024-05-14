@@ -68,13 +68,12 @@ const IntroductionContent = () => {
       setCurrentContent((prev) => (prev + 1) % contents.length)
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [contents.length])
 
   return (
     <div className="select-none flex flex-col justify-around h-full">
       <RoomInfo />
       {contents[currentContent]()}
-      {/* {GameRuleContent()} */}
     </div>
   )
 }
