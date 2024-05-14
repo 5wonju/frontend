@@ -29,7 +29,7 @@ const WaitingRoomList: React.FC = () => {
       {roomList.length > 0 ? (
         roomList.map((room) => <WaitingRoom key={room.roomId} room={room} />)
       ) : (
-        <fieldset className="flex flex-col gap-2 justify-center items-center col-span-2 pb-10 text-black select-none">
+        <fieldset className="flex flex-col gap-2 justify-center h-[calc(100vh/2)] items-center col-span-2 pb-10 text-black select-none">
           <p className="text-xl">현재 만들어진 방이 없습니다 👀</p>
           <p className='font-light text-darkGray2'>새로운 방을 만들어 보세요</p>
         </fieldset>

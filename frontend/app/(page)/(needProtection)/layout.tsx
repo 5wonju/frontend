@@ -18,7 +18,7 @@ const ProtectedLayout = ({
     case '/login':
       return (
         <ProtectedLogin>
-          <main className="pt-14 h-full">
+          <main className="pt-12 h-screen">
             <HeaderNavigationBar />
             {children}
           </main>
@@ -33,7 +33,7 @@ const ProtectedLayout = ({
       return (
         <ProtectedRoute>
           <ProtectedSocket>
-            <main className="pt-14 h-full">
+            <main className="pt-12 h-screen">
               <HeaderNavigationBar />
               {children}
             </main>
