@@ -6,6 +6,7 @@ import { useGameRoomStore } from '../../lib/store'
 import { useState } from 'react'
 import RoomEditButton from './RoomEditButton'
 import { gameStateEnum } from '../../lib/store-type'
+import RespawnButton from './RespawnButton'
 
 const GameControlPanel = () => {
   let isRoomOwner = false
@@ -28,8 +29,9 @@ const GameControlPanel = () => {
     <>
       {gameState === gameStateEnum.READY && (
         <div className="absolute inline-flex flex-col bottom-16 right-6 items-end gap-3">
+          <RespawnButton />
           <CharacterChange />
-          
+
           {/* 방 정보 수정 버튼은 방장에개만 보임 */}
           {isRoomOwner && <RoomEditButton />}
           {/* 
