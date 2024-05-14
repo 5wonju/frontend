@@ -7,7 +7,7 @@ import {
 } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { IGameResult, IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
-import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
+import { IRoomInfo, IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
@@ -191,6 +191,12 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
   const { successReceiveChat } = useSetUpChat()
+  const { setRoomInfo } = useGameRoomStore((state) => ({ setRoomInfo: state.setRoomInfo }))
+
+  const successCreateRoom = (roomInfo: IRoomInfo) => {
+    console.log('방 생성 성공 응답', roomInfo)
+    setRoomInfo(roomInfo)
+  }
 
   const setUpGame = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
@@ -216,12 +222,15 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
           break
-        // 추가적인 이벤트 핸들러 등록..
+        case SOCKET_RES_CODE.CREATE_ROOM:
+          console.log('방 생성 성공 응답')
+          successCreateRoom(event.data)
+          break
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
           break
       }
-    }
+    } 
   }
   return { setUpGame }
 }
