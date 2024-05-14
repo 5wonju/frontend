@@ -46,26 +46,52 @@ const CharacterController = () => {
   const [position, setPosition] = useState({ x: 0, y: 0, z: 0 })
   const [linVelocity, setLinVelocity] = useState({ x: 0, y: 0, z: 0 })
 
+  const roundVector = (vector, decimals = 3) => {
+    const factor = Math.pow(10, decimals)
+    return {
+      x: Math.round(vector.x * factor) / factor,
+      y: Math.round(vector.y * factor) / factor,
+      z: Math.round(vector.z * factor) / factor,
+    }
+  }
+
   useEffect(() => {
     const updateState = () => {
       if (rigidbody.current) {
-        setPosition(rigidbody.current.translation())
-        setLinVelocity(rigidbody.current.linvel())
+        const newPosition = roundVector(rigidbody.current.translation())
+        const newLinVelocity = roundVector(rigidbody.current.linvel())
+
+        if (
+          position.x !== newPosition.x ||
+          position.y !== newPosition.y ||
+          position.z !== newPosition.z
+        ) {
+          setPosition(newPosition)
+        }
+
+        if (
+          linVelocity.x !== newLinVelocity.x ||
+          linVelocity.y !== newLinVelocity.y ||
+          linVelocity.z !== newLinVelocity.z
+        ) {
+          setLinVelocity(newLinVelocity)
+        }
       }
     }
 
-    const intervalId = setInterval(updateState, 100) // 매 0.1초마다 상태 업데이트
+    const intervalId = setInterval(updateState, 500) // 매 0.5초마다 상태 업데이트
 
     return () => clearInterval(intervalId)
-  }, [])
+  }, [position, linVelocity])
 
   const { userInfo } = useAuth()
-  let linvel = rigidbody.current?.linvel()
   useEffect(() => {
     if (socket === null) return
     if (!rigidbody.current) return
     // 플레이어 위치 정보 및 상태 소켓으로 전송
-    console.log(playerMoveState)
+    console.log('살려줘', linVelocity)
+    console.log('크아악', position)
+    console.log(playerTeamState)
     socket.send(
       JSON.stringify({
         eventType: 'MOVE_CHARACTER',
@@ -76,10 +102,11 @@ const CharacterController = () => {
           characterType: characterIndex,
           nickname: userInfo.nickname,
           direction: 'left',
+          team: playerTeamState,
         },
       })
     )
-  }, [playerMoveState, characterIndex, position, linVelocity])
+  }, [playerMoveState, characterIndex, position, linVelocity, playerTeamState])
 
   useEffect(() => {
     if (!rigidbody.current) return
@@ -206,7 +233,7 @@ const CharacterController = () => {
           args={[0.8, 0.4]}
           position={[0, 1.2, 0]}
           restitution={0} // 반발력 설정: 0(완전 흡수) ~ 1(완전 반사)
-          friction={0.1} // 마찰력 설정
+          friction={1} // 마찰력 설정
         />
         <group ref={character}>
           <Character pos={rigidbody.current && rigidbody.current.linvel()} />
