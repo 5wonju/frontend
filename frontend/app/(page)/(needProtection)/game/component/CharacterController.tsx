@@ -2,13 +2,15 @@
 import { useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, vec3 } from '@react-three/rapier'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
 import { useCharacterSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { controls } from './KeyboardControl'
 import { gameStateEnum, playerMoveStateEnum } from '../lib/store-type'
+import { useMainSocketStore } from '@/app/lib/store'
+import { useAuth } from '@/app/hooks/useAuth'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1
@@ -16,6 +18,7 @@ const MAX_VEL = 3
 const RUN_VEL = 1.5
 
 const CharacterController = () => {
+  const { socket } = useMainSocketStore()
   // 게임 진행 상태
   const { gameState } = useGameRoomStore((state) => ({
     gameState: state.gameState,
@@ -39,6 +42,54 @@ const CharacterController = () => {
   const isOnFloor = useRef(true)
   const character = useRef()
   const cameraLookAt = useRef(new THREE.Vector3()).current
+
+  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 })
+  const [linVelocity, setLinVelocity] = useState({ x: 0, y: 0, z: 0 })
+
+  useEffect(() => {
+    const updateState = () => {
+      if (rigidbody.current) {
+        setPosition(rigidbody.current.translation())
+        setLinVelocity(rigidbody.current.linvel())
+      }
+    }
+
+    const intervalId = setInterval(updateState, 100) // 매 0.1초마다 상태 업데이트
+
+    return () => clearInterval(intervalId)
+  }, [])
+
+  const { userInfo } = useAuth()
+  let linvel = rigidbody.current?.linvel()
+  useEffect(() => {
+    if (socket === null) return
+    if (!rigidbody.current) return
+    // 플레이어 위치 정보 및 상태 소켓으로 전송
+    socket.send(
+      JSON.stringify({
+        eventType: 'MOVE_CHARACTER',
+        data: {
+          pos: position,
+          linvel: linVelocity,
+          moveState: playerMoveState,
+          characterType: characterIndex,
+          nickname: userInfo.nickname,
+          direction: 'left',
+        },
+      })
+    )
+  }, [playerMoveState, characterIndex, position, linVelocity])
+
+  useEffect(() => {
+    socket.send(
+      JSON.stringify({
+        eventType: 'TEAM_SELECT',
+        data: {
+          team: playerTeamState,
+        },
+      })
+    )
+  }, [playerTeamState])
 
   useEffect(() => {
     if (!rigidbody.current) return

@@ -18,7 +18,6 @@ const OtherController = ({
   linvel,
   moveState,
   characterType,
-  direction,
   nickname,
   team,
   modelKey,
@@ -31,11 +30,11 @@ const OtherController = ({
 
   useEffect(() => {
     // if (!rigidbody.current) return
-    rigidbody.current.setTranslation(vec3({ x: Math.random() * 3, y: pos.y, z: Math.random() * 3 }))
+    rigidbody.current.setTranslation(vec3({ x: pos.x, y: pos.y, z: pos.z }))
     rigidbody.current.setLinvel(vec3({ x: linvel.x, y: linvel.y, z: linvel.z }))
     // 캐릭터가 이동할 때마다 좌표 받아오기
     // console.log('rigidbody.current', rigidbody.current.linvel())
-  }, [])
+  }, [pos, linvel])
 
   useFrame((state, delta) => {
     if (!rigidbody.current) return
@@ -92,7 +91,6 @@ const OtherController = ({
             pos={rigidbody.current && rigidbody.current.linvel()}
             moveState={moveState}
             characterType={characterType}
-            direction={direction}
             nickname={nickname}
             team={team}
             modelKey={modelKey}

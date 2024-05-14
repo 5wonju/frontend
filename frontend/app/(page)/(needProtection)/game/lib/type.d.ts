@@ -27,6 +27,11 @@ interface IUserInfo {
     y: number
     z: number
   }
+  linvel: {
+    x: number
+    y: number
+    z: number
+  }
   team: teamEnum
   userScore: number
   moveState?: playerMoveStateEnum.IDLE

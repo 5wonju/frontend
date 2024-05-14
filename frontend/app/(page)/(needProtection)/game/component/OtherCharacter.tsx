@@ -39,13 +39,12 @@ export default function OtherCharacter({
   pos,
   moveState,
   characterType,
-  direction,
   nickname,
   team,
 }: IOtherStatus) {
   const groupRef = useRef()
   // const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
-  console.log('nickname', nickname, moveState, characterType, direction, nickname, team)
+  console.log('nickname', nickname, moveState, characterType, nickname, team)
 
   const { nodes, animations, scene } = useGLTF(
     `/models/custom${modelKey}/custom-model${characterType}.gltf`
