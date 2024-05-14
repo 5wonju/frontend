@@ -1,26 +1,14 @@
-interface WaitingRoom {
-  roomTitle: string
-  roomOwnerName: string
-  roomCurUserNum: number
-  roomMaxUserNum: number
-  roomId: number
-  isGameStart: boolean
-  isRoomFull: boolean
-  probCategory: '수학' | '과학' | '역사' | '국어' | '개발'
-  isHavePW: boolean
-  curRound: number
-  totalRound: number
-  roomMode: 'basic' | 'yoot'
-}
+import { Dispatch } from 'react'
 
-type ProblemCategoryType = '수학' | '과학' | '역사' | '국어' | '개발'
+type ProblemCategoryType = '개발' | '과학' | '컴퓨터' | '한국사' | '근현대사'
 
-interface ICreatedRoom {
-  roomTitle: string
-  roomPW: string
+interface IRoomInfo {
+  roomId: number | null
+  roomTitle: string | null
+  roomPW: string | null
   probCategory: ProblemCategoryType[]
+  roomMode: gameMode
   maxUserNum: number
-  roomMode: 'basic' | 'yoot'
   probNum: number
 }
 
@@ -29,4 +17,27 @@ interface RoomListResponse {
   data: {
     roomList: Room[]
   }
+}
+
+type gameMode = 'BASIC' | 'YOOT'
+
+interface IRoomOfLobby {
+  roomTitle: string | null
+  roomOwnerName: string | null
+  roomCurUserNum: number | null
+  roomMaxUserNum: number
+  roomId: number | null
+  isGameStart: boolean | null
+  isRoomFull: boolean | null
+  probCategory: ProblemCategoryType[]
+  hasPassword: boolean | null
+  roomPW: string | null
+  curRound: number | null
+  totalRound: number
+  roomMode: gameMode
+}
+
+interface RoomEditProps {
+  roomInfo: IRoomInfo
+  setRoomInfo: React.Dispatch<React.SetStateAction<IRoomInfo>>
 }

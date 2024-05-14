@@ -1,19 +1,59 @@
 import { Cylinder, MeshReflectorMaterial, OrbitControls } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import AnswerSpot from './AnswerSpot'
-import React from 'react'
+import React, { useEffect } from 'react'
 import CharacterController from './CharacterController'
 import { useAnswerSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
 import { AnswerEnum, gameStateEnum, teamEnum } from '../lib/store-type'
 import TeamSpot from './TeamSpot'
+<<<<<<< HEAD
 import OtherPlayers from './OtherPlayers'
+=======
+import { useWaitingRoom } from '@/app/hooks/useSocket'
+import { useAuth } from '@/app/hooks/useAuth'
+>>>>>>> 077bfa4d7a34dd6508c7cd29d913d6db8441d51b
 
 const GameField = () => {
-  const { startGame, gameState } = useGameRoomStore()
+  const { startGame, gameState, setIsRoomOwner, gameUserList } = useGameRoomStore((state) => ({
+    startGame: state.startGame,
+    gameState: state.gameState,
+    setIsRoomOwner: state.setIsRoomOwner,
+    gameUserList: state.gameUserList,
+  }))
+  const { selectTeam } = useWaitingRoom()
   const { setPlayerTeamState } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
   }))
   const { setSelectAnswer } = useAnswerSelectStore()
+  const { userInfo } = useAuth()
+
+  // 메인 필드에 닿았을 때 (선택한 팁 or 선택한 답) 초기화
+  const handleEnterMainField = () => {
+    switch (gameState) {
+      case gameStateEnum.READY:
+        setPlayerTeamState(teamEnum.NONE)
+        selectTeam(teamEnum.NONE)
+        break
+      case gameStateEnum.GAME:
+        setSelectAnswer(AnswerEnum.NONE)
+        break
+    }
+  }
+
+  // 유저가 방장인지 정보를 받아와서 store에 저장
+  if (gameUserList) {
+    const roomOwner = gameUserList.find(
+      (user) => user.userNickname === userInfo.nickname
+    )?.roomOwner
+    if (roomOwner !== undefined) {
+      setIsRoomOwner(roomOwner)
+    }
+  }
+
+  // 개발용 게임 시작
+  // useEffect(() => {
+  //   startGame()
+  // }, [])
 
   return (
     <>
@@ -64,10 +104,7 @@ const GameField = () => {
           type="fixed"
           position-y={-0.5}
           friction={4}
-          onCollisionEnter={() => {
-            setPlayerTeamState(teamEnum.NONE)
-            setSelectAnswer(AnswerEnum.NONE)
-          }}
+          onCollisionEnter={handleEnterMainField}
         >
           <CylinderCollider args={[1, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>

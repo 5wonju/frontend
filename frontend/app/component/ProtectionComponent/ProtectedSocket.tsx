@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMainSocketStore } from '@/app/(page)/(needProtection)/channel/lib/store'
+import { useMainSocketStore } from '@/app/lib/store'
 
 const ProtectedSocket = ({ children }: { children: React.ReactNode }) => {
   const { socket } = useMainSocketStore()

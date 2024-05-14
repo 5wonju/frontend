@@ -5,31 +5,46 @@ import { Lock } from 'lucide-react'
 import RoomPasswordModal from './RoomPasswordModal'
 import { canEnterRoom } from '../lib/util'
 import clsx from 'clsx'
-import { useEnterRoom } from '../hooks/enterRoom'
 import { useWaitingRoom } from '@/app/hooks/useSocket'
+import { IRoomOfLobby } from '../lib/type'
+import { useGameRoomStore } from '../../game/lib/store'
 
 interface RoomProps {
-  room: WaitingRoom
+  room: IRoomOfLobby
 }
 
 const WaitingRoom = ({ room }: RoomProps) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const { enterRoom } = useWaitingRoom()
+  const { setRoomInfo } = useGameRoomStore((state) => ({
+    setRoomInfo: state.setRoomInfo,
+  }))
 
   const handleRoomClick = () => {
+    if (!room) return
+    setRoomInfo({
+      roomId: room.roomId,
+      roomTitle: room.roomTitle,
+      roomPW: room.roomPW,
+      probCategory: room.probCategory,
+      roomMode: room.roomMode,
+      maxUserNum: room.roomMaxUserNum,
+      probNum: room.totalRound,
+    })
+
     // 비밀번호 방 클릭 시
-    if (room.isHavePW) {
+    if (room.hasPassword) {
       canEnterRoom(room) && setModalOpen(true)
     }
     // 비밀번호 없는 방 클릭 시
     else {
-      enterRoom(room.roomId)
+      if (room.roomId) enterRoom(room.roomId)
     }
   }
 
   const submitPassword = (password: string) => {
     console.log('Password entered:', password)
-    enterRoom(room.roomId, password)
+    if (room.roomId) enterRoom(room.roomId, password)
     setModalOpen(false)
   }
 
@@ -60,7 +75,7 @@ const WaitingRoom = ({ room }: RoomProps) => {
       </div>
       <div className="text-right">
         <p>{`${room.roomCurUserNum}/${room.roomMaxUserNum}`}</p>
-        {room.isHavePW && <Lock size={24} />}
+        {room.hasPassword && <Lock size={24} />}
       </div>
       <RoomPasswordModal
         isOpen={isModalOpen}

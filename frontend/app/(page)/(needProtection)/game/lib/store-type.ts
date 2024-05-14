@@ -1,10 +1,12 @@
-import { IUserInfo } from "./type"
+import { IRoomInfo } from '../../lobby/lib/type'
+import { IGameResult, IGameScore, IQuiz, IUserInfo } from './type'
 
 // :: 게임 상태
 export enum gameStateEnum {
-  READY = '대기중',
-  GAME = '게임중',
-  DONE = '게임종료',
+  READY = 'READY',
+  COUNTDOWN = 'COUNTDOWN',
+  GAME = 'GAME',
+  DONE = 'DONE',
 }
 
 // :: 플레이어 액션 종류
@@ -27,7 +29,7 @@ export enum AnswerEnum {
   C = 'C',
   D = 'D',
   B = 'B',
-  NONE = 'none',
+  NONE = 'none', // none -> N으로 수정하기
 }
 
 // ------------------------------------------------
@@ -44,10 +46,15 @@ export interface IOnGameUserInfo {
 }
 
 export interface IGameRoomState {
-  gameState: gameStateEnum
+  isRoomOwner: boolean
+  setIsRoomOwner: (isRoomOwner: boolean) => void
   gameUserList: IUserInfo[] | null
   setGameUserList: (users: IUserInfo[] | null) => void
+  gameState: gameStateEnum
   startGame: () => void
+  countdownGame: () => void
+  roomInfo: IRoomInfo
+  setRoomInfo: (roomInfo: IRoomInfo) => void
 }
 
 export interface IPlayerState {
@@ -79,4 +86,19 @@ export interface ITeamSetBoardState {
 export interface IAnswerState {
   selectAnswer: AnswerEnum
   setSelectAnswer: (selectAnswer: AnswerEnum) => void
+}
+
+export interface IQuizState {
+  quiz: IQuiz
+  setQuiz: (quiz: IQuiz) => void
+}
+
+export interface IGameScoreState {
+  gameScore: IGameScore | null
+  setGameScore: (gameScore: IGameScore) => void
+}
+
+export interface IGameResultState {
+  gameResult: IGameResult | null
+  setGameResult: (gameResult: IGameResult) => void
 }

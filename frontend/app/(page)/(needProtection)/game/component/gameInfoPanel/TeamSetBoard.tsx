@@ -1,7 +1,6 @@
 import TeamInfo from './TeamInfo'
 import { FaCaretDown } from 'react-icons/fa'
-import { useGameRoomStore, useTeamSetBoardStore } from '../../lib/store'
-import { userList } from '../../lib/dummy'
+import { useGameRoomStore, useGameScoreStore, useTeamSetBoardStore } from '../../lib/store'
 import { teamEnum } from '../../lib/store-type'
 
 const TeamSetBoard = () => {
@@ -9,8 +8,7 @@ const TeamSetBoard = () => {
   const { gameUserList } = useGameRoomStore((state) => ({
     gameUserList: state.gameUserList,
   }))
-
-  console.log(gameUserList)
+  const { gameScore } = useGameScoreStore()
   const toggleOpen = () => setTeamSetBoardOpen(!isTeamSetBoardOpen)
 
   const handleOutUser = (userNickname: string) => {
@@ -30,19 +28,24 @@ const TeamSetBoard = () => {
         teamName="RED TEAM"
         teamColor={teamEnum.RED}
         userList={gameUserList}
+        gameUserScore={gameScore?.redTeamUsers ?? null}
         handleOutUser={handleOutUser}
+        teamScore={gameScore?.redTeamPoint}
       />
       <TeamInfo
         teamName="BLUE TEAM"
         teamColor={teamEnum.BLUE}
         userList={gameUserList}
+        gameUserScore={gameScore?.blueTeamUsers ?? null}
         handleOutUser={handleOutUser}
+        teamScore={gameScore?.blueTeamPoint}
       />
       <TeamInfo
         teamName="NONE TEAM"
         teamColor={teamEnum.NONE}
         userList={gameUserList}
         handleOutUser={handleOutUser}
+        teamScore={0}
       />
     </div>
   )

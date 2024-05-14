@@ -1,11 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+import { RoomEditProps } from '../../lib/type'
 
-interface SelectPlayerCountProps {
-  playerCount: number
-  setPlayerCount: (count: number) => void
-}
-const SelectPlayerCount = ({ playerCount, setPlayerCount }: SelectPlayerCountProps) => {
+const SelectPlayerCount = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
   const [isPlayerCountOpen, setIsPlayerCountOpen] = useState(false)
   const ref = useRef(null)
 
@@ -31,7 +28,7 @@ const SelectPlayerCount = ({ playerCount, setPlayerCount }: SelectPlayerCountPro
           onClick={() => setIsPlayerCountOpen(!isPlayerCountOpen)}
           className="w-full border p-2 rounded cursor-pointer"
         >
-          {playerCount}
+          {roomInfo.maxUserNum}
         </button>
         {isPlayerCountOpen && (
           <ul
@@ -41,9 +38,9 @@ const SelectPlayerCount = ({ playerCount, setPlayerCount }: SelectPlayerCountPro
             {[2, 3, 4, 5, 6, 7, 8].map((count) => (
               <li
                 key={count}
-                className={`p-2 hover:bg-blue-100 ${count === playerCount ? 'bg-blue-200' : ''}`}
+                className={`p-2 hover:bg-blue-100 ${count === roomInfo.maxUserNum ? 'bg-blue-200' : ''}`}
                 onClick={() => {
-                  setPlayerCount(count)
+                  setRoomInfo((prev) => ({ ...prev, maxUserNum: count }))
                   setIsPlayerCountOpen(false)
                 }}
                 role="menuitem"

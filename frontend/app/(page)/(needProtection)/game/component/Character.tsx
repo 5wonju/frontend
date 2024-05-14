@@ -1,20 +1,13 @@
 // @ts-nocheck
 'use client'
 
-import { Html, useAnimations, useGLTF } from '@react-three/drei'
+import { Html, Text, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
 import { useCharacterSelectStore, useModalStore, usePlayerStore } from '../lib/store'
 import { teamEnum } from '../lib/store-type'
 import { useAuth } from '@/app/hooks/useAuth'
+import { useFrame, useThree } from '@react-three/fiber'
 
-const pathObj = {
-  0: '/models/custom/custom-model0.gltf',
-  1: '/models/custom/custom-model1.gltf',
-  2: '/models/custom/custom-model2.gltf',
-  3: '/models/custom/custom-model3.gltf',
-  4: '/models/custom/custom-model4.gltf',
-  5: '/models/custom/custom-model5.gltf',
-}
 export default function Character({ pos }) {
   const groupRef = useRef()
   const { userInfo } = useAuth()
@@ -33,7 +26,7 @@ export default function Character({ pos }) {
 
   // 캐릭터에 그림자 효과
   scene.traverse((child) => {
-    if (child.isMesh) {
+    if (child.amIMesh) {
       child.castShadow = true
     }
   })
@@ -47,27 +40,35 @@ export default function Character({ pos }) {
       if (!actions[playerMoveState]) return
       actions[playerMoveState].fadeOut(0.2)
     }
-  }, [playerMoveState, actions])
+  }, [playerMoveState])
+
+  const textRef = useRef()
+  const { camera } = useThree()
+
+  useFrame(() => {
+    if (textRef.current) {
+      // 텍스트 오브젝트를 카메라 방향으로 회전
+      textRef.current.lookAt(camera.position)
+      // Y 축을 고정하려면 아래 코드로 조정
+      textRef.current.rotation.z = 0
+      textRef.current.rotation.y = 0 // Y 축 회전 제거
+    }
+  })
 
   return (
     <group ref={groupRef} scale={1}>
       <primitive object={nodes} />
       <primitive object={scene} />
-      {pos && (
-        <Html position={[0, 3, 0]} className={`${isModalOpen ? 'hidden' : ''}`}>
-          <div
-            className={`text-sm w-20 overflow-hidden whitespace-nowrap select-none truncate ${
-              playerTeamState === teamEnum.BLUE
-                ? 'text-blue-400'
-                : playerTeamState === teamEnum.RED
-                ? 'text-red-400'
-                : 'text-neutral-700'
-            }`}
-          >
-            {userInfo && userInfo.nickname}
-          </div>
-        </Html>
-      )}
+      <Text
+        ref={textRef}
+        position={[0, 3, 0]} // 캐릭터의 머리 위 적절한 위치에 닉네임을 배치합니다.
+        fontSize={0.5} // 폰트 크기를 조절합니다.
+        color="black" // 텍스트 색상을 지정합니다.
+        anchorX="center" // 텍스트를 중앙 정렬합니다.
+        anchorY="bottom" // 텍스트의 하단을 기준으로 위치를 조정합니다.
+      >
+        {userInfo && userInfo.nickname}
+      </Text>
     </group>
   )
 }

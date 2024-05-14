@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
-import { useChatLogsStore, useMainSocketStore } from '../(page)/(needProtection)/channel/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
+import { IChat, useChatLogsStore, useMainSocketStore } from '../lib/store'
 import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import { IRoomInfo } from '../(page)/(needProtection)/lobby/lib/type'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -10,13 +11,22 @@ const useWaitingRoom = () => {
   const { socket } = useMainSocketStore()
   const { roomList } = useWaitingRoomStore()
 
-  const createWaitingRoom = (roomInfo: ICreatedRoom) => {
+  const createWaitingRoom = (roomInfo: IRoomInfo) => {
     if (!socket) {
       alert('Socket이 비어있습니다.')
       return
     }
     console.log('createWaitingRoom:', roomInfo)
     socket.send(JSON.stringify({ eventType: 'CREATE_ROOM', data: roomInfo }))
+  }
+
+  const editRoom = (roomInfo: IRoomInfo) => {
+    if (!socket) {
+      alert('Socket이 비어있습니다.')
+      return
+    }
+    console.log('editRoom:', roomInfo)
+    socket.send(JSON.stringify({ eventType: 'UPDATE_ROOM_INFO', data: roomInfo }))
   }
 
   // Todo : 서버랑 예기해서 소켓 연결 끊기는 문제 해결 필요.
@@ -46,7 +56,7 @@ const useWaitingRoom = () => {
   }
 
   const selectTeam = (team: teamEnum) => {
-    if(!socket) {
+    if (!socket) {
       console.log('Socket이 비어있습니다.')
       return
     }
@@ -54,7 +64,24 @@ const useWaitingRoom = () => {
     socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team } }))
   }
 
-  return { createWaitingRoom, enterRoom, getInitialRoomList, roomList, selectTeam }
+  const getRoomInfo = (roomId: number) => {
+    if (!socket) {
+      console.log('소켓이 비었어')
+      return
+    }
+
+    socket.send(JSON.stringify({ eventType: 'SEARCH_ROOM_BY_ID', data: { roomId } }))
+  }
+
+  return {
+    createWaitingRoom,
+    enterRoom,
+    getInitialRoomList,
+    roomList,
+    selectTeam,
+    getRoomInfo,
+    editRoom,
+  }
 }
 
 // :: Chat
@@ -76,6 +103,7 @@ const useChat = () => {
       return
     }
 
+    console.log('보내지는 채팅', message)
     socket.send(JSON.stringify({ eventType: 'CHATTING', data: { message: message } }))
   }
 

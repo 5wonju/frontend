@@ -1,4 +1,4 @@
-import { teamEnum } from "./store-type"
+import { AnswerEnum, teamEnum } from './store-type'
 
 // 정답자 순위 표현
 export const rankList: { [key: number]: string } = {
@@ -7,11 +7,18 @@ export const rankList: { [key: number]: string } = {
   3: '3rd',
 }
 
-// 팀 색상 css
-export const teamColorToCss = {
+// 팀 색상 text css
+export const teamColorToCssText = {
   [teamEnum.RED]: 'text-red-400',
   [teamEnum.BLUE]: 'text-blue-400',
   [teamEnum.NONE]: 'text-gray-400',
+}
+
+// 팀 색상 bg css
+export const teamColorToCssBg = {
+  [teamEnum.RED]: 'bg-red-400',
+  [teamEnum.BLUE]: 'bg-blue-400',
+  [teamEnum.NONE]: 'bg-gray-400',
 }
 
 // 캐러셀 위치 계산 함수
@@ -37,4 +44,12 @@ export const models = [
 export const formatTime = (time: number) => {
   const seconds = time.toFixed(2) // 소수점 2자리까지 표시
   return seconds
+}
+
+// 정답 선택 번호
+export const QuizAnswer: { [key: number]: AnswerEnum } = {
+  0: AnswerEnum.A,
+  1: AnswerEnum.B,
+  2: AnswerEnum.C,
+  3: AnswerEnum.D,
 }

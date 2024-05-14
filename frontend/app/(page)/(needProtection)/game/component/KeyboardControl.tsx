@@ -12,10 +12,10 @@ export const controls = {
 const KeyboardControl = ({ children }: { children: React.ReactNode }) => {
   const map = useMemo(
     () => [
-      { name: controls.forward, keys: ['ArrowUp', 'KeyW'] },
-      { name: controls.back, keys: ['ArrowDown', 'KeyS'] },
-      { name: controls.left, keys: ['ArrowLeft', 'KeyA'] },
-      { name: controls.right, keys: ['ArrowRight', 'KeyD'] },
+      { name: controls.forward, keys: ['ArrowUp'] },
+      { name: controls.back, keys: ['ArrowDown'] },
+      { name: controls.left, keys: ['ArrowLeft'] },
+      { name: controls.right, keys: ['ArrowRight'] },
       { name: controls.jump, keys: ['Space'] },
     ],
     []

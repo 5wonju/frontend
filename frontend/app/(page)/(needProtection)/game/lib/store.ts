@@ -6,21 +6,29 @@ import {
   gameStateEnum,
   IAnswerState,
   ICharacterSelectState,
+  IGameResultState,
   IGameRoomState,
+  IGameScoreState,
   IModalState,
-  IOnGameUserInfo,
   IPlayerState,
+  IQuizState,
   ITeamSetBoardState,
   playerMoveStateEnum,
   teamEnum,
 } from './store-type'
-import { IUserInfo } from './type'
-
+import { IQuiz, IUserInfo } from './type'
 
 // :: RoomStore
 export const useGameRoomStore = create<IGameRoomState>()(
   devtools(
     immer((set) => ({
+      // 내가 방장인지 여부
+      isRoomOwner: false,
+      setIsRoomOwner: (isRoomOwner: boolean) =>
+        set((state: IGameRoomState) => {
+          state.isRoomOwner = isRoomOwner
+        }),
+
       // room 내 유저 정보 리스트
       gameUserList: [], // initial state
       setGameUserList: (users: IUserInfo[] | null) =>
@@ -33,6 +41,25 @@ export const useGameRoomStore = create<IGameRoomState>()(
       startGame: () =>
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.GAME
+        }),
+      countdownGame: () =>
+        set((state: IGameRoomState) => {
+          state.gameState = gameStateEnum.COUNTDOWN
+        }),
+
+      // 방 정보 상태
+      roomInfo: {
+        roomId: null,
+        roomTitle: '',
+        roomPW: '',
+        probCategory: ['개발'],
+        roomMode: 'BASIC',
+        maxUserNum: 2,
+        probNum: 10,
+      },
+      setRoomInfo: (roomInfo) =>
+        set((state: IGameRoomState) => {
+          state.roomInfo = roomInfo
         }),
     })),
     { name: 'RoomStore' } // This name will appear in Redux DevTools
@@ -116,5 +143,53 @@ export const useAnswerSelectStore = create<IAnswerState>()(
         }),
     })),
     { name: 'AnswerSelectStore' }
+  )
+)
+
+// :: 현재 퀴즈 정보
+export const useQuizStore = create<IQuizState>()(
+  devtools(
+    immer((set) => ({
+      quiz: {
+        currentRound: 0,
+        questionId: null,
+        question: '',
+        options: [],
+        timeLimit: 0,
+      },
+      setQuiz: (quiz: IQuiz) =>
+        set((state) => {
+          state.quiz = quiz
+        }),
+    })),
+    { name: 'QuizStore' }
+  )
+)
+
+// :: 점수 정보
+export const useGameScoreStore = create<IGameScoreState>()(
+  devtools(
+    immer((set) => ({
+      gameScore: null,
+      setGameScore: (gameScore) =>
+        set((state) => {
+          state.gameScore = gameScore
+        }),
+    })),
+    { name: 'GameScoreStore' }
+  )
+)
+
+// :: 게임 결과 (우승 팀 및 유저별 획득 포인트)
+export const useGameResultStore = create<IGameResultState>()(
+  devtools(
+    immer((set) => ({
+      gameResult: null,
+      setGameResult: (gameResult) =>
+        set((state) => {
+          state.gameResult = gameResult
+        }),
+    })),
+    { name: 'GameResultStore' }
   )
 )
