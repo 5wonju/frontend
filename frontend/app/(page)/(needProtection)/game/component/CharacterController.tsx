@@ -81,17 +81,6 @@ const CharacterController = () => {
   }, [playerMoveState, characterIndex, position, linVelocity])
 
   useEffect(() => {
-    socket.send(
-      JSON.stringify({
-        eventType: 'TEAM_SELECT',
-        data: {
-          team: playerTeamState,
-        },
-      })
-    )
-  }, [playerTeamState])
-
-  useEffect(() => {
     if (!rigidbody.current) return
     // 캐릭터가 이동할 때마다 좌표 받아오기
     // console.log('rigidbody.current', rigidbody.current.linvel())
