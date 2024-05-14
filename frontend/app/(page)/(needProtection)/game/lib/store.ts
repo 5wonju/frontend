@@ -201,7 +201,7 @@ export const useRoundResultStore = create<IRoundResultState>()(
     immer((set) => ({
       answer: null,
       roundResults: null,
-      setAnswer: (answer: AnswerEnum) =>
+      setAnswer: (answer: AnswerEnum | null) =>
         set((state) => {
           state.answer = answer
         }),
