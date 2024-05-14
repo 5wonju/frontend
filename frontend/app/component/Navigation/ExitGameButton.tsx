@@ -1,15 +1,17 @@
-import { useRouter } from 'next/navigation'
+import { useGameRoomStore } from '@/app/(page)/(needProtection)/game/lib/store'
+import { useGame } from '@/app/hooks/useSocket'
 import React from 'react'
 
 const ExitGameButton = () => {
-  const router = useRouter()
+  const { exitRoom } = useGame()
+  const { gameState } = useGameRoomStore()
 
   const handleExitGame = () => {
-    router.push('/lobby')
+    exitRoom()
   }
 
   return (
-    <button onClick={handleExitGame} className="nav-btn">
+    <button onClick={handleExitGame} disabled={gameState !== 'READY'} className="nav-btn">
       게임 나가기
     </button>
   )
