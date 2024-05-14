@@ -7,7 +7,7 @@ import {
 } from '../(page)/(needProtection)/game/lib/store'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { IGameResult, IGameScore, IQuiz, IUserInfo } from '../(page)/(needProtection)/game/lib/type'
-import { IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
+import { IRoomInfo, IRoomOfLobby } from '../(page)/(needProtection)/lobby/lib/type'
 import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
@@ -53,8 +53,9 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
   // :: Handler Functions
   // Todo : 게임 입장 시 url에 roomId를 반영할지 말지 결정하고 추후 반영
-  const successCreateRoom = (roomId: number) => {
+  const successCreateRoom = (roomInfo: IRoomInfo) => {
     router.push(`/game`)
+    setRoomInfo(roomInfo)
     // router.push(`/game/${roomId}`)
   }
 
@@ -148,7 +149,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.CREATE_ROOM:
           console.log('방 생성 성공 응답')
-          successCreateRoom(responseData.data.roomId)
+          successCreateRoom(responseData.data)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')
@@ -216,12 +217,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
           break
-        // 추가적인 이벤트 핸들러 등록..
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
           break
       }
-    }
+    } 
   }
   return { setUpGame }
 }

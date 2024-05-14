@@ -76,8 +76,8 @@ export const validateCreateRoomData = ({
     return false
   }
 
-  if (roomTitle.length > 10) {
-    alert('방 제목은 10자 이내로 작성해야 합니다.')
+  if (roomTitle.length > 18) {
+    alert('방 제목은 18자 이내로 작성해야 합니다.')
     return false
   }
 
