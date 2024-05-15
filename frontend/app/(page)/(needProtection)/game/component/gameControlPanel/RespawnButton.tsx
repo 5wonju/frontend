@@ -1,8 +1,12 @@
 import { GrPowerCycle } from 'react-icons/gr'
+import { useRespawnButtonStore } from '../../lib/store'
 
 const RespawnButton = () => {
+  const { setRespawnButton } = useRespawnButtonStore()
+
   const handleRespawn = () => {
     console.log('중앙 리스폰 얍!')
+    setRespawnButton(true)
   }
 
   return (

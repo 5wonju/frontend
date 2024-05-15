@@ -12,6 +12,7 @@ import {
   IModalState,
   IPlayerState,
   IQuizState,
+  IRespawnButtonState,
   IRoundResultState,
   ITeamSetBoardState,
   playerMoveStateEnum,
@@ -211,5 +212,19 @@ export const useRoundResultStore = create<IRoundResultState>()(
         }),
     })),
     { name: 'RoundResultStore' }
+  )
+)
+
+// :: 리스폰 버튼 클릭 여부
+export const useRespawnButtonStore = create<IRespawnButtonState>()(
+  devtools(
+    immer((set) => ({
+      letRespawn: false,
+      setRespawnButton: (letRespawn: boolean) =>
+        set((state) => {
+          state.letRespawn = letRespawn
+        }),
+    })),
+    { name: 'RespawnButtonStore' }
   )
 )
