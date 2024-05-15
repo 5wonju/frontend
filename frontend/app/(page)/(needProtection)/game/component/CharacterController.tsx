@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
-import { useCharacterSelectStore, useGameRoomStore, usePlayerStore } from '../lib/store'
+import { useCharacterSelectStore, useGameRoomStore, usePlayerStore, useRespawnButtonStore } from '../lib/store'
 import { controls } from './KeyboardControl'
 import { gameStateEnum, playerMoveStateEnum } from '../lib/store-type'
 import { useMainSocketStore } from '@/app/lib/store'
@@ -23,6 +23,7 @@ const CharacterController = () => {
   const { gameState } = useGameRoomStore((state) => ({
     gameState: state.gameState,
   }))
+  const { letRespawn, setRespawnButton } = useRespawnButtonStore()
 
   // 플레이어 상태
   const { playerMoveState, setPlayerMoveState, playerTeamState } = usePlayerStore((state) => ({
@@ -110,9 +111,14 @@ const CharacterController = () => {
 
   useEffect(() => {
     if (!rigidbody.current) return
-    // 캐릭터가 이동할 때마다 좌표 받아오기
-    // console.log('rigidbody.current', rigidbody.current.linvel())
-  })
+    
+    // 리스폰 버튼이 true 이면 플레이어 위치 초기화
+    if (letRespawn) {
+      rigidbody.current.setTranslation(vec3({ x: 0, y: 1, z: 0 }))
+      rigidbody.current.setLinvel(vec3({ x: 0, y: 1, z: 0 }))
+      setRespawnButton(false)
+    }
+  }, [letRespawn, setRespawnButton])
 
   useFrame((state, delta) => {
     if (!rigidbody.current) return

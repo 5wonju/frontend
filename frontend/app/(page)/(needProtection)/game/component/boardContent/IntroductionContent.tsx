@@ -28,18 +28,17 @@ const GameRuleContent = () => {
   return (
     <fieldset className="flex flex-col gap-4 pt-2 items-center justify-around text-black transition-colors">
       <h2 className="text-3xl font-medium">매 라운드 퀴즈가 출제됩니다</h2>
-      <div className="text-md flex flex-col items-center gap-1">
+      <div className="text-md flex flex-col items-center gap-2">
         <p className="flex">
-          {['A', 'B', 'C', 'D'].map((answer, index) => (
-            <>
+          {['A', 'B', 'C', 'D'].map((answer) => (
+            <span key={answer} className='pr-1'>
               <span
                 key={answer}
                 className="font-medium bg-indigo-600 text-white rounded-full size-6 flex items-center justify-center"
               >
                 {answer}
               </span>
-              <span className="last:invisible pr-1">,</span>
-            </>
+            </span>
           ))}
           중 정답이라고 생각되는 구역으로 이동해서 정답을 선택하세요
         </p>
@@ -61,7 +60,7 @@ const GameRuleContent = () => {
 const IntroductionContent = () => {
   // TeamSelectContent, GameRuleContent가 각각 번갈아가면서 보여짐
   const [currentContent, setCurrentContent] = useState(0)
-  const contents = [TeamSelectContent, GameRuleContent]
+  const contents = [<TeamSelectContent key="team-select"/>, <GameRuleContent key="game-rule"/>]
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,7 +72,7 @@ const IntroductionContent = () => {
   return (
     <div className="select-none flex flex-col justify-around h-full">
       <RoomInfo />
-      {contents[currentContent]()}
+      {contents[currentContent]}
     </div>
   )
 }
