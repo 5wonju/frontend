@@ -109,3 +109,17 @@ export const useChatLogsStore = create<IChatLogsState>()(
     },
   }))
 )
+
+interface IAudioPlayState {
+  isPlaying: boolean
+  setIsPlaying: (isPlaying: boolean) => void
+}
+
+export const useAudioPlayStore = create<IAudioPlayState>()(
+  devtools((set, get) => ({
+    isPlaying: false,
+    setIsPlaying: (isPlaying: boolean) => {
+      set({ isPlaying })
+    },
+  }))
+)
