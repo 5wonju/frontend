@@ -61,11 +61,11 @@ export default function Character({ pos }) {
       <primitive object={scene} />
       <Text
         ref={textRef}
-        position={[0, 3, 0]} // 캐릭터의 머리 위 적절한 위치에 닉네임을 배치합니다.
-        fontSize={0.5} // 폰트 크기를 조절합니다.
-        color="black" // 텍스트 색상을 지정합니다.
-        anchorX="center" // 텍스트를 중앙 정렬합니다.
-        anchorY="bottom" // 텍스트의 하단을 기준으로 위치를 조정합니다.
+        position={[0, 3, 0]}
+        fontSize={0.5}
+        color={playerTeamState === teamEnum.RED ? '#ff8080' : playerTeamState === teamEnum.BLUE ? 'skyblue' : '#454545'}
+        anchorX="center"
+        anchorY="bottom"
       >
         {userInfo && userInfo.nickname}
       </Text>
