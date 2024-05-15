@@ -28,7 +28,7 @@ const GameRuleContent = () => {
   return (
     <fieldset className="flex flex-col gap-4 pt-2 items-center justify-around text-black transition-colors">
       <h2 className="text-3xl font-medium">매 라운드 퀴즈가 출제됩니다</h2>
-      <div className="text-md flex flex-col items-center gap-1">
+      <div className="text-md flex flex-col items-center gap-2">
         <p className="flex">
           {['A', 'B', 'C', 'D'].map((answer, index) => (
             <>
