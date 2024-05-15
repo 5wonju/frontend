@@ -11,7 +11,6 @@ import GameResult from './component/gameResult/GameResult'
 import { useMainSocketStore } from '@/app/lib/store'
 import { useSetupSocket } from '@/app/hooks/useSetupSocket'
 import WebGLContextManager from './component/WebGLContextManager'
-import AudioPlayer from '@/app/component/AudioPlayer'
 
 const Game = () => {
   const { socket } = useMainSocketStore()
@@ -35,7 +34,6 @@ const Game = () => {
       <GameInfoPanel />
       <GameControlPanel />
       <GameResult />
-      <AudioPlayer />
     </KeyboardControl>
   )
 }
