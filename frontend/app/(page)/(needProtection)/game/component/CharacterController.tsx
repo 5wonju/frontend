@@ -6,11 +6,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import Character from './Character'
 
 import * as THREE from 'three'
-import { useCharacterSelectStore, useGameRoomStore, usePlayerStore, useRespawnButtonStore } from '../lib/store'
+import {
+  useCharacterSelectStore,
+  useGameRoomStore,
+  usePlayerStore,
+  useRespawnButtonStore,
+} from '../lib/store'
 import { controls } from './KeyboardControl'
 import { gameStateEnum, playerMoveStateEnum } from '../lib/store-type'
 import { useMainSocketStore } from '@/app/lib/store'
 import { useAuth } from '@/app/hooks/useAuth'
+import { playAudio } from '../lib/util'
 
 const JUMP_FORCE = 0.5
 const MOVEMENT_SPEED = 0.1
@@ -111,7 +117,7 @@ const CharacterController = () => {
 
   useEffect(() => {
     if (!rigidbody.current) return
-    
+
     // 리스폰 버튼이 true 이면 플레이어 위치 초기화
     if (letRespawn) {
       rigidbody.current.setTranslation(vec3({ x: 0, y: 1, z: 0 }))
@@ -128,6 +134,7 @@ const CharacterController = () => {
       impulse.y += JUMP_FORCE
       setPlayerMoveState(playerMoveStateEnum.JUMP)
       isOnFloor.current = false
+      playAudio('jump')
     }
 
     const linvel = rigidbody.current.linvel()
@@ -228,10 +235,7 @@ const CharacterController = () => {
         onIntersectionEnter={({ other }) => {
           if (other.rigidBodyObject.name === 'void') {
             resetPosition()
-            // Todo: 게임 시작 오디오 삽입하기!
-            playAudio('fall', () => {
-              playAudio('ganbatte')
-            })
+            playAudio('falling')
           }
         }}
       >
