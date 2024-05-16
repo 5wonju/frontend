@@ -53,3 +53,8 @@ export const QuizAnswer: { [key: number]: AnswerEnum } = {
   2: AnswerEnum.C,
   3: AnswerEnum.D,
 }
+
+export const playAudio = (action: string) => {
+  const audio = new Audio(`/sounds/character/${action}.mp3`)
+  audio.play()
+}
