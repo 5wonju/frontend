@@ -30,7 +30,7 @@ export const getPosition = (index: number, numItems = 6, radius: number) => {
   return [x, y, z]
 }
 
-// 캐릭터 모델 경로 리스트
+// 캐릭터 변경 모달 model Path
 export const models = [
   '/models/character-select/custom-model0.gltf',
   '/models/character-select/custom-model1.gltf',

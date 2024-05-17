@@ -8,12 +8,21 @@ import { teamEnum } from '../lib/store-type'
 import { useAuth } from '@/app/hooks/useAuth'
 import { useFrame, useThree } from '@react-three/fiber'
 
+const modelPaths = [
+  '/models/custom/custom-model0.gltf',
+  '/models/custom/custom-model1.gltf',
+  '/models/custom/custom-model2.gltf',
+  '/models/custom/custom-model3.gltf',
+  '/models/custom/custom-model4.gltf',
+  '/models/custom/custom-model5.gltf',
+]
+
 export default function Character({ pos }) {
   const groupRef = useRef()
   const { userInfo } = useAuth()
   const { characterIndex } = useCharacterSelectStore()
 
-  const { nodes, animations, scene } = useGLTF(`/models/custom/custom-model${characterIndex}.gltf`)
+  const { nodes, animations, scene } = useGLTF(modelPaths[characterIndex])
   const { actions } = useAnimations(animations, scene)
 
   const { playerMoveState, playerTeamState } = usePlayerStore((state) => ({
@@ -56,14 +65,20 @@ export default function Character({ pos }) {
   })
 
   return (
-    <group ref={groupRef} scale={1}>
+    <group ref={groupRef} scale={1.2}>
       <primitive object={nodes} />
       <primitive object={scene} />
       <Text
         ref={textRef}
         position={[0, 3, 0]}
         fontSize={0.5}
-        color={playerTeamState === teamEnum.RED ? '#ff8080' : playerTeamState === teamEnum.BLUE ? 'skyblue' : '#454545'}
+        color={
+          playerTeamState === teamEnum.RED
+            ? '#ff8080'
+            : playerTeamState === teamEnum.BLUE
+            ? 'skyblue'
+            : '#454545'
+        }
         anchorX="center"
         anchorY="bottom"
       >
