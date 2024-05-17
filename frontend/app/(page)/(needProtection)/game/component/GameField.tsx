@@ -23,7 +23,7 @@ const GameField = () => {
   }))
   const { setSelectAnswer } = useAnswerSelectStore()
   const { userInfo } = useAuth()
-
+  
   // 메인 필드에 닿았을 때 (선택한 팁 or 선택한 답) 초기화
   const handleEnterMainField = () => {
     switch (gameState) {
