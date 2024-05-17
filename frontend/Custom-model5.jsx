@@ -13,7 +13,7 @@ export function Model(props) {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="FemaleSurvivor">
+        <group name="Male" scale={0.64}>
           <primitive object={nodes.LeftFootCtrl} />
           <primitive object={nodes.RightFootCtrl} />
           <primitive object={nodes.HipsCtrl} />

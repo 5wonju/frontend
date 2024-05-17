@@ -65,7 +65,7 @@ export default function Character({ pos }) {
   })
 
   return (
-    <group ref={groupRef} scale={1.2}>
+    <group ref={groupRef} scale={1}>
       <primitive object={nodes} />
       <primitive object={scene} />
       <Text
