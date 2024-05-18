@@ -52,9 +52,9 @@ const OtherController = ({
     // linvel을 기반으로 위치 업데이트
     const currentTranslation = rigidbody.current.translation()
     const newTranslation = {
-      x: currentTranslation.x + (linvel.x * delta) / 2,
+      x: currentTranslation.x + linvel.x * delta,
       y: currentTranslation.y,
-      z: currentTranslation.z + (linvel.z * delta) / 2,
+      z: currentTranslation.z + linvel.z * delta,
     }
     rigidbody.current.setTranslation(vec3(newTranslation))
 
