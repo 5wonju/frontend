@@ -5,7 +5,7 @@ import { Html, useAnimations, useGLTF } from '@react-three/drei'
 import React, { useEffect, useRef } from 'react'
 import { useCharacterSelectStore, useModalStore } from '../lib/store'
 import { IOtherStatus } from './OtherPlayers'
-import { teamEnum } from '../lib/store-type'
+import { playerMoveStateEnum, teamEnum } from '../lib/store-type'
 
 /*
 모델별 scale 조정
@@ -48,7 +48,7 @@ export default function OtherCharacter({
   console.log('nickname', nickname, moveState, characterType, nickname, team)
 
   const { nodes, animations, scene } = useGLTF(
-    `/models/custom${modelKey}/custom-model${characterType}.gltf`
+    `/models/custom${modelKey}/custom-model${characterType ?? 0}.gltf`
   )
   const { actions } = useAnimations(animations, scene)
   const { isModalOpen } = useModalStore()
@@ -64,10 +64,10 @@ export default function OtherCharacter({
     if (!actions) return
     console.log(actions)
     console.log('moveState', moveState, actions[moveState])
-    actions[moveState].reset().fadeIn(0.2).play()
+    actions[moveState ?? playerMoveStateEnum.IDLE].reset().fadeIn(0.2).play()
     return () => {
-      if (!actions[moveState]) return
-      actions[moveState].fadeOut(0.2)
+      if (!actions[moveState ?? playerMoveStateEnum.IDLE]) return
+      actions[moveState ?? playerMoveStateEnum.IDLE].fadeOut(0.2)
     }
   }, [moveState, actions])
 
