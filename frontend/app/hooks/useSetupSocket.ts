@@ -20,6 +20,7 @@ import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
 import { AnswerEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import { IOtherStatus } from '../(page)/(needProtection)/game/component/OtherPlayers'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -119,6 +120,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
+          console.log(responseData)
           break
       }
     }
@@ -142,6 +144,35 @@ const useSetUpGame = (socket: WebSocket | null) => {
     setRoundResults: state.setRoundResults,
   }))
   const router = useRouter()
+
+  const successOtherUserMove = (otherStatus: {
+    nickname: string
+    position: { x: number; y: number; z: number }
+    linvel: { x: number; y: number; z: number }
+    moveState: number
+    characterType: number
+    team: string
+    direction: string
+  }) => {
+    if (gameUserList === null) return
+
+    const newUserList = gameUserList.map((user: IUserInfo) => {
+      if (user.userNickname === otherStatus.nickname) {
+        return {
+          ...user,
+          position: otherStatus.position,
+          linvel: otherStatus.linvel,
+          moveState: otherStatus.moveState,
+          characterType: otherStatus.characterType,
+          team: otherStatus.team ?? 'NONE',
+          direction: otherStatus.direction,
+        }
+      }
+      return user
+    })
+
+    setGameUserList(newUserList)
+  }
 
   const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
     console.log('방 정보 업데이트 성공 응답', roomInfo)
@@ -262,8 +293,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
           successQuizAnswerRank(responseData.data)
           break
+        case SOCKET_RES_CODE.MOVE_CHARACTER:
+          successOtherUserMove(responseData.data)
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
+          console.log(responseData)
           break
       }
     }

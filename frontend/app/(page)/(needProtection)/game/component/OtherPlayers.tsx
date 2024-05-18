@@ -23,6 +23,7 @@ export interface IOtherStatus {
   nickname: string
   team: teamEnum
   modelKey: number
+  direction?: string
 }
 
 const samplePlayers: IOtherStatus[] = [
