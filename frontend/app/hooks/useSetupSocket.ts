@@ -232,6 +232,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
     setRoundResults(data.userRank)
   }
 
+  const successEnterRoom = (userList: IUserInfo[]) => {
+    setGameUserList(userList)
+  }
+
   const setUpGame = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
       console.log('Socket is null or not connected.')
@@ -256,7 +260,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
           break
-
+        case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
+          successEnterRoom(responseData.data.userList)
+          console.log('유저 입장 성공 응답')
+          break
         case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
           console.log('팀 선택 성공 응답')
           break
