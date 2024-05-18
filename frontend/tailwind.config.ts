@@ -16,6 +16,7 @@ const colorPalette = {
   white: '#ffffff',
 
   // Main Colors
+  yellow: '#fcec4e',
 }
 
 const config: Config = {
