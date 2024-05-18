@@ -26,11 +26,13 @@ const RUN_VEL = 1.5
 const CharacterController = () => {
   const { socket } = useMainSocketStore()
   // 게임 진행 상태
-  const { gameState } = useGameRoomStore((state) => ({
+  const { gameState, gameUserList } = useGameRoomStore((state) => ({
     gameState: state.gameState,
+    gameUserList: state.gameUserList,
   }))
   const { letRespawn, setRespawnButton } = useRespawnButtonStore()
 
+  console.log('===============gameUserList', gameUserList)
   // 플레이어 상태
   const { playerMoveState, setPlayerMoveState, playerTeamState } = usePlayerStore((state) => ({
     playerMoveState: state.playerMoveState,
@@ -96,9 +98,9 @@ const CharacterController = () => {
     if (socket === null) return
     if (!rigidbody.current) return
     // 플레이어 위치 정보 및 상태 소켓으로 전송
-    console.log('살려줘', linVelocity)
-    console.log('크아악', position)
-    console.log(playerTeamState)
+    // console.log('살려줘', linVelocity)
+    // console.log('크아악', position)
+    // console.log(playerTeamState)
     socket.send(
       JSON.stringify({
         eventType: 'MOVE_CHARACTER',

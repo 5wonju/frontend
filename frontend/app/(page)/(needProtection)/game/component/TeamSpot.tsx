@@ -14,7 +14,7 @@ const TeamSpot = () => {
 
   const handleEnterTeamSpot = (teamColor: teamEnum) => {
     setPlayerTeamState(teamColor)
-    // selectTeam(teamColor)
+    selectTeam(teamColor)
   }
 
   const answers = [teamEnum.RED, teamEnum.BLUE]

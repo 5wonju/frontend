@@ -19,7 +19,7 @@ import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
-import { AnswerEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import { AnswerEnum, teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -165,8 +165,8 @@ const useSetUpGame = (socket: WebSocket | null) => {
     console.log('게임 시작 성공')
 
     if (gameUserList === null) return
-    const redTeams = setUserScores(gameUserList.filter((user) => user.team === 'red'))
-    const blueTeams = setUserScores(gameUserList.filter((user) => user.team === 'blue'))
+    const redTeams = setUserScores(gameUserList.filter((user) => user.team === teamEnum.RED))
+    const blueTeams = setUserScores(gameUserList.filter((user) => user.team === teamEnum.BLUE))
 
     // 게임 시작 시
     // 1. 유저 스코어 초기화
@@ -201,6 +201,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
     setRoundResults(data.userRank)
   }
 
+  const successSelectTeam = (userList: IUserInfo[]) => {
+    setGameUserList(userList)
+  }
+
   const setUpGame = () => {
     if (socket === null || socket.readyState !== WebSocket.OPEN) {
       console.log('Socket is null or not connected.')
@@ -225,9 +229,12 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
           break
-
-        case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
-          console.log('팀 선택 성공 응답')
+        case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
+          console.log('팀 선택 성공 응답', responseData.data)
+          successSelectTeam(responseData.data.userList)
+          break
+        case SOCKET_RES_CODE.ENTER_ROOM_OTHER:
+          console.log('다른 사람 방 입장 응답', responseData.data)
           break
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OWNER:
         case SOCKET_RES_CODE.UPDATE_ROOM_INFO_OTHER:

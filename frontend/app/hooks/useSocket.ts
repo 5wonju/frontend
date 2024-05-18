@@ -79,8 +79,8 @@ const useGame = () => {
       console.log('Socket이 비어있습니다.')
       return
     }
-    console.log('selectTeam:', team)
-    socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team } }))
+    console.log('------selectTeam:', team)
+    socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team: team } }))
   }
 
   const getRoomInfo = (roomId: number) => {
