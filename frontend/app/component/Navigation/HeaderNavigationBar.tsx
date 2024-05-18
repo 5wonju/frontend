@@ -9,6 +9,7 @@ import LogoutButton from './LogoutButton'
 import ExitLobbyButton from './ExitLobbyButton'
 import ExitGameButton from './ExitGameButton'
 import GoBackButton from './GoBackButton'
+import BgmPlayer from '../AudioPlayer/BgmPlayer'
 
 // 1. 메인 페이지
 // - 로고
@@ -25,6 +26,7 @@ import GoBackButton from './GoBackButton'
 
 // 4. 게임 페이지
 // - 로고
+// - 노래 설정 버튼
 // - 게임 나가기 버튼
 
 // 5. 마이페이지
@@ -51,6 +53,7 @@ const renderLobbyNavbarButtons = () => {
 const renderGameNavbarButtons = () => {
   return (
     <>
+      <BgmPlayer />
       <ExitGameButton />
     </>
   )

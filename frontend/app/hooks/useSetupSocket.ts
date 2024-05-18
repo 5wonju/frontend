@@ -109,8 +109,8 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           successGetRoomList(responseData.data.roomList)
           break
         case SOCKET_RES_CODE.CREATE_ROOM:
-          console.log('방 생성 성공 응답')
-          successCreateRoom(responseData.data.roomId)
+          console.log('방 생성 성공 응답', responseData.data)
+          successCreateRoom(responseData.data)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           console.log('방 입장 성공 응답')

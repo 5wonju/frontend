@@ -109,3 +109,8 @@ export interface IRoundResultState {
   setAnswer: (answer: AnswerEnum | null) => void
   setRoundResults: (gameResults: IUserRoundResult[]) => void
 }
+
+export interface IRespawnButtonState {
+  letRespawn: boolean
+  setRespawnButton: (letRespawn: boolean) => void
+}
