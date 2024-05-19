@@ -80,7 +80,7 @@ export default function OtherPlayers() {
   const { socket } = useMainSocketStore()
   const { gameUserList } = useGameRoomStore()
   const { userInfo } = useAuth()
-  console.log(gameUserList)
+  console.log('other players-----', gameUserList)
   return (
     <>
       {gameUserList &&

@@ -32,7 +32,6 @@ const CharacterController = () => {
   }))
   const { letRespawn, setRespawnButton } = useRespawnButtonStore()
 
-  console.log('===============gameUserList', gameUserList)
   // 플레이어 상태
   const { playerMoveState, setPlayerMoveState, playerTeamState } = usePlayerStore((state) => ({
     playerMoveState: state.playerMoveState,
