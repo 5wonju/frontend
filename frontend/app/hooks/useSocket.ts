@@ -82,9 +82,13 @@ const useGame = () => {
       return
     }
     const { nickname } = userInfo
+
     console.log('------selectTeam:', team, nickname)
     socket.send(
-      JSON.stringify({ eventType: 'TEAM_SELECT', data: { team: team, nickname: nickname } })
+      JSON.stringify({
+        eventType: 'TEAM_SELECT',
+        data: { team: team, nickname: nickname },
+      })
     )
   }
 
