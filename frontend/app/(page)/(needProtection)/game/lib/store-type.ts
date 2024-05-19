@@ -54,6 +54,8 @@ export interface IGameRoomState {
   gameState: gameStateEnum
   startGame: () => void
   countdownGame: () => void
+  doneGame: () => void
+  readyGame: () => void
   roomInfo: IRoomInfo
   setRoomInfo: (roomInfo: IRoomInfo) => void
 }

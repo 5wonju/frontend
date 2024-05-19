@@ -50,6 +50,14 @@ export const useGameRoomStore = create<IGameRoomState>()(
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.COUNTDOWN
         }),
+      doneGame: () =>
+        set((state: IGameRoomState) => {
+          state.gameState = gameStateEnum.DONE
+        }),
+      readyGame: () =>
+        set((state: IGameRoomState) => {
+          state.gameState = gameStateEnum.READY
+        }),
 
       // 방 정보 상태
       roomInfo: {

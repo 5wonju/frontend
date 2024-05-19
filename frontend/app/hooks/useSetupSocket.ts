@@ -138,7 +138,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
   // const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } =
   //   useGameRoomStore()
   const { setRoomInfo } = useGameRoomStore((state) => ({ setRoomInfo: state.setRoomInfo }))
-  const { gameUserList } = useGameRoomStore((state) => ({ gameUserList: state.gameUserList }))
+  const { gameUserList, doneGame, readyGame } = useGameRoomStore((state) => ({
+    gameUserList: state.gameUserList,
+    doneGame: state.doneGame,
+    readyGame: state.readyGame,
+  }))
   const { setGameUserList } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
   }))
@@ -236,7 +240,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successGameResultInfo = (gameResult: IGameResult) => {
     console.log('게임 결과 응답', gameResult)
     setGameResult(gameResult)
-    
+    doneGame()
   }
 
   const successOtherUserExit = (newUserList: IUserInfo[]) => {
@@ -253,6 +257,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successEnterRoom = (userList: IUserInfo[]) => {
     // console.log('유저 리스트 정보 업데이트 newUserList: ', userList)
     setGameUserList(userList)
+  }
+
+  const successGameDone = () => {
+    readyGame()
   }
 
   const setUpGame = () => {
@@ -317,6 +325,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.CHANGE_ZONE_OWNER:
           console.log('정답 구역 이동', responseData.data)
+          break
+        case SOCKET_RES_CODE.GAME_DONE_ROOM_TO_READY:
+          console.log('게임 종료 후 대기실로 이동')
+          successGameDone()
           break
         default:
           console.log('이벤트 코드가 없습니다. 게임 소켓')
