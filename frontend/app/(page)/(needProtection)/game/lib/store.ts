@@ -85,6 +85,11 @@ export const usePlayerStore = create<IPlayerState>()(
         set({
           playerTeamState,
         }),
+      playerHandle: null,
+      setPlayerHandle: (playerHandle: number) =>
+        set({
+          playerHandle,
+        }),
     })),
     { name: 'PlayerStore' }
   )

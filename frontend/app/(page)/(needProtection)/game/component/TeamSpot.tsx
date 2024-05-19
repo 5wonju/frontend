@@ -8,8 +8,9 @@ import { useGame } from '@/app/hooks/useSocket'
 const TeamSpot = () => {
   const { selectTeam } = useGame()
 
-  const { setPlayerTeamState } = usePlayerStore((state) => ({
+  const { setPlayerTeamState, playerHandle } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
+    playerHandle: state.playerHandle,
   }))
 
   const handleEnterTeamSpot = (teamColor: teamEnum) => {
@@ -27,7 +28,13 @@ const TeamSpot = () => {
         <RigidBody
           colliders={false}
           type="fixed"
-          onCollisionEnter={() => handleEnterTeamSpot(teamColor)}
+          onCollisionEnter={(event) => {
+            // collision 내 객체인지 확인
+            console.log('collision test start', event)
+            if (event.collider.handle !== playerHandle) return
+            console.log('collision test 통과')
+            handleEnterTeamSpot(teamColor)
+          }}
         >
           <CylinderCollider args={[2 / 2, 3]} />
           <Cylinder scale={[3, 2, 3]}>

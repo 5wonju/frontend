@@ -32,11 +32,14 @@ const CharacterController = () => {
   const { letRespawn, setRespawnButton } = useRespawnButtonStore()
 
   // 플레이어 상태
-  const { playerMoveState, setPlayerMoveState, playerTeamState } = usePlayerStore((state) => ({
-    playerMoveState: state.playerMoveState,
-    setPlayerMoveState: state.setPlayerMoveState,
-    playerTeamState: state.playerTeamState,
-  }))
+  const { playerMoveState, setPlayerMoveState, playerTeamState, setPlayerHandle } = usePlayerStore(
+    (state) => ({
+      playerMoveState: state.playerMoveState,
+      setPlayerMoveState: state.setPlayerMoveState,
+      playerTeamState: state.playerTeamState,
+      setPlayerHandle: state.setPlayerHandle,
+    })
+  )
 
   const { characterIndex } = useCharacterSelectStore()
 
@@ -61,6 +64,14 @@ const CharacterController = () => {
       z: Math.round(vector.z * factor) / factor,
     }
   }
+
+  // 초기 렌더링시 내 캐릭터 uuid 저장
+  useEffect(() => {
+    if (rigidbody.current) {
+      console.log('내 캐릭터 정보 얻어보자', rigidbody.current)
+      setPlayerHandle(rigidbody.current.handle)
+    }
+  }, [])
 
   useEffect(() => {
     const updateState = () => {

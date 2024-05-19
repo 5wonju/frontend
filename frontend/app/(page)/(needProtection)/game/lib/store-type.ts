@@ -1,3 +1,4 @@
+import { UUID } from 'crypto'
 import { IRoomInfo } from '../../lobby/lib/type'
 import { IGameResult, IGameScore, IQuiz, IUserInfo, IUserRoundResult } from './type'
 
@@ -62,6 +63,8 @@ export interface IPlayerState {
   setPlayerMoveState: (state: playerMoveStateEnum) => void
   playerTeamState: teamEnum
   setPlayerTeamState: (state: teamEnum) => void
+  playerHandle: number | null
+  setPlayerHandle: (playerHandle: number) => void
 }
 
 // :: 모달 상태
