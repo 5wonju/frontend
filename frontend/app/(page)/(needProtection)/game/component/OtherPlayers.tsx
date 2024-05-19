@@ -23,6 +23,7 @@ export interface IOtherStatus {
   nickname: string
   team: teamEnum
   modelKey: number
+  direction?: string
 }
 
 const samplePlayers: IOtherStatus[] = [
@@ -80,7 +81,7 @@ export default function OtherPlayers() {
   const { socket } = useMainSocketStore()
   const { gameUserList } = useGameRoomStore()
   const { userInfo } = useAuth()
-  console.log(gameUserList)
+  console.log('other players-----', gameUserList)
   return (
     <>
       {gameUserList &&

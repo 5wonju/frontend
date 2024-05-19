@@ -18,12 +18,13 @@ const GameField = () => {
     gameUserList: state.gameUserList,
   }))
   const { selectTeam } = useGame()
-  const { setPlayerTeamState } = usePlayerStore((state) => ({
+  const { setPlayerTeamState, playerHandle } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
+    playerHandle: state.playerHandle,
   }))
   const { setSelectAnswer } = useAnswerSelectStore()
   const { userInfo } = useAuth()
-  
+
   // 메인 필드에 닿았을 때 (선택한 팁 or 선택한 답) 초기화
   const handleEnterMainField = () => {
     switch (gameState) {
@@ -101,7 +102,10 @@ const GameField = () => {
           type="fixed"
           position-y={-0.5}
           friction={4}
-          onCollisionEnter={handleEnterMainField}
+          onCollisionEnter={(event) => {
+            if (event.collider.handle !== playerHandle) return
+            handleEnterMainField()
+          }}
         >
           <CylinderCollider args={[1, 10]} />
           <Cylinder scale={[10, 2, 10]} receiveShadow>

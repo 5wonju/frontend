@@ -4,17 +4,16 @@ import { useAnswerSelectStore, useQuizStore, useRoundResultStore } from '../../l
 import RoomInfo from './RoomInfo'
 
 const QuizContent = () => {
-  // TODO: 다음 문제 출제 api 완성되면 아래 주석 풀기
-  // const { quiz } = useQuizStore()
+  const { quiz } = useQuizStore()
 
   // 더미 퀴즈 데이터
-  const quiz = {
-    currentRound: 1,
-    questionId: null,
-    question: '우리팀의 막내 이름은?',
-    options: ['이재민', '신창엽', '이우성', '이원주'],
-    timeLimit: 10,
-  }
+  // const quiz = {
+  //   currentRound: 1,
+  //   questionId: null,
+  //   question: '우리팀의 막내 이름은?',
+  //   options: ['이재민', '신창엽', '이우성', '이원주'],
+  //   timeLimit: 10,
+  // }
   const [time, setTime] = useState(quiz.timeLimit) // 초기 시간: 10초
   const { selectAnswer } = useAnswerSelectStore()
   const { answer: quizAnswer } = useRoundResultStore((state) => ({
@@ -36,7 +35,7 @@ const QuizContent = () => {
     }, 10)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [quiz])
 
   return (
     <div className="flex flex-col items-center gap-5 select-none w-full h-full">

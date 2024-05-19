@@ -19,7 +19,8 @@ import { SOCKET_RES_CODE } from '../lib/type.d'
 import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
-import { AnswerEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import { IOtherStatus } from '../(page)/(needProtection)/game/component/OtherPlayers'
+import { AnswerEnum, teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -112,13 +113,13 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           successCreateRoom(responseData.data)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
-          console.log('방 입장 성공 응답')
           console.log('방 입장 성공시 받아오는 데이터', responseData.data)
           successEnterRoom(responseData.data.userList)
           break
 
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
+          console.log(responseData)
           break
       }
     }
@@ -128,11 +129,15 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList } = useGameRoomStore((state) => ({
-    setGameUserList: state.setGameUserList,
-    setRoomInfo: state.setRoomInfo,
-    gameUserList: state.gameUserList,
-  }))
+  const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } = useGameRoomStore(
+    (state) => ({
+      setGameUserList: state.setGameUserList,
+      setRoomInfo: state.setRoomInfo,
+      gameUserList: state.gameUserList,
+      countdownGame: state.countdownGame,
+      startGame: state.startGame,
+    })
+  )
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
@@ -142,6 +147,35 @@ const useSetUpGame = (socket: WebSocket | null) => {
     setRoundResults: state.setRoundResults,
   }))
   const router = useRouter()
+
+  const successOtherUserMove = (otherStatus: {
+    nickname: string
+    position: { x: number; y: number; z: number }
+    linvel: { x: number; y: number; z: number }
+    moveState: number
+    characterType: number
+    team: string
+    direction: string
+  }) => {
+    if (gameUserList === null) return
+
+    const newUserList = gameUserList.map((user: IUserInfo) => {
+      if (user.userNickname === otherStatus.nickname) {
+        return {
+          ...user,
+          position: otherStatus.position,
+          linvel: otherStatus.linvel,
+          moveState: otherStatus.moveState,
+          characterType: otherStatus.characterType,
+          team: otherStatus.team ?? 'NONE',
+          direction: otherStatus.direction,
+        }
+      }
+      return user
+    })
+
+    setGameUserList(newUserList)
+  }
 
   const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
     console.log('방 정보 업데이트 성공 응답', roomInfo)
@@ -159,14 +193,15 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successNextQuestion = (quiz: IQuiz) => {
     console.log('다음 문제 출제 성공')
     setQuiz(quiz)
+    startGame()
   }
 
   const successStartGame = () => {
     console.log('게임 시작 성공')
 
     if (gameUserList === null) return
-    const redTeams = setUserScores(gameUserList.filter((user) => user.team === 'red'))
-    const blueTeams = setUserScores(gameUserList.filter((user) => user.team === 'blue'))
+    const redTeams = setUserScores(gameUserList.filter((user) => user.team === teamEnum.RED))
+    const blueTeams = setUserScores(gameUserList.filter((user) => user.team === teamEnum.BLUE))
 
     // 게임 시작 시
     // 1. 유저 스코어 초기화
@@ -178,11 +213,15 @@ const useSetUpGame = (socket: WebSocket | null) => {
     })
 
     // 2. 게임 상태 변경
+    countdownGame()
   }
 
   const successGetTeamPoint = (gameScore: IGameScore) => {
-    console.log('현재 팀 별 총 점수와 개인 점수 응답')
+    console.log('현재 팀 별 총 점수와 개인 점수 응답', gameScore)
     setGameScore(gameScore)
+    setTimeout(() => {
+      countdownGame()
+    }, 3000)
   }
 
   const successGameResultInfo = (gameResult: IGameResult) => {
@@ -196,9 +235,13 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successQuizAnswerRank = (data: { answer: AnswerEnum; userRank: IUserRoundResult[] }) => {
-    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
+    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', data.userRank)
     setAnswer(data.answer)
     setRoundResults(data.userRank)
+  }
+
+  const successEnterRoom = (userList: IUserInfo[]) => {
+    setGameUserList(userList)
   }
 
   const setUpGame = () => {
@@ -225,7 +268,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('채팅 수신 응답')
           successReceiveChat(event.data)
           break
-
+        case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
+          successEnterRoom(responseData.data.userList)
+          console.log('유저 입장 성공 응답')
+          break
         case SOCKET_RES_CODE.TEAM_SELECT_OWNER:
           console.log('팀 선택 성공 응답')
           break
@@ -262,8 +308,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
           console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
           successQuizAnswerRank(responseData.data)
           break
+        case SOCKET_RES_CODE.MOVE_CHARACTER:
+          successOtherUserMove(responseData.data)
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
+          console.log(responseData)
           break
       }
     }
