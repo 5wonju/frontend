@@ -241,10 +241,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
     setGameUserList(newUserList)
   }
 
-  const successQuizAnswerRank = (data: { answer: AnswerEnum; userRank: IUserRoundResult[] }) => {
-    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', data.userRank)
+  const successQuizAnswerRank = (data: { answer: AnswerEnum; usersRank: IUserRoundResult[] }) => {
+    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', data.usersRank)
     setAnswer(data.answer)
-    setRoundResults(data.userRank)
+    setRoundResults(data.usersRank)
   }
 
   const successEnterRoom = (userList: IUserInfo[]) => {

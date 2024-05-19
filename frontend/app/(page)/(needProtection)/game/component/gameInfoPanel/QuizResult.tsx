@@ -29,7 +29,7 @@ const QuizResult = () => {
       keys.forEach((key, index) => {
         clearTimeout(500 * (index + 1))
       })
-  }, [])
+  }, [roundResults])
 
   return (
     roundResults && (
