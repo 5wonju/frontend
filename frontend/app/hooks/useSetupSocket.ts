@@ -312,6 +312,9 @@ const useSetUpGame = (socket: WebSocket | null) => {
           // console.log('유저 이동', responseData.data)
           successOtherUserMove(responseData.data)
           break
+        case SOCKET_RES_CODE.CHANGE_ZONE_OWNER:
+          console.log('정답 구역 이동', responseData.data)
+          break
         default:
           console.log('이벤트 코드가 없습니다. 게임 소켓')
           console.log(responseData)

@@ -138,7 +138,7 @@ const useGame = () => {
     socket.send(JSON.stringify({ eventType: 'CHANGE_ZONE', data: data }))
   }
 
-  return { selectTeam, getRoomInfo, editRoom, exitRoom, startGame }
+  return { selectTeam, getRoomInfo, editRoom, exitRoom, startGame, selectAnswer }
 }
 
 // :: Chat

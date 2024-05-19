@@ -3,10 +3,12 @@ import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React from 'react'
 import { AnswerEnum } from '../lib/store-type'
 import { useAnswerSelectStore, useRoundResultStore } from '../lib/store'
+import { useGame } from '@/app/hooks/useSocket'
 
 const AnswerSpot = () => {
   const answers = Object.values(AnswerEnum).slice(0, 4)
   const { selectAnswer, setSelectAnswer } = useAnswerSelectStore()
+  const { selectAnswer: selectAnswerField } = useGame()
   
   return answers.map((answer, index) => (
     <group key={answer} rotation-y={((index + 1) / 4) * Math.PI * 2}>
@@ -16,6 +18,7 @@ const AnswerSpot = () => {
           type="fixed"
           onCollisionEnter={() => {
             setSelectAnswer(answer as AnswerEnum)
+            selectAnswerField(answer as AnswerEnum)
           }}
         >
           <CylinderCollider args={[2 / 2, 3]} />
