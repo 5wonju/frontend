@@ -32,7 +32,7 @@ const Game = () => {
         </Suspense>
       </Canvas>
       <GameInfoPanel />
-      {/* <GameControlPanel /> */}
+      <GameControlPanel />
       <GameResult />
     </KeyboardControl>
   )

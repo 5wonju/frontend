@@ -32,7 +32,7 @@ const OtherController = ({
 
   useEffect(() => {
     // if (!rigidbody.current) return
-    console.log(pos)
+    // console.log(pos)
     rigidbody.current.setTranslation(vec3({ x: pos.x, y: pos.y, z: pos.z }))
     rigidbody.current.setLinvel(vec3({ x: linvel.x, y: linvel.y, z: linvel.z }))
     // 캐릭터가 이동할 때마다 좌표 받아오기

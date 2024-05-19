@@ -117,7 +117,6 @@ export const useCharacterSelectStore = create<ICharacterSelectState>()(
 
       setCharacterIndex: (character: number) =>
         set((state: ICharacterSelectState) => {
-          console.log('selected characterIndex:', character)
           state.characterIndex = character
         }),
     })),

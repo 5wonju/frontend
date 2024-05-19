@@ -45,7 +45,7 @@ export default function OtherCharacter({
 }: IOtherStatus) {
   const groupRef = useRef()
   // const nickname = '꽁꽁얼어붙은한강위에고양이가걸어다닙니다.'
-  console.log('nickname', nickname, moveState, characterType, nickname, team)
+  // console.log('nickname', nickname, moveState, characterType, nickname, team)
 
   const { nodes, animations, scene } = useGLTF(
     `/models/custom${modelKey}/custom-model${characterType ?? 0}.gltf`
@@ -62,8 +62,8 @@ export default function OtherCharacter({
   // 캐릭터 움직임 애니메이션
   useEffect(() => {
     if (!actions) return
-    console.log(actions)
-    console.log('moveState', moveState, actions[moveState])
+    // console.log(actions)
+    // console.log('moveState', moveState, actions[moveState])
     actions[moveState ?? playerMoveStateEnum.IDLE].reset().fadeIn(0.2).play()
     return () => {
       if (!actions[moveState ?? playerMoveStateEnum.IDLE]) return

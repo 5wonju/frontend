@@ -167,7 +167,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   ) => {
     if (!userList) return
 
-    console.log('other move info: ', otherStatus)
+    // console.log('other move info: ', otherStatus)
 
     if (userList.some((user) => user.userNickname === otherStatus.nickname) === false) {
       console.log('새로운 유저 입장')
@@ -177,7 +177,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           userNickname: otherStatus.nickname,
           position: otherStatus.position,
           linvel: otherStatus.linvel,
-          team: otherStatus.team ?? 'NONE',
+          team: otherStatus.team ?? teamEnum.NONE,
           userScore: 0,
           moveState: otherStatus.moveState,
           characterType: otherStatus.characterType,
@@ -188,7 +188,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
       setGameUserList(newUserList)
       return
     } else {
-      console.log('기존 유저 이동', userList)
+      // console.log('기존 유저 이동', userList)
       const newUserList = userList.map((user: IUserInfo) => {
         return user.userNickname === otherStatus.nickname
           ? ({
@@ -341,7 +341,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successQuizAnswerRank(responseData.data)
           break
         case SOCKET_RES_CODE.MOVE_CHARACTER:
-          console.log('유저 이동')
+          console.log('유저 이동', responseData.data)
           successOtherUserMove(responseData.data, gameUserList)
         default:
           console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
