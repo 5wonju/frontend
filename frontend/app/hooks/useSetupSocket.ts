@@ -127,11 +127,12 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList, countdownGame } = useGameRoomStore((state) => ({
+  const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
     setRoomInfo: state.setRoomInfo,
     gameUserList: state.gameUserList,
     countdownGame: state.countdownGame,
+    startGame: state.startGame,
   }))
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
@@ -159,6 +160,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successNextQuestion = (quiz: IQuiz) => {
     console.log('다음 문제 출제 성공')
     setQuiz(quiz)
+    startGame()
   }
 
   const successStartGame = () => {
@@ -197,7 +199,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successQuizAnswerRank = (data: { answer: AnswerEnum; userRank: IUserRoundResult[] }) => {
-    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
+    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', data.userRank)
     setAnswer(data.answer)
     setRoundResults(data.userRank)
   }

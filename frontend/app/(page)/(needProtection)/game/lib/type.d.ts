@@ -64,6 +64,7 @@ interface IQuiz {
   question: string
   options: string[]
   timeLimit: number
+  roomStatus: gameStateEnum
 }
 
 interface IUserScore {
