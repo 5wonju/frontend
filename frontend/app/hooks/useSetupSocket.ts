@@ -127,13 +127,15 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } = useGameRoomStore((state) => ({
-    setGameUserList: state.setGameUserList,
-    setRoomInfo: state.setRoomInfo,
-    gameUserList: state.gameUserList,
-    countdownGame: state.countdownGame,
-    startGame: state.startGame,
-  }))
+  const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } = useGameRoomStore(
+    (state) => ({
+      setGameUserList: state.setGameUserList,
+      setRoomInfo: state.setRoomInfo,
+      gameUserList: state.gameUserList,
+      countdownGame: state.countdownGame,
+      startGame: state.startGame,
+    })
+  )
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
@@ -184,8 +186,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successGetTeamPoint = (gameScore: IGameScore) => {
-    console.log('현재 팀 별 총 점수와 개인 점수 응답')
+    console.log('현재 팀 별 총 점수와 개인 점수 응답', gameScore)
     setGameScore(gameScore)
+    setTimeout(() => {
+      countdownGame()
+    }, 3000)
   }
 
   const successGameResultInfo = (gameResult: IGameResult) => {
