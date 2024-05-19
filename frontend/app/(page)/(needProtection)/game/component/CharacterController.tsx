@@ -138,6 +138,15 @@ const CharacterController = () => {
     }
   }, [letRespawn, setRespawnButton])
 
+  // gameState가 COUNTDOWN일 때 플레이어 위치 초기화
+  useEffect(() => {
+    if (!rigidbody.current) return
+    if (gameState === gameStateEnum.COUNTDOWN) {
+      rigidbody.current.setTranslation(vec3({ x: 0, y: 1, z: 0 }))
+      rigidbody.current.setLinvel(vec3({ x: 0, y: 1, z: 0 }))
+    }
+  }, [gameState])
+
   useFrame((state, delta) => {
     if (!rigidbody.current) return
 
@@ -203,6 +212,7 @@ const CharacterController = () => {
         targetCameraPosition.y = 10
         break
       case gameStateEnum.GAME:
+      case gameStateEnum.COUNTDOWN:
         targetCameraPosition.y = 6
         break
     }
