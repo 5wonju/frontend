@@ -293,7 +293,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           break
         case SOCKET_RES_CODE.EXIT_ROOM_OWNER:
           console.log('방 나가기 성공 응답')
-          router.push('/lobby')
+          router.back()
           break
         case SOCKET_RES_CODE.EXIT_ROOM_OTHER:
           console.log('다른 유저 방 나갔음 응답')
