@@ -2,7 +2,12 @@ import { Center, Cylinder, Text3D } from '@react-three/drei'
 import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import React, { useEffect } from 'react'
 import { AnswerEnum, gameStateEnum } from '../lib/store-type'
-import { useAnswerSelectStore, useGameRoomStore, useRoundResultStore } from '../lib/store'
+import {
+  useAnswerSelectStore,
+  useGameRoomStore,
+  usePlayerStore,
+  useRoundResultStore,
+} from '../lib/store'
 import { useGame } from '@/app/hooks/useSocket'
 
 const AnswerSpot = () => {
@@ -11,6 +16,9 @@ const AnswerSpot = () => {
   const { selectAnswer: selectAnswerField } = useGame()
   const { gameState } = useGameRoomStore((state) => ({
     gameState: state.gameState,
+  }))
+  const { playerHandle } = usePlayerStore((state) => ({
+    playerHandle: state.playerHandle,
   }))
 
   useEffect(() => {
@@ -25,8 +33,10 @@ const AnswerSpot = () => {
         <RigidBody
           colliders={false}
           type="fixed"
-          onCollisionEnter={() => {
-            setSelectAnswer(answer as AnswerEnum)
+          onCollisionEnter={(event) => {
+            if (event.collider.handle === playerHandle) {
+              setSelectAnswer(answer as AnswerEnum)
+            }
             selectAnswerField(answer as AnswerEnum)
           }}
         >
