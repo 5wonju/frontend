@@ -225,9 +225,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successGetTeamPoint = (gameScore: IGameScore) => {
     console.log('현재 팀 별 총 점수와 개인 점수 응답', gameScore)
     setGameScore(gameScore)
-    setTimeout(() => {
-      countdownGame()
-    }, 3000)
+    countdownGame()
+    // setTimeout(() => {
+    //   countdownGame()
+    // }, 3000)
   }
 
   const successGameResultInfo = (gameResult: IGameResult) => {
@@ -304,7 +305,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successOtherUserExit(responseData.data.userList)
           break
         case SOCKET_RES_CODE.ANSWER_TOP:
-          console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
+          console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', responseData.data)
           successQuizAnswerRank(responseData.data)
           break
         case SOCKET_RES_CODE.MOVE_CHARACTER:

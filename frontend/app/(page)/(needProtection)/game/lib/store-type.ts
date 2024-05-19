@@ -30,7 +30,7 @@ export enum AnswerEnum {
   C = 'C',
   D = 'D',
   B = 'B',
-  NONE = 'none', // none -> N으로 수정하기
+  NONE = 'N',
 }
 
 // ------------------------------------------------
