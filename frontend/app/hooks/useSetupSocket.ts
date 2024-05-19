@@ -22,6 +22,7 @@ import { setUserScores } from '../lib/util'
 import { IOtherStatus } from '../(page)/(needProtection)/game/component/OtherPlayers'
 import {
   AnswerEnum,
+  gameStateEnum,
   playerMoveStateEnum,
   teamEnum,
 } from '../(page)/(needProtection)/game/lib/store-type'
@@ -216,6 +217,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
       blueTeamPoint: 0,
       redTeamUsers: redTeams,
       blueTeamUsers: blueTeams,
+      roomStatus: gameStateEnum.COUNTDOWN,
     })
 
     // 2. 게임 상태 변경
@@ -234,6 +236,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successGameResultInfo = (gameResult: IGameResult) => {
     console.log('게임 결과 응답', gameResult)
     setGameResult(gameResult)
+    
   }
 
   const successOtherUserExit = (newUserList: IUserInfo[]) => {

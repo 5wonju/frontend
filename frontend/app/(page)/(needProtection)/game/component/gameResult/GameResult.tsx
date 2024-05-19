@@ -56,6 +56,7 @@ const GameResult = () => {
   //   ],
   // }
 
+  
   return (
     gameResult && (
       <div
