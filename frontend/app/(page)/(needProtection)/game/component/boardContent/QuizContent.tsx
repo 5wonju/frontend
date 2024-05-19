@@ -35,7 +35,7 @@ const QuizContent = () => {
     }, 10)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [quiz])
 
   return (
     <div className="flex flex-col items-center gap-5 select-none w-full h-full">
