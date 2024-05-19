@@ -48,7 +48,7 @@ const QuizResult = () => {
               alt="Star"
               className=" size-6"
             />
-            <span className="flex items-center gap-1 text-yellow-400">WIN</span>
+            <span className="flex items-center gap-1 text-[#F5CA28]">WIN</span>
           </div>
         </section>
         {/* 리스트 요소 하나씩 등장하기 */}
