@@ -77,6 +77,7 @@ interface IGameScore {
   blueTeamPoint: number
   redTeamUsers: IUserScore[]
   blueTeamUsers: IUserScore[]
+  roomStatus: gameStateEnum
 }
 
 interface IUserResult {
@@ -92,6 +93,7 @@ interface IGameResult {
   blueTeamTotalPoint: number
   redTeam: IUserResult[]
   blueTeam: IUserResult[]
+  roomStatus: gameStateEnum
 }
 
 interface TeamResultProps {

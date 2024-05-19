@@ -81,7 +81,6 @@ export default function OtherPlayers() {
   const { socket } = useMainSocketStore()
   const gameUserList = useGameRoomStore((state) => state.gameUserList)
   const { userInfo } = useAuth()
-  console.log('other players-----', gameUserList)
   return (
     <>
       {gameUserList &&

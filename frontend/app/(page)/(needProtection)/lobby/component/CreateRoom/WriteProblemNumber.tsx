@@ -13,7 +13,7 @@ const WriteProblemNumber = ({ roomInfo, setRoomInfo }: RoomEditProps) => {
           value={roomInfo.probNum}
           onChange={(e) => setRoomInfo((prev) => ({ ...prev, probNum: Number(e.target.value) }))}
           placeholder="Enter problem number"
-          min="10"
+          min="1"
           max="100"
           className="w-full border p-2 rounded"
         />

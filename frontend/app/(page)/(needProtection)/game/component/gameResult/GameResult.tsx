@@ -56,6 +56,7 @@ const GameResult = () => {
   //   ],
   // }
 
+  
   return (
     gameResult && (
       <div
@@ -72,7 +73,7 @@ const GameResult = () => {
               alt="Star"
               className=" size-6"
             />
-            <span className="flex items-center gap-1 text-yellow-400">WIN</span>
+            <span className="flex items-center gap-1 text-[#F5CA28]">WIN</span>
           </div>
 
           <fieldset className="flex justify-around w-full *:w-5/12 items-center mt-4">

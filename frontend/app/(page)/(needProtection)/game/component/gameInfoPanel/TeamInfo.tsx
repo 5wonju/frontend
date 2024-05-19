@@ -41,9 +41,9 @@ const TeamInfo = ({
           : userList &&
             userList
               .filter((user) => user.team === teamColor)
-              .map((user) => (
+              .map((user, index) => (
                 <li
-                  key={user.userNickname}
+                  key={index+user.userNickname}
                   className="flex items-center justify-between gap-2 text-sm"
                 >
                   <div className="flex items-end gap-2">

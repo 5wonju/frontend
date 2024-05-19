@@ -30,7 +30,7 @@ export enum AnswerEnum {
   C = 'C',
   D = 'D',
   B = 'B',
-  NONE = 'none', // none -> N으로 수정하기
+  NONE = 'N',
 }
 
 // ------------------------------------------------
@@ -54,6 +54,8 @@ export interface IGameRoomState {
   gameState: gameStateEnum
   startGame: () => void
   countdownGame: () => void
+  doneGame: () => void
+  readyGame: () => void
   roomInfo: IRoomInfo
   setRoomInfo: (roomInfo: IRoomInfo) => void
 }
