@@ -14,14 +14,14 @@ const Lobby = () => {
 
   return (
     <main className="grid grid-cols-3 grid-rows-3 h-[calc(100vh-3rem)]">
-      <section className="col-span-3 row-span-2 ">
+      <section className="col-span-3 row-span-2 overflow-y-scroll">
         <WaitingRoomList />
       </section>
       <div className="col-span-3 grid grid-cols-3">
         <section className="col-span-1 flex items-center justify-center shadow-inner">
           <UserInfo />
         </section>
-        <section className="col-span-2 relative rounded overflow-hidden">
+        <section className="col-span-2 relative rounded overflow-hidden bg-black">
           <Chat />
         </section>
       </div>
