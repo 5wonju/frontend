@@ -20,7 +20,11 @@ import { useEffect } from 'react'
 import { IChat, useChatLogsStore } from '../lib/store'
 import { setUserScores } from '../lib/util'
 import { IOtherStatus } from '../(page)/(needProtection)/game/component/OtherPlayers'
-import { AnswerEnum, teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import {
+  AnswerEnum,
+  playerMoveStateEnum,
+  teamEnum,
+} from '../(page)/(needProtection)/game/lib/store-type'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -152,9 +156,9 @@ const useSetUpGame = (socket: WebSocket | null) => {
     nickname: string
     position: { x: number; y: number; z: number }
     linvel: { x: number; y: number; z: number }
-    moveState: number
+    moveState: playerMoveStateEnum
     characterType: number
-    team: string
+    team: teamEnum
     direction: string
   }) => {
     if (gameUserList === null) return
@@ -167,7 +171,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           linvel: otherStatus.linvel,
           moveState: otherStatus.moveState,
           characterType: otherStatus.characterType,
-          team: otherStatus.team ?? 'NONE',
+          team: otherStatus.team ?? teamEnum.NONE,
           direction: otherStatus.direction,
         }
       }
