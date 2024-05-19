@@ -5,7 +5,7 @@ import WaitingRoomList from './component/WaitingRoomList'
 import UserInfo from '@/app/component/UserInfo'
 import { useSetupSocket } from './../../../hooks/useSetupSocket'
 import { useMainSocketStore } from '@/app/lib/store'
-import LobbyChat from './component/LobbyChat/LobbyChat'
+import Chat from './component/Chat/Chat'
 
 // overflow-y-scroll box-border
 const Lobby = () => {
@@ -22,7 +22,7 @@ const Lobby = () => {
           <UserInfo />
         </section>
         <section className="col-span-2 relative rounded overflow-hidden">
-          <LobbyChat />
+          <Chat />
         </section>
       </div>
     </main>
