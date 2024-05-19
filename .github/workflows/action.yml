@@ -91,13 +91,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # - name: .env setting
-      #   run: |
-      #     echo "VITE_DEPLOY_BASE_URL=${{ secrets.VITE_DEPLOY_BASE_URL }}" >> frontend/.env
-      #     echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> frontend/.env
-      #     echo "VITE_GOOGLE_REDIRECT_URI=${{ secrets.VITE_GOOGLE_REDIRECT_URI }}" >> frontend/.env
-      #     echo "VITE_KAKAO_REST_API_KEY=${{ secrets.VITE_KAKAO_REST_API_KEY }}" >> frontend/.env
-      #     echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_KAKAO_REDIRECT_URI }}" >> frontend/.env
+      - name: .env setting
+        run: |
+          echo "${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> frontend/.env.production
+          echo "${{ secrets.NEXT_PUBLIC_CLIENT_ID }}" >> frontend/.env.production
 
       - name: Push Docker image with tag
         uses: docker/build-push-action@v2
