@@ -163,6 +163,7 @@ export const useQuizStore = create<IQuizState>()(
         question: '',
         options: [],
         timeLimit: 0,
+        roomStatus: gameStateEnum.READY,
       },
       setQuiz: (quiz: IQuiz) =>
         set((state) => {

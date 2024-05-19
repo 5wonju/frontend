@@ -4,9 +4,13 @@ import React from 'react'
 import { usePlayerStore } from '../lib/store'
 import { teamEnum } from '../lib/store-type'
 import { useGame } from '@/app/hooks/useSocket'
+import { useAuth } from '@/app/hooks/useAuth'
 
 const TeamSpot = () => {
   const { selectTeam } = useGame()
+  const {
+    userInfo: { nickname },
+  } = useAuth()
 
   const { setPlayerTeamState, playerHandle } = usePlayerStore((state) => ({
     setPlayerTeamState: state.setPlayerTeamState,
@@ -15,7 +19,7 @@ const TeamSpot = () => {
 
   const handleEnterTeamSpot = (teamColor: teamEnum) => {
     setPlayerTeamState(teamColor)
-    // selectTeam(teamColor)
+    selectTeam(teamColor, nickname)
   }
 
   const answers = [teamEnum.RED, teamEnum.BLUE]

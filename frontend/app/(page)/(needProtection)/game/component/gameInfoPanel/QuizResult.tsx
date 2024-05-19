@@ -32,28 +32,28 @@ const QuizResult = () => {
   }, [])
 
   return (
-    <div className="min-h-full flex flex-col items-center py-4 animate-floating">
-      {/* 우승팀 결과 or 기본 정보 */}
-      <section
-        className={`glass px-2 py-3 ${
-          result.winTeam ? 'visible animate-fadeInLast duration-500' : 'invisible'
-        }`}
-      >
-        <div className="flex items-center gap-2 font-bold text-3xl">
-          <span className={`text-red-400`}>RED</span>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
-            alt="Star"
-            className=" size-6"
-          />
-          <span className="flex items-center gap-1 text-yellow-400">WIN</span>
-        </div>
-      </section>
-      {/* 리스트 요소 하나씩 등장하기 */}
-      <ul className="flex-1 flex flex-col gap-3 pt-5 justify-around">
-        {roundResults &&
-          roundResults.map((wonUser, index) => (
+    roundResults && (
+      <div className="min-h-full flex flex-col items-center py-4 animate-floating">
+        {/* 우승팀 결과 or 기본 정보 */}
+        <section
+          className={`glass px-2 py-3 ${
+            result.winTeam ? 'visible animate-fadeInLast duration-500' : 'invisible'
+          }`}
+        >
+          <div className="flex items-center gap-2 font-bold text-3xl">
+            <span className={teamColorToCssText[roundResults[0].team]}>{roundResults[0].team}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+              alt="Star"
+              className=" size-6"
+            />
+            <span className="flex items-center gap-1 text-yellow-400">WIN</span>
+          </div>
+        </section>
+        {/* 리스트 요소 하나씩 등장하기 */}
+        <ul className="flex-1 flex flex-col gap-3 pt-5 justify-around">
+          {roundResults.map((wonUser, index) => (
             <li
               key={index}
               className={`${
@@ -74,8 +74,9 @@ const QuizResult = () => {
               </p>
             </li>
           ))}
-      </ul>
-    </div>
+        </ul>
+      </div>
+    )
   )
 }
 

@@ -1,4 +1,4 @@
-import { teamEnum } from './store'
+import { teamEnum } from './store-type'
 
 // 퀴즈 정답자
 interface IWonUser {
@@ -64,6 +64,7 @@ interface IQuiz {
   question: string
   options: string[]
   timeLimit: number
+  roomStatus: gameStateEnum
 }
 
 interface IUserScore {
