@@ -168,7 +168,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
     direction: string
   }) => {
     console.log('여기서 막히는거야?', gameUserList)
-    if (!gameUserList) return
+    if (!gameUserList || gameUserList.length === 0) return
 
     const newUserList = gameUserList.map((user: IUserInfo) => {
       console.log('map이 실행은 되나?')
@@ -331,6 +331,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
 // 페이지별 소켓 셋팅***
 const useSetupSocket = (socket: WebSocket | null) => {
   const currentPath = usePathname()
+  const { gameUserList } = useGameRoomStore((state) => ({ gameUserList: state.gameUserList }))
   const { setUpRoom } = useSetUpRoom(socket)
   const { setUpGame } = useSetUpGame(socket)
 
@@ -343,7 +344,7 @@ const useSetupSocket = (socket: WebSocket | null) => {
         setUpGame()
       }
     }
-  }, [socket, currentPath])
+  }, [socket, currentPath, gameUserList])
 }
 
 export { useSetupSocket }
