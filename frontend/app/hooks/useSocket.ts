@@ -76,15 +76,21 @@ const useGame = () => {
     socket.send(JSON.stringify({ eventType: 'UPDATE_ROOM_INFO', data: roomInfo }))
   }
 
-  const selectTeam = (team: teamEnum) => {
+  const selectTeam = (team: teamEnum, nicknameChangingTeam: string) => {
     if (!socket) {
       console.log('Socket이 비어있습니다.')
       return
     }
     const { nickname } = userInfo
+    if (nicknameChangingTeam !== nickname) {
+      return
+    }
     console.log('------selectTeam:', team, nickname)
     socket.send(
-      JSON.stringify({ eventType: 'TEAM_SELECT', data: { team: team, nickname: nickname } })
+      JSON.stringify({
+        eventType: 'TEAM_SELECT',
+        data: { team: team, nickname: nicknameChangingTeam },
+      })
     )
   }
 
