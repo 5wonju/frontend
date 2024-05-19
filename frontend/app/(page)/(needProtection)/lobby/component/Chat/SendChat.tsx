@@ -1,12 +1,12 @@
 'use client'
-import { useAuth } from '@/app/hooks/useAuth'
+
 import { useChat } from '@/app/hooks/useSocket'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 
 const MAX_CHAT_LEN = 50
 
-const SendLobbyChat = () => {
+const SendChat = () => {
   const { sendChat } = useChat()
   const [message, setMessage] = useState('')
   const searchParams = useSearchParams()
@@ -63,4 +63,4 @@ const SendLobbyChat = () => {
   )
 }
 
-export default SendLobbyChat
+export default SendChat
