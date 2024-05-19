@@ -84,7 +84,7 @@ export const useChatSocketStore = create<ChatSocket>()(
 export interface IChat {
   nickname: string
   message: string
-  timestamp: string
+  timeStamp: string
 }
 
 interface IChatLogsState {
