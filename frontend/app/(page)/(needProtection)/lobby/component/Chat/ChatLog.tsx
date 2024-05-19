@@ -1,11 +1,11 @@
 import { useChat } from '@/app/hooks/useSocket'
 import React, { useEffect } from 'react'
 
-interface LobbyChatLogProps {
+interface ChatLogProps {
   chatEndRef: React.RefObject<HTMLDivElement>
 }
 
-const LobbyChatLog = ({ chatEndRef }: LobbyChatLogProps) => {
+const ChatLog = ({ chatEndRef }: ChatLogProps) => {
   const { chatLogs } = useChat()
 
   useEffect(() => {
@@ -30,4 +30,4 @@ const LobbyChatLog = ({ chatEndRef }: LobbyChatLogProps) => {
   )
 }
 
-export default LobbyChatLog
+export default ChatLog
