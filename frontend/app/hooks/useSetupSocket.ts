@@ -232,7 +232,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successGameResultInfo = (gameResult: IGameResult) => {
-    console.log('게임 결과 응답')
+    console.log('게임 결과 응답', gameResult)
     setGameResult(gameResult)
   }
 
