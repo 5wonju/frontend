@@ -134,15 +134,20 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } = useGameRoomStore(
-    (state) => ({
-      setGameUserList: state.setGameUserList,
-      setRoomInfo: state.setRoomInfo,
-      gameUserList: state.gameUserList,
-      countdownGame: state.countdownGame,
-      startGame: state.startGame,
-    })
-  )
+  // const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } =
+  //   useGameRoomStore()
+  const { setRoomInfo } = useGameRoomStore((state) => ({ setRoomInfo: state.setRoomInfo }))
+  const { gameUserList } = useGameRoomStore((state) => ({ gameUserList: state.gameUserList }))
+  const { setGameUserList } = useGameRoomStore((state) => ({
+    setGameUserList: state.setGameUserList,
+  }))
+  const { countdownGame } = useGameRoomStore((state) => ({ countdownGame: state.countdownGame }))
+  const { startGame } = useGameRoomStore((state) => ({ startGame: state.startGame }))
+
+  useEffect(() => {
+    console.log('gameUserList in useSetUpGame:', gameUserList)
+  }, [gameUserList])
+
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
@@ -153,59 +158,35 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }))
   const router = useRouter()
 
-  const successOtherUserMove = (
-    otherStatus: {
-      nickname: string
-      position: { x: number; y: number; z: number }
-      linvel: { x: number; y: number; z: number }
-      moveState: playerMoveStateEnum
-      characterType: number
-      team: teamEnum
-      direction: string
-    },
-    userList: IUserInfo[] | null
-  ) => {
-    if (!userList) return
+  const successOtherUserMove = (otherStatus: {
+    nickname: string
+    position: { x: number; y: number; z: number }
+    linvel: { x: number; y: number; z: number }
+    moveState: playerMoveStateEnum
+    characterType: number
+    team: teamEnum
+    direction: string
+  }) => {
+    console.log('여기서 막히는거야?', gameUserList)
+    if (!gameUserList) return
 
-    console.log('other move info: ', otherStatus)
+    const newUserList = gameUserList.map((user: IUserInfo) => {
+      console.log('map이 실행은 되나?')
+      return user.userNickname === otherStatus.nickname
+        ? ({
+            ...user,
+            position: otherStatus.position,
+            linvel: otherStatus.linvel,
+            moveState: otherStatus.moveState,
+            characterType: otherStatus.characterType,
+            team: otherStatus.team ?? teamEnum.NONE,
+            direction: otherStatus.direction,
+          } as IUserInfo)
+        : user
+    })
 
-    if (userList.some((user) => user.userNickname === otherStatus.nickname) === false) {
-      console.log('새로운 유저 입장')
-      const newUserList = [
-        ...userList,
-        {
-          userNickname: otherStatus.nickname,
-          position: otherStatus.position,
-          linvel: otherStatus.linvel,
-          team: otherStatus.team ?? 'NONE',
-          userScore: 0,
-          moveState: otherStatus.moveState,
-          characterType: otherStatus.characterType,
-          direction: otherStatus.direction,
-        } as IUserInfo,
-      ]
-      console.log(newUserList)
-      setGameUserList(newUserList)
-      return
-    } else {
-      console.log('기존 유저 이동', userList)
-      const newUserList = userList.map((user: IUserInfo) => {
-        return user.userNickname === otherStatus.nickname
-          ? ({
-              ...user,
-              position: otherStatus.position,
-              linvel: otherStatus.linvel,
-              moveState: otherStatus.moveState,
-              characterType: otherStatus.characterType,
-              team: otherStatus.team ?? teamEnum.NONE,
-              direction: otherStatus.direction,
-            } as IUserInfo)
-          : user
-      })
-
-      console.log('newUserList after move: ', newUserList)
-      setGameUserList(newUserList)
-    }
+    // console.log('newUserList after move: ', newUserList)
+    setGameUserList(newUserList)
   }
 
   const successUpdateRoomInfo = (roomInfo: IRoomOfLobby) => {
@@ -283,17 +264,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
     }
 
     socket.onmessage = (event) => {
-      let responseData = undefined
-      let eventType = undefined
-
       // Todo : 채팅 부분 응답 변경되면 try-catch 제거
-      try {
-        responseData = JSON.parse(event.data)
-        eventType = parseInt(responseData.code)
-      } catch (error) {
-        console.log('socket 응답 데이터를 확인하세요.', error)
-      }
-      // const { eventType, data } = JSON.parse(event.data)
+      const responseData = JSON.parse(event.data)
+      console.log(responseData.code)
+      const eventType = parseInt(responseData.code)
 
       switch (eventType) {
         case SOCKET_RES_CODE.CHATTING:
@@ -341,10 +315,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successQuizAnswerRank(responseData.data)
           break
         case SOCKET_RES_CODE.MOVE_CHARACTER:
-          console.log('유저 이동')
-          successOtherUserMove(responseData.data, gameUserList)
+          console.log('유저 이동', responseData.data)
+          successOtherUserMove(responseData.data)
+          break
         default:
-          console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
+          console.log('이벤트 코드가 없습니다. 게임 소켓')
           console.log(responseData)
           break
       }

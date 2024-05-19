@@ -38,15 +38,17 @@ const GameField = () => {
     }
   }
 
-  // 유저가 방장인지 정보를 받아와서 store에 저장
-  if (gameUserList) {
-    const roomOwner = gameUserList.find(
-      (user) => user.userNickname === userInfo.nickname
-    )?.roomOwner
-    if (roomOwner !== undefined) {
-      setIsRoomOwner(roomOwner)
+  useEffect(() => {
+    // 유저가 방장인지 정보를 받아와서 store에 저장
+    if (gameUserList) {
+      const roomOwner = gameUserList.find(
+        (user) => user.userNickname === userInfo.nickname
+      )?.roomOwner
+      if (roomOwner !== undefined) {
+        setIsRoomOwner(roomOwner)
+      }
     }
-  }
+  }, [gameUserList])
 
   // 개발용 게임 시작
   // useEffect(() => {
