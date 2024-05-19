@@ -36,7 +36,7 @@ interface IUserInfo {
   userScore: number
   moveState?: playerMoveStateEnum.IDLE
   characterType?: number
-  direction?: 'right'
+  direction?: string
   escapeHistory?: number
   winRate?: number
   winCnt?: number

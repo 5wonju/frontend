@@ -32,6 +32,7 @@ const OtherController = ({
 
   useEffect(() => {
     // if (!rigidbody.current) return
+    console.log(pos)
     rigidbody.current.setTranslation(vec3({ x: pos.x, y: pos.y, z: pos.z }))
     rigidbody.current.setLinvel(vec3({ x: linvel.x, y: linvel.y, z: linvel.z }))
     // 캐릭터가 이동할 때마다 좌표 받아오기
@@ -51,9 +52,9 @@ const OtherController = ({
     // linvel을 기반으로 위치 업데이트
     const currentTranslation = rigidbody.current.translation()
     const newTranslation = {
-      x: currentTranslation.x + (linvel.x * delta) / 2,
+      x: currentTranslation.x + linvel.x * delta,
       y: currentTranslation.y,
-      z: currentTranslation.z + (linvel.z * delta) / 2,
+      z: currentTranslation.z + linvel.z * delta,
     }
     rigidbody.current.setTranslation(vec3(newTranslation))
 

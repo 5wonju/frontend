@@ -31,8 +31,8 @@ const Game = () => {
           </Physics>
         </Suspense>
       </Canvas>
-      <GameInfoPanel />
-      <GameControlPanel />
+      {/* <GameInfoPanel /> */}
+      {/* <GameControlPanel /> */}
       <GameResult />
     </KeyboardControl>
   )
