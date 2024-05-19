@@ -32,20 +32,9 @@ import { ContactShadows } from '@react-three/drei'
 const useSetUpChat = () => {
   const { addChatLogs } = useChatLogsStore()
 
-  const successReceiveChat = (message: string | IChat) => {
+  const successReceiveChat = (message: IChat) => {
     console.log('Received message:', message)
-
-    if (typeof message === 'string') {
-      message = {
-        nickname: '닉네임 null',
-        message: message,
-        timestamp: '시간 null',
-      }
-
-      addChatLogs(message)
-    } else {
-      addChatLogs(message)
-    }
+    addChatLogs(message)
   }
 
   return { successReceiveChat }
@@ -107,7 +96,7 @@ const useSetUpRoom = (socket: WebSocket | null) => {
       switch (eventType) {
         case SOCKET_RES_CODE.CHATTING:
           console.log('채팅 수신 응답')
-          successReceiveChat(event.data)
+          successReceiveChat(responseData.data)
           break
         case SOCKET_RES_CODE.GET_ROOM_LIST:
           console.log('방 목록 조회 응답')
@@ -272,7 +261,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
       switch (eventType) {
         case SOCKET_RES_CODE.CHATTING:
           console.log('채팅 수신 응답')
-          successReceiveChat(event.data)
+          successReceiveChat(responseData.data)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
           successEnterRoom(responseData.data.userList)
