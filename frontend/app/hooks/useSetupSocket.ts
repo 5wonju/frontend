@@ -167,11 +167,9 @@ const useSetUpGame = (socket: WebSocket | null) => {
     team: teamEnum
     direction: string
   }) => {
-    console.log('여기서 막히는거야?', gameUserList)
     if (!gameUserList || gameUserList.length === 0) return
 
     const newUserList = gameUserList.map((user: IUserInfo) => {
-      console.log('map이 실행은 되나?')
       return user.userNickname === otherStatus.nickname
         ? ({
             ...user,
@@ -266,7 +264,6 @@ const useSetUpGame = (socket: WebSocket | null) => {
     socket.onmessage = (event) => {
       // Todo : 채팅 부분 응답 변경되면 try-catch 제거
       const responseData = JSON.parse(event.data)
-      console.log(responseData.code)
       const eventType = parseInt(responseData.code)
 
       switch (eventType) {
