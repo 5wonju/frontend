@@ -25,6 +25,7 @@ import {
   playerMoveStateEnum,
   teamEnum,
 } from '../(page)/(needProtection)/game/lib/store-type'
+import { ContactShadows } from '@react-three/drei'
 
 // 채팅 관련 소켓 셋팅
 // - 대기방 + 게임방 공통으로 사용
@@ -133,15 +134,20 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } = useGameRoomStore(
-    (state) => ({
-      setGameUserList: state.setGameUserList,
-      setRoomInfo: state.setRoomInfo,
-      gameUserList: state.gameUserList,
-      countdownGame: state.countdownGame,
-      startGame: state.startGame,
-    })
-  )
+  // const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } =
+  //   useGameRoomStore()
+  const { setRoomInfo } = useGameRoomStore((state) => ({ setRoomInfo: state.setRoomInfo }))
+  const { gameUserList } = useGameRoomStore((state) => ({ gameUserList: state.gameUserList }))
+  const { setGameUserList } = useGameRoomStore((state) => ({
+    setGameUserList: state.setGameUserList,
+  }))
+  const { countdownGame } = useGameRoomStore((state) => ({ countdownGame: state.countdownGame }))
+  const { startGame } = useGameRoomStore((state) => ({ startGame: state.startGame }))
+
+  useEffect(() => {
+    console.log('gameUserList in useSetUpGame:', gameUserList)
+  }, [gameUserList])
+
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
@@ -161,23 +167,25 @@ const useSetUpGame = (socket: WebSocket | null) => {
     team: teamEnum
     direction: string
   }) => {
-    if (gameUserList === null) return
+    console.log('여기서 막히는거야?', gameUserList)
+    if (!gameUserList || gameUserList.length === 0) return
 
     const newUserList = gameUserList.map((user: IUserInfo) => {
-      if (user.userNickname === otherStatus.nickname) {
-        return {
-          ...user,
-          position: otherStatus.position,
-          linvel: otherStatus.linvel,
-          moveState: otherStatus.moveState,
-          characterType: otherStatus.characterType,
-          team: otherStatus.team ?? teamEnum.NONE,
-          direction: otherStatus.direction,
-        }
-      }
-      return user
+      console.log('map이 실행은 되나?')
+      return user.userNickname === otherStatus.nickname
+        ? ({
+            ...user,
+            position: otherStatus.position,
+            linvel: otherStatus.linvel,
+            moveState: otherStatus.moveState,
+            characterType: otherStatus.characterType,
+            team: otherStatus.team ?? teamEnum.NONE,
+            direction: otherStatus.direction,
+          } as IUserInfo)
+        : user
     })
 
+    // console.log('newUserList after move: ', newUserList)
     setGameUserList(newUserList)
   }
 
@@ -245,6 +253,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successEnterRoom = (userList: IUserInfo[]) => {
+    console.log('유저 리스트 정보 업데이트 newUserList: ', userList)
     setGameUserList(userList)
   }
 
@@ -255,17 +264,10 @@ const useSetUpGame = (socket: WebSocket | null) => {
     }
 
     socket.onmessage = (event) => {
-      let responseData = undefined
-      let eventType = undefined
-
       // Todo : 채팅 부분 응답 변경되면 try-catch 제거
-      try {
-        responseData = JSON.parse(event.data)
-        eventType = parseInt(responseData.code)
-      } catch (error) {
-        console.log('socket 응답 데이터를 확인하세요.', error)
-      }
-      // const { eventType, data } = JSON.parse(event.data)
+      const responseData = JSON.parse(event.data)
+      console.log(responseData.code)
+      const eventType = parseInt(responseData.code)
 
       switch (eventType) {
         case SOCKET_RES_CODE.CHATTING:
@@ -313,9 +315,11 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successQuizAnswerRank(responseData.data)
           break
         case SOCKET_RES_CODE.MOVE_CHARACTER:
+          console.log('유저 이동', responseData.data)
           successOtherUserMove(responseData.data)
+          break
         default:
-          console.log('이벤트 코드가 없습니다. 현재는 채팅에 대한 이벤트 코드가 없습니다.')
+          console.log('이벤트 코드가 없습니다. 게임 소켓')
           console.log(responseData)
           break
       }
@@ -327,6 +331,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
 // 페이지별 소켓 셋팅***
 const useSetupSocket = (socket: WebSocket | null) => {
   const currentPath = usePathname()
+  const { gameUserList } = useGameRoomStore((state) => ({ gameUserList: state.gameUserList }))
   const { setUpRoom } = useSetUpRoom(socket)
   const { setUpGame } = useSetUpGame(socket)
 
@@ -339,7 +344,7 @@ const useSetupSocket = (socket: WebSocket | null) => {
         setUpGame()
       }
     }
-  }, [socket, currentPath])
+  }, [socket, currentPath, gameUserList])
 }
 
 export { useSetupSocket }
