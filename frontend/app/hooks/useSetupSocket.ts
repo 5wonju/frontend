@@ -112,7 +112,6 @@ const useSetUpRoom = (socket: WebSocket | null) => {
           successCreateRoom(responseData.data)
           break
         case SOCKET_RES_CODE.ENTER_ROOM_OWNER:
-          console.log('방 입장 성공 응답')
           console.log('방 입장 성공시 받아오는 데이터', responseData.data)
           successEnterRoom(responseData.data.userList)
           break
@@ -128,10 +127,11 @@ const useSetUpRoom = (socket: WebSocket | null) => {
 
 // 게임방 관련 소켓 셋팅
 const useSetUpGame = (socket: WebSocket | null) => {
-  const { setRoomInfo, gameUserList, setGameUserList } = useGameRoomStore((state) => ({
+  const { setRoomInfo, gameUserList, setGameUserList, countdownGame } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
     setRoomInfo: state.setRoomInfo,
     gameUserList: state.gameUserList,
+    countdownGame: state.countdownGame,
   }))
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
@@ -178,6 +178,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
     })
 
     // 2. 게임 상태 변경
+    countdownGame()
   }
 
   const successGetTeamPoint = (gameScore: IGameScore) => {

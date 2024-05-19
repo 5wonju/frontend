@@ -4,6 +4,7 @@ import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { IChat, useChatLogsStore, useMainSocketStore } from '../lib/store'
 import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 import { IRoomInfo } from '../(page)/(needProtection)/lobby/lib/type'
+import { useAuth } from './useAuth'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -55,6 +56,7 @@ const useWaitingRoom = () => {
 
 const useGame = () => {
   const { socket } = useMainSocketStore()
+  const { userInfo } = useAuth()
 
   const exitRoom = () => {
     if (!socket) {
@@ -79,8 +81,11 @@ const useGame = () => {
       console.log('Socket이 비어있습니다.')
       return
     }
-    console.log('------selectTeam:', team)
-    socket.send(JSON.stringify({ eventType: 'TEAM_SELECT', data: { team: team } }))
+    const { nickname } = userInfo
+    console.log('------selectTeam:', team, nickname)
+    socket.send(
+      JSON.stringify({ eventType: 'TEAM_SELECT', data: { team: team, nickname: nickname } })
+    )
   }
 
   const getRoomInfo = (roomId: number) => {
@@ -92,7 +97,16 @@ const useGame = () => {
     socket.send(JSON.stringify({ eventType: 'SEARCH_ROOM_BY_ID', data: { roomId } }))
   }
 
-  return { selectTeam, getRoomInfo, editRoom, exitRoom }
+  const startGame = () => {
+    if (!socket) {
+      console.log('소켓이 비었어')
+      return
+    }
+
+    socket.send(JSON.stringify({ eventType: 'START_GAME' }))
+  }
+
+  return { selectTeam, getRoomInfo, editRoom, exitRoom, startGame }
 }
 
 // :: Chat
