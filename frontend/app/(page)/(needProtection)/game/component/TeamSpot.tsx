@@ -34,9 +34,9 @@ const TeamSpot = () => {
           type="fixed"
           onCollisionEnter={(event) => {
             // collision 내 객체인지 확인
-            console.log('collision test start', event)
+            // console.log('collision test start', event)
             if (event.collider.handle !== playerHandle) return
-            console.log('collision test 통과')
+            // console.log('collision test 통과')
             handleEnterTeamSpot(teamColor)
           }}
         >

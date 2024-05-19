@@ -105,7 +105,7 @@ export const validateCreateRoomData = ({
     return false
   }
 
-  if (probNum < 10 || probNum > 100) {
+  if (probNum < 1 || probNum > 100) {
     alert('문제 수는 10개 이상 100개 이하여야 합니다.')
     return false
   }

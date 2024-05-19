@@ -22,6 +22,7 @@ import { setUserScores } from '../lib/util'
 import { IOtherStatus } from '../(page)/(needProtection)/game/component/OtherPlayers'
 import {
   AnswerEnum,
+  gameStateEnum,
   playerMoveStateEnum,
   teamEnum,
 } from '../(page)/(needProtection)/game/lib/store-type'
@@ -126,16 +127,16 @@ const useSetUpGame = (socket: WebSocket | null) => {
   // const { setRoomInfo, gameUserList, setGameUserList, countdownGame, startGame } =
   //   useGameRoomStore()
   const { setRoomInfo } = useGameRoomStore((state) => ({ setRoomInfo: state.setRoomInfo }))
-  const { gameUserList } = useGameRoomStore((state) => ({ gameUserList: state.gameUserList }))
+  const { gameUserList, doneGame, readyGame } = useGameRoomStore((state) => ({
+    gameUserList: state.gameUserList,
+    doneGame: state.doneGame,
+    readyGame: state.readyGame,
+  }))
   const { setGameUserList } = useGameRoomStore((state) => ({
     setGameUserList: state.setGameUserList,
   }))
   const { countdownGame } = useGameRoomStore((state) => ({ countdownGame: state.countdownGame }))
   const { startGame } = useGameRoomStore((state) => ({ startGame: state.startGame }))
-
-  useEffect(() => {
-    console.log('gameUserList in useSetUpGame:', gameUserList)
-  }, [gameUserList])
 
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
@@ -156,11 +157,9 @@ const useSetUpGame = (socket: WebSocket | null) => {
     team: teamEnum
     direction: string
   }) => {
-    console.log('여기서 막히는거야?', gameUserList)
     if (!gameUserList || gameUserList.length === 0) return
 
     const newUserList = gameUserList.map((user: IUserInfo) => {
-      console.log('map이 실행은 되나?')
       return user.userNickname === otherStatus.nickname
         ? ({
             ...user,
@@ -211,6 +210,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
       blueTeamPoint: 0,
       redTeamUsers: redTeams,
       blueTeamUsers: blueTeams,
+      roomStatus: gameStateEnum.COUNTDOWN,
     })
 
     // 2. 게임 상태 변경
@@ -220,14 +220,16 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const successGetTeamPoint = (gameScore: IGameScore) => {
     console.log('현재 팀 별 총 점수와 개인 점수 응답', gameScore)
     setGameScore(gameScore)
-    setTimeout(() => {
-      countdownGame()
-    }, 3000)
+    countdownGame()
+    // setTimeout(() => {
+    //   countdownGame()
+    // }, 3000)
   }
 
   const successGameResultInfo = (gameResult: IGameResult) => {
-    console.log('게임 결과 응답')
+    console.log('게임 결과 응답', gameResult)
     setGameResult(gameResult)
+    doneGame()
   }
 
   const successOtherUserExit = (newUserList: IUserInfo[]) => {
@@ -235,15 +237,19 @@ const useSetUpGame = (socket: WebSocket | null) => {
     setGameUserList(newUserList)
   }
 
-  const successQuizAnswerRank = (data: { answer: AnswerEnum; userRank: IUserRoundResult[] }) => {
-    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', data.userRank)
+  const successQuizAnswerRank = (data: { answer: AnswerEnum; usersRank: IUserRoundResult[] }) => {
+    console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', data.usersRank)
     setAnswer(data.answer)
-    setRoundResults(data.userRank)
+    setRoundResults(data.usersRank)
   }
 
   const successEnterRoom = (userList: IUserInfo[]) => {
-    console.log('유저 리스트 정보 업데이트 newUserList: ', userList)
+    // console.log('유저 리스트 정보 업데이트 newUserList: ', userList)
     setGameUserList(userList)
+  }
+
+  const successGameDone = () => {
+    readyGame()
   }
 
   const setUpGame = () => {
@@ -255,7 +261,6 @@ const useSetUpGame = (socket: WebSocket | null) => {
     socket.onmessage = (event) => {
       // Todo : 채팅 부분 응답 변경되면 try-catch 제거
       const responseData = JSON.parse(event.data)
-      console.log(responseData.code)
       const eventType = parseInt(responseData.code)
 
       switch (eventType) {
@@ -300,12 +305,19 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successOtherUserExit(responseData.data.userList)
           break
         case SOCKET_RES_CODE.ANSWER_TOP:
-          console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표')
+          console.log('매 라운드 퀴즈 정답 및 정답자 순위 발표', responseData.data)
           successQuizAnswerRank(responseData.data)
           break
         case SOCKET_RES_CODE.MOVE_CHARACTER:
-          console.log('유저 이동', responseData.data)
+          // console.log('유저 이동', responseData.data)
           successOtherUserMove(responseData.data)
+          break
+        case SOCKET_RES_CODE.CHANGE_ZONE_OWNER:
+          console.log('정답 구역 이동', responseData.data)
+          break
+        case SOCKET_RES_CODE.GAME_DONE_ROOM_TO_READY:
+          console.log('게임 종료 후 대기실로 이동')
+          successGameDone()
           break
         default:
           console.log('이벤트 코드가 없습니다. 게임 소켓')

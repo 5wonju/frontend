@@ -34,7 +34,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
       // room 내 유저 정보 리스트
       gameUserList: [], // initial state
       setGameUserList: (users: IUserInfo[] | null) => {
-        console.log('userList가 업데이트 됩니다.', users)
+        // console.log('userList가 업데이트 됩니다.', users)
         return set((state: IGameRoomState) => {
           state.gameUserList = users
         })
@@ -49,6 +49,14 @@ export const useGameRoomStore = create<IGameRoomState>()(
       countdownGame: () =>
         set((state: IGameRoomState) => {
           state.gameState = gameStateEnum.COUNTDOWN
+        }),
+      doneGame: () =>
+        set((state: IGameRoomState) => {
+          state.gameState = gameStateEnum.DONE
+        }),
+      readyGame: () =>
+        set((state: IGameRoomState) => {
+          state.gameState = gameStateEnum.READY
         }),
 
       // 방 정보 상태
@@ -119,7 +127,6 @@ export const useCharacterSelectStore = create<ICharacterSelectState>()(
 
       setCharacterIndex: (character: number) =>
         set((state: ICharacterSelectState) => {
-          console.log('selected characterIndex:', character)
           state.characterIndex = character
         }),
     })),
