@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { getSocketToken } from '../lib/api'
 import { useWaitingRoomStore } from '../(page)/(needProtection)/lobby/lib/store'
 import { IChat, useChatLogsStore, useMainSocketStore } from '../lib/store'
-import { teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
+import { AnswerEnum, teamEnum } from '../(page)/(needProtection)/game/lib/store-type'
 import { IRoomInfo } from '../(page)/(needProtection)/lobby/lib/type'
 import { useAuth } from './useAuth'
+import { useGameRoomStore } from '../(page)/(needProtection)/game/lib/store'
 
 // :: Waiting Room
 // 대기방과 관련된 처리를 담당하는 hook
@@ -57,6 +58,7 @@ const useWaitingRoom = () => {
 const useGame = () => {
   const { socket } = useMainSocketStore()
   const { userInfo } = useAuth()
+  const { gameUserList } = useGameRoomStore()
 
   const exitRoom = () => {
     if (!socket) {
@@ -108,6 +110,32 @@ const useGame = () => {
     }
 
     socket.send(JSON.stringify({ eventType: 'START_GAME' }))
+  }
+
+  const selectAnswer = (answer: AnswerEnum) => {
+    if (!socket) {
+      console.log('소켓이 비었어')
+      return
+    }
+
+    const myInfo = gameUserList?.find((user) => user.userNickname === userInfo.nickname)
+    const data = {
+      pos: {
+        x: myInfo?.position.x,
+        y: myInfo?.position.y,
+        z: myInfo?.position.z,
+      },
+      linvel: {
+        x: myInfo?.linvel.x,
+        y: myInfo?.linvel.y,
+        z: myInfo?.linvel.z,
+      },
+      moveState: myInfo?.moveState,
+      characterType: myInfo?.characterType,
+      direction: myInfo?.direction,
+      zone: answer,
+    }
+    socket.send(JSON.stringify({ eventType: 'CHANGE_ZONE', data: data }))
   }
 
   return { selectTeam, getRoomInfo, editRoom, exitRoom, startGame }
