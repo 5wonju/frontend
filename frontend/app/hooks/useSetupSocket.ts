@@ -144,10 +144,6 @@ const useSetUpGame = (socket: WebSocket | null) => {
   const { countdownGame } = useGameRoomStore((state) => ({ countdownGame: state.countdownGame }))
   const { startGame } = useGameRoomStore((state) => ({ startGame: state.startGame }))
 
-  useEffect(() => {
-    console.log('gameUserList in useSetUpGame:', gameUserList)
-  }, [gameUserList])
-
   const { successReceiveChat } = useSetUpChat()
   const { setQuiz } = useQuizStore()
   const { setGameScore } = useGameScoreStore()
@@ -251,7 +247,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successEnterRoom = (userList: IUserInfo[]) => {
-    console.log('유저 리스트 정보 업데이트 newUserList: ', userList)
+    // console.log('유저 리스트 정보 업데이트 newUserList: ', userList)
     setGameUserList(userList)
   }
 
@@ -312,7 +308,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
           successQuizAnswerRank(responseData.data)
           break
         case SOCKET_RES_CODE.MOVE_CHARACTER:
-          console.log('유저 이동', responseData.data)
+          // console.log('유저 이동', responseData.data)
           successOtherUserMove(responseData.data)
           break
         default:

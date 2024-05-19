@@ -34,7 +34,7 @@ export const useGameRoomStore = create<IGameRoomState>()(
       // room 내 유저 정보 리스트
       gameUserList: [], // initial state
       setGameUserList: (users: IUserInfo[] | null) => {
-        console.log('userList가 업데이트 됩니다.', users)
+        // console.log('userList가 업데이트 됩니다.', users)
         return set((state: IGameRoomState) => {
           state.gameUserList = users
         })
