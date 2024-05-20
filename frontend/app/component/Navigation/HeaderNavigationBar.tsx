@@ -89,7 +89,7 @@ const HeaderNavigationBar = () => {
     <section className="flex justify-between items-center absolute bg-white top-0 h-12 w-full px-4 select-none">
       <div>
         <h1 className="text-purple-300 font-bold my-auto text-center text-2xl px-3">
-          <Link href="/">LOGO</Link>
+          <Link href="/">MOORDO</Link>
         </h1>
       </div>
 
