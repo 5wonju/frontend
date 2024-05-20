@@ -249,6 +249,7 @@ const useSetUpGame = (socket: WebSocket | null) => {
   }
 
   const successGameDone = () => {
+    setGameScore(null)
     readyGame()
   }
 
