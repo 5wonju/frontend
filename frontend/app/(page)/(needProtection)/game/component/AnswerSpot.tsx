@@ -36,8 +36,8 @@ const AnswerSpot = () => {
           onCollisionEnter={(event) => {
             if (event.collider.handle === playerHandle) {
               setSelectAnswer(answer as AnswerEnum)
+              selectAnswerField(answer as AnswerEnum)
             }
-            selectAnswerField(answer as AnswerEnum)
           }}
         >
           <CylinderCollider args={[2 / 2, 3]} />
