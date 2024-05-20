@@ -212,7 +212,6 @@ const CharacterController = () => {
         targetCameraPosition.y = 10
         break
       case gameStateEnum.GAME:
-      case gameStateEnum.COUNTDOWN:
         targetCameraPosition.y = 6
         break
     }

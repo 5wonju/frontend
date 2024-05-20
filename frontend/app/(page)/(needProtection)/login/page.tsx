@@ -8,6 +8,7 @@ import { fetchState } from './lib/api'
 import { useAuth } from '@/app/hooks/useAuth'
 import Image from 'next/image'
 
+// const GOOGLE_AUTH_URL = 'https://mo-or-do.net/users/oauth/kakao/distribution-to-distribution'
 const GOOGLE_AUTH_URL = 'https://kauth.kakao.com/oauth/authorize'
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID
 const RESPONSE_TYPE = 'code'

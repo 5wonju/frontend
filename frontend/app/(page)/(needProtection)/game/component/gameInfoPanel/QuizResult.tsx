@@ -25,10 +25,17 @@ const QuizResult = () => {
       }, 500 * (index + 1))
     })
 
-    return () =>
+    return () => {
+      setResult({
+        winTeam: false,
+        0: false,
+        1: false,
+        2: false,
+      })
       keys.forEach((key, index) => {
         clearTimeout(500 * (index + 1))
       })
+    }
   }, [roundResults])
 
   return (
