@@ -36,7 +36,7 @@ const GameChat = () => {
         style={{ height: '10px', cursor: 'row-resize' }}
         onMouseDown={handleMouseDown}
       />
-      <Chat />
+      <Chat type="game" />
     </section>
   )
 }

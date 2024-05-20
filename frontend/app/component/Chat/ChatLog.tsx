@@ -16,9 +16,10 @@ const formatChatTimestamp = (isoString: string): string => {
 
 interface ChatLogProps {
   chatEndRef: React.RefObject<HTMLDivElement>
+  type: 'game' | 'lobby'
 }
 
-const ChatLog = ({ chatEndRef }: ChatLogProps) => {
+const ChatLog = ({ chatEndRef, type }: ChatLogProps) => {
   const { chatLogs } = useChat()
 
   useEffect(() => {
@@ -26,11 +27,15 @@ const ChatLog = ({ chatEndRef }: ChatLogProps) => {
   }, [chatLogs])
 
   return (
-    <ul className="max-w-full z-10 text-white px-2 overflow-y-scroll">
+    <ul
+      className={`max-w-full z-10 ${
+        type === 'game' ? 'text-black' : 'text-white'
+      } px-2 overflow-y-scroll`}
+    >
       {chatLogs.map((log, index) => (
         <li
           key={index}
-          className="flex gap-4 text-white animate-slide-in"
+          className={`flex gap-4 ${type === 'game' ? 'text-black' : 'text-white'} animate-slide-in`}
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <span className="shrink-0">{log.nickname} : </span>

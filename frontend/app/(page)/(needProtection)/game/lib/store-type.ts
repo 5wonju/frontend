@@ -100,7 +100,7 @@ export interface IQuizState {
 
 export interface IGameScoreState {
   gameScore: IGameScore | null
-  setGameScore: (gameScore: IGameScore) => void
+  setGameScore: (gameScore: IGameScore | null) => void
 }
 
 export interface IGameResultState {
