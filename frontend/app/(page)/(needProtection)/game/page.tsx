@@ -22,6 +22,7 @@ const Game = () => {
       <Canvas
         shadows
         camera={{ position: [0, 40, 20], fov: 42 }}
+        frameloop="demand"
         className="absolute top-0 bottom-0"
       >
         <WebGLContextManager />
