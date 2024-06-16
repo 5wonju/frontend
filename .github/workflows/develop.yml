@@ -1,8 +1,8 @@
 name: develop build test
 
-on:
-  push:
-    branches:
+#on:
+#  push:
+#    branches:
 #      - develop
 
 jobs:
