@@ -3,7 +3,7 @@ name: develop build test
 on:
   push:
     branches:
-      - develop
+#      - develop
 
 jobs:
   build-test:

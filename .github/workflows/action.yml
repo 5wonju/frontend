@@ -3,7 +3,7 @@ name: deployment
 on:
   push:
     branches:
-      - deploy
+#      - deploy
 
 jobs:
   push-to-gitlab:
